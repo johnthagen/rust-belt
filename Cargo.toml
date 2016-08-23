@@ -1,0 +1,6 @@
+[package]
+name = "rust_belt"
+version = "0.1.0"
+authors = ["johnthagen <johnthagen@gmail.com>", "theandrewdavis <theandrewdavis@gmail.com"]
+
+[dependencies]
