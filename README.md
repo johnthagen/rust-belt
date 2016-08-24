@@ -1,4 +1,6 @@
 # Rust Belt
+[![Build Status](https://travis-ci.org/johnthagen/rust-belt.svg)](https://travis-ci.org/johnthagen/rust-belt)
+
 `rust_belt` is a recreation of the classic 
 [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game using
 the [Rust](https://www.rust-lang.org/en-US/) game engine, [Piston](http://www.piston.rs/).
