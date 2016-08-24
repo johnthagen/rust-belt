@@ -21,7 +21,7 @@ $ cargo build
 To run:
 
 ```bash
-$ cargo run
+$ cargo run --release
 ```
 
 # Maintainers
