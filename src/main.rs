@@ -1,6 +1,8 @@
+extern crate graphics;
 extern crate piston_window;
 
-use piston_window::{clear, PistonWindow, rectangle, WindowSettings};
+use piston_window::{PistonWindow, WindowSettings};
+use graphics::{clear, rectangle};
 
 fn main() {
     let mut window: PistonWindow = WindowSettings::new("Rust Belt", [640, 480])

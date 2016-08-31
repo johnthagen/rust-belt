@@ -2,6 +2,7 @@
 name = "rust_belt"
 version = "0.1.0"
 dependencies = [
+ "piston2d-graphics 0.17.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston_window 0.51.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 

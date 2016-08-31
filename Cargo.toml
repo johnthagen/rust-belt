@@ -8,3 +8,4 @@ authors = [
 
 [dependencies]
 piston_window = "0.51.1"
+piston2d-graphics = "0.17.0"
