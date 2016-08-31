@@ -12,11 +12,11 @@ fn main() {
 
     while let Some(event) = window.next() {
         window.draw_2d(&event,
-                       |c, g| {
-                           clear([1.0; 4], g);
-                           rectangle([1.0, 0.0, 0.0, 1.0], // red
-                                     [0.0, 0.0, 100.0, 100.0],
-                                     c.transform, g);
+                       |context, graphics2d| {
+                           clear([1.0; 4], graphics2d);
+                           rectangle([1.0, 0.0, 1.0, 1.0], // color
+                                     [0.0, 0.0, 100.0, 100.0], // border
+                                     context.transform, graphics2d);
                        });
     }
 }
