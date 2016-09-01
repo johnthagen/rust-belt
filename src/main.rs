@@ -13,7 +13,8 @@ fn main() {
     while let Some(event) = window.next() {
         window.draw_2d(&event,
                        |context, graphics2d| {
-                           clear([1.0; 4], graphics2d);
+                           clear([1.0, 1.0, 1.0, 1.0], //color
+                                 graphics2d);
                            rectangle([1.0, 0.0, 1.0, 1.0], // color
                                      [0.0, 0.0, 100.0, 100.0], // border
                                      context.transform, graphics2d);
