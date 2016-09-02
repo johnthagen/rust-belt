@@ -7,4 +7,4 @@ authors = [
 ]
 
 [dependencies]
-piston_window = "0.42.0"
+piston_window = "0.52.0"
