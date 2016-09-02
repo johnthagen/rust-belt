@@ -7,10 +7,20 @@ the [Rust](https://www.rust-lang.org/en-US/) game engine, [Piston](http://www.pi
 
 # Usage
 
-:warning: Windows users must install the 
-[GNU ABI](https://www.rust-lang.org/en-US/downloads.html#win-foot) version of `rustc` as well as
-[MinGW-w64](https://sourceforge.net/projects/mingw-w64/) and ensure that `gcc.exe` is in the 
-`PATH`.
+## Windows
+
+1. Install the [GNU ABI](https://www.rust-lang.org/en-US/downloads.html#win-foot) version of 
+`rustc`.
+2. Install [MSYS2](https://msys2.github.io/).
+3. Open an MSYS2 terminal
+* `pacman -S mingw-w64-x86_64-gcc`
+* Add `C:\msys64\mingw64\bin` to system `PATH`.
+
+## Mac OSX
+
+TODO
+
+## Build and Run
 
 To build:
 
