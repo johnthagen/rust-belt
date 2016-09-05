@@ -1,6 +1,7 @@
 extern crate piston_window;
 
-use piston_window::*;
+use piston_window::{AdvancedWindow, Button, clear, ellipse, Key, PressEvent, PistonWindow,
+    rectangle, WindowSettings};
 
 fn main() {
     let title = "Hello Piston! (press any key to enter inner loop)";
