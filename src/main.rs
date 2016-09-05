@@ -8,15 +8,19 @@ fn main() {
     let mut window: PistonWindow = WindowSettings::new(title, [640, 480])
         .exit_on_esc(true)
         .build()
-        .unwrap_or_else(|e| { panic!("Failed to build PistonWindow: {}", e) });
+        .unwrap_or_else(|error| { panic!("Failed to build PistonWindow: {}", error) });
 
-    while let Some(e) = window.next() {
-        window.draw_2d(&e, |c, g| {
-            clear([0.5, 1.0, 0.5, 1.0], g);
-            rectangle([1.0, 0.0, 0.0, 1.0], [50.0, 50.0, 100.0, 100.0], c.transform, g);
+    while let Some(event) = window.next() {
+        window.draw_2d(&event,
+                       |context, graphics| {
+                            clear([0.5, 1.0, 0.5, 1.0], graphics);
+                            rectangle([1.0, 0.0, 0.0, 1.0],
+                                      [50.0, 50.0, 100.0, 100.0],
+                                      context.transform,
+                                      graphics);
         });
 
-        if e.press_args().is_some() {
+        if event.press_args().is_some() {
             InnerApp {
                 title: "Inner loop (press X to exit inner loop)",
                 exit_button: Button::Keyboard(Key::X),
@@ -35,12 +39,16 @@ pub struct InnerApp {
 impl InnerApp {
     pub fn run(&mut self, window: &mut PistonWindow) {
         window.set_title(self.title.into());
-        while let Some(e) = window.next() {
-            window.draw_2d(&e, |c, g| {
-                clear([0.5, 0.5, 1.0, 1.0], g);
-                ellipse([1.0, 0.0, 0.0, 1.0], [50.0, 50.0, 100.0, 100.0], c.transform, g);
+        while let Some(event) = window.next() {
+            window.draw_2d(&event,
+                           |context, graphics| {
+                                clear([0.5, 0.5, 1.0, 1.0], graphics);
+                                ellipse([1.0, 0.0, 0.0, 1.0],
+                                        [50.0, 50.0, 100.0, 100.0],
+                                        context.transform,
+                                        graphics);
             });
-            if let Some(button) = e.press_args() {
+            if let Some(button) = event.press_args() {
                 if button == self.exit_button {
                     break;
                 }
