@@ -24,6 +24,7 @@ fn main() {
             InnerApp {
                 title: "Inner loop (press X to exit inner loop)",
                 exit_button: Button::Keyboard(Key::X),
+                position: Position{ x: 50.0 },
             }.run(&mut window);
             window.set_title(title.into());
         }
@@ -34,6 +35,11 @@ fn main() {
 pub struct InnerApp {
     pub title: &'static str,
     pub exit_button: Button,
+    pub position: Position,
+}
+
+pub struct Position {
+    pub x: f64,
 }
 
 impl InnerApp {
@@ -44,13 +50,15 @@ impl InnerApp {
                            |context, graphics| {
                                 clear([0.5, 0.5, 1.0, 1.0], graphics);
                                 ellipse([1.0, 0.0, 0.0, 1.0],
-                                        [50.0, 50.0, 100.0, 100.0],
+                                        [self.position.x, 50.0, 100.0, 100.0],
                                         context.transform,
                                         graphics);
             });
             if let Some(button) = event.press_args() {
-                if button == self.exit_button {
-                    break;
+                match button {
+                    Button::Keyboard(Key::X) => break,
+                    Button::Keyboard(Key::D) => { self.position.x += 1.0 }
+                    _ => {}
                 }
             }
         }
