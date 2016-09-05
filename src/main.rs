@@ -51,7 +51,7 @@ impl InnerApp {
                            |context, graphics| {
                                 clear([0.5, 0.5, 1.0, 1.0], graphics);
                                 ellipse([1.0, 0.0, 0.0, 1.0],
-                                        [self.position.x, self.position.y, 100.0, 100.0],
+                                        [self.position.x, self.position.y, 20.0, 20.0],
                                         context.transform,
                                         graphics);
             });
