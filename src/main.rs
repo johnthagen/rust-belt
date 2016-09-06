@@ -1,6 +1,6 @@
 extern crate piston_window;
 
-use piston_window::{AdvancedWindow, Button, clear, Key, PressEvent, PistonWindow,
+use piston_window::{AdvancedWindow, Button, clear, Key, PressEvent, PistonWindow, polygon,
     rectangle, Transformed, WindowSettings};
 
 fn main() {
@@ -35,7 +35,14 @@ fn main() {
     }
 }
 
-const SHIP_SIZE: f64 = 20.0;
+const SHIP_HEIGHT: f64 = 16.0;
+const SHIP_WIDTH: f64 = 20.0;
+
+const SHIP: &'static [[f64; 2]] = &[
+    [0.0, -1.0 * SHIP_HEIGHT / 2.0],
+    [SHIP_WIDTH, 0.0],
+    [0.0, SHIP_HEIGHT / 2.0]
+];
 
 /// Stores application state of inner event loop.
 pub struct InnerApp {
@@ -60,17 +67,17 @@ impl InnerApp {
             window.draw_2d(&event,
                            |context, graphics| {
                                clear(BLACK, graphics);
-                               rectangle(CYAN,
-                                         rectangle::square(0.0, 0.0, SHIP_SIZE),
-                                         context.transform
-                                             .trans(self.position.x,
-                                                    self.position.y)
-                                             .rot_rad(self.rotation)
-                                             // Without this trans(), rotation occurs around the
-                                             // upper left corner rather than the center.
-                                             .trans(-1.0 * SHIP_SIZE / 2.0,
-                                                    -1.0 * SHIP_SIZE / 2.0),
-                                         graphics);
+                               polygon(CYAN,
+                                       SHIP,
+                                       context.transform
+                                           .trans(self.position.x,
+                                                  self.position.y)
+                                           .rot_rad(self.rotation)
+                                           // Without this trans(), rotation occurs around the
+                                           // upper left corner rather than the center.
+                                           .trans(-1.0 * SHIP_HEIGHT / 2.0,
+                                                  0.0),
+                                       graphics);
                            });
             if let Some(button) = event.press_args() {
                 match button {
