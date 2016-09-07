@@ -75,8 +75,7 @@ impl InnerApp {
                                            .rot_rad(self.rotation)
                                            // Without this trans(), rotation occurs around the
                                            // upper left corner rather than the center.
-                                           .trans(-1.0 * SHIP_HEIGHT / 2.0,
-                                                  0.0),
+                                           .trans(-1.0 * SHIP_HEIGHT / 2.0, 0.0),
                                        graphics);
                            });
             if let Some(button) = event.press_args() {
@@ -85,8 +84,8 @@ impl InnerApp {
                     Button::Keyboard(Key::A) => { self.position.x -= 1.0 }
                     Button::Keyboard(Key::S) => { self.position.y += 1.0 }
                     Button::Keyboard(Key::W) => { self.position.y -= 1.0 }
-                    Button::Keyboard(Key::Q) => { self.rotation += 0.1 }
-                    Button::Keyboard(Key::E) => { self.rotation -= 0.1 }
+                    Button::Keyboard(Key::Q) => { self.rotation -= 0.1 }
+                    Button::Keyboard(Key::E) => { self.rotation += 0.1 }
                     _ => {
                         if button == self.exit_button {
                             break;
