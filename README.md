@@ -9,8 +9,14 @@ the [Rust](https://www.rust-lang.org/en-US/) game engine, [Piston](http://www.pi
 
 ## Windows
 
-1. Install the latest 64-bit [GNU ABI](https://www.rust-lang.org/en-US/downloads.html#win-foot) 
+1. **Recommended:** Install [`rustup`](https://www.rustup.rs/), which will automatically configure
+the latest stable 64-bit [GNU ABI](https://www.rust-lang.org/en-US/downloads.html#win-foot)
 version of `rustc`.
+
+* *Alternative:* Manually install the latest 64-bit
+[GNU ABI](https://www.rust-lang.org/en-US/downloads.html#win-foot) version of
+[`rustc`](https://www.rust-lang.org/downloads.html).
+
 2. Install [MSYS2](https://msys2.github.io/).
 3. In an MSYS2 terminal: `pacman --sync mingw-w64-x86_64-gcc`
 4. Add `C:\msys64\mingw64\bin` to system `PATH`.
