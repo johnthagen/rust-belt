@@ -45,20 +45,20 @@ const SHIP: &'static [[f64; 2]] = &[
 ];
 
 /// Stores application state of inner event loop.
-pub struct InnerApp {
-    pub title: &'static str,
-    pub exit_button: Button,
-    pub position: Position,
-    pub rotation: f64,
+struct InnerApp {
+    title: &'static str,
+    exit_button: Button,
+    position: Position,
+    rotation: f64,
 }
 
-pub struct Position {
-    pub x: f64,
-    pub y: f64
+struct Position {
+    x: f64,
+    y: f64
 }
 
 impl InnerApp {
-    pub fn run(&mut self, window: &mut PistonWindow) {
+    fn run(&mut self, window: &mut PistonWindow) {
         window.set_title(self.title.into());
         while let Some(event) = window.next() {
             const BLACK: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
