@@ -1,7 +1,8 @@
 extern crate piston_window;
+extern crate find_folder;
 
-use piston_window::{Button, clear, Key, PressEvent, PistonWindow, polygon, Transformed,
-    WindowSettings};
+use piston_window::{Button, clear, Glyphs, Key, PressEvent, PistonWindow, polygon, text,
+    Transformed, WindowSettings};
 
 mod color {
     use piston_window::{types};
@@ -16,10 +17,25 @@ fn main() {
         .build()
         .unwrap_or_else(|error| { panic!("Failed to build PistonWindow: {}", error) });
 
+    let assets = find_folder::Search::ParentsThenKids(3, 3)
+        .for_folder("assets").unwrap();
+    println!("{:?}", assets);
+    let ref font = assets.join("FiraSans-Regular.ttf");
+    let factory = window.factory.clone();
+    let mut glyphs = Glyphs::new(font, factory).unwrap();
+
     while let Some(event) = window.next() {
         window.draw_2d(&event,
-                       |_context, graphics| {
+                       |context, graphics| {
                            clear(color::BLACK, graphics);
+                           text::Text::new_color([0.0, 1.0, 0.0, 1.0], 32).draw(
+                               "Hello world!",
+                               &mut glyphs,
+                               &context.draw_state,
+                               context.transform
+                                   .trans(10.0, 100.0),
+                               graphics
+                           );
                        });
 
         if event.press_args().is_some() {
