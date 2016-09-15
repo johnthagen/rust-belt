@@ -1,7 +1,13 @@
 extern crate piston_window;
 
 use piston_window::{AdvancedWindow, Button, clear, Key, PressEvent, PistonWindow, polygon,
-    rectangle, Transformed, WindowSettings};
+    Transformed, WindowSettings};
+
+mod color {
+    pub const BLACK: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
+    pub const WHITE: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
+    pub const CYAN: [f32; 4] = [0.0, 1.0, 1.0, 1.0];
+}
 
 fn main() {
     let title = "Hello Piston! (press any key to enter inner loop)";
@@ -11,16 +17,9 @@ fn main() {
         .unwrap_or_else(|error| { panic!("Failed to build PistonWindow: {}", error) });
 
     while let Some(event) = window.next() {
-        const WHITE: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
-        const DARK_GREEN: [f32; 4] = [0.0, 0.5, 0.0, 1.0];
-
         window.draw_2d(&event,
-                       |context, graphics| {
-                           clear(WHITE, graphics);
-                           rectangle(DARK_GREEN,
-                                     [50.0, 50.0, 100.0, 100.0],
-                                     context.transform,
-                                     graphics);
+                       |_context, graphics| {
+                           clear(color::BLACK, graphics);
                        });
 
         if event.press_args().is_some() {
@@ -61,13 +60,10 @@ impl InnerApp {
     fn run(&mut self, window: &mut PistonWindow) {
         window.set_title(self.title.into());
         while let Some(event) = window.next() {
-            const BLACK: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
-            const CYAN: [f32; 4] = [0.0, 1.0, 1.0, 1.0];
-
             window.draw_2d(&event,
                            |context, graphics| {
-                               clear(BLACK, graphics);
-                               polygon(CYAN,
+                               clear(color::BLACK, graphics);
+                               polygon(color::CYAN,
                                        SHIP,
                                        context.transform
                                            .trans(self.position.x,
