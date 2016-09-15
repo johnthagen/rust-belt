@@ -41,16 +41,16 @@ const SHIP: &'static [[f64; 2]] = &[
     [0.0, SHIP_HEIGHT / 2.0]
 ];
 
+struct Position {
+    x: f64,
+    y: f64
+}
+
 /// Stores application state of inner event loop.
 struct InnerApp {
     exit_button: Button,
     position: Position,
     rotation: f64,
-}
-
-struct Position {
-    x: f64,
-    y: f64
 }
 
 impl InnerApp {
