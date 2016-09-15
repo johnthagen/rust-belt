@@ -1,17 +1,15 @@
 extern crate piston_window;
 
-use piston_window::{AdvancedWindow, Button, clear, Key, PressEvent, PistonWindow, polygon,
+use piston_window::{Button, clear, Key, PressEvent, PistonWindow, polygon,
     Transformed, WindowSettings};
 
 mod color {
     pub const BLACK: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
-    pub const WHITE: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
     pub const CYAN: [f32; 4] = [0.0, 1.0, 1.0, 1.0];
 }
 
 fn main() {
-    let title = "Hello Piston! (press any key to enter inner loop)";
-    let mut window: PistonWindow = WindowSettings::new(title, [640, 480])
+    let mut window: PistonWindow = WindowSettings::new("Rust Belt", [640, 480])
         .exit_on_esc(true)
         .build()
         .unwrap_or_else(|error| { panic!("Failed to build PistonWindow: {}", error) });
@@ -24,12 +22,10 @@ fn main() {
 
         if event.press_args().is_some() {
             InnerApp {
-                title: "Inner loop (press X to exit inner loop)",
                 exit_button: Button::Keyboard(Key::X),
                 position: Position { x: 0.0, y: 0.0 },
                 rotation: 0.0,
             }.run(&mut window);
-            window.set_title(title.into());
         }
     }
 }
@@ -45,7 +41,6 @@ const SHIP: &'static [[f64; 2]] = &[
 
 /// Stores application state of inner event loop.
 struct InnerApp {
-    title: &'static str,
     exit_button: Button,
     position: Position,
     rotation: f64,
@@ -58,7 +53,6 @@ struct Position {
 
 impl InnerApp {
     fn run(&mut self, window: &mut PistonWindow) {
-        window.set_title(self.title.into());
         while let Some(event) = window.next() {
             window.draw_2d(&event,
                            |context, graphics| {
