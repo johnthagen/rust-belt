@@ -12,67 +12,87 @@ mod color {
     pub const CYAN: types::Color = [0.0, 1.0, 1.0, 1.0];
 }
 
-fn main() {
-    const GAME_TITLE: &'static str = "Rust Belt";
-    const GAME_WINDOW_WIDTH: u32 = 640;
-    const GAME_WINDOW_HEIGHT: u32 = 480;
+const GAME_TITLE: &'static str = "Rust Belt";
+const GAME_WINDOW_WIDTH: u32 = 640;
+const GAME_WINDOW_HEIGHT: u32 = 480;
 
+
+fn main() {
     let mut window: PistonWindow = WindowSettings::new(GAME_TITLE,
                                                        [GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT])
         .exit_on_esc(true)
         .build()
         .unwrap_or_else(|error| { panic!("Failed to build PistonWindow: {}", error) });
 
-    let assets = find_folder::Search::ParentsThenKids(3, 3)
-        .for_folder("assets").unwrap();
-    println!("{:?}", assets);
-    let ref font = assets.join("FiraSans-Regular.ttf");
-    let factory = window.factory.clone();
-    let mut glyphs = Glyphs::new(font, factory).unwrap();
+    Menu {
+        menu_selection: MenuSelection::Play,
+    }.run(&mut window);
+}
 
-    // Menu screen.
-    while let Some(event) = window.next() {
-        const MENU_ALIGN: f64 = ((GAME_WINDOW_WIDTH / 2) - 120) as f64;
+enum MenuSelection {
+    Play,
+    Story,
+    Exit
+}
 
-        window.draw_2d(&event,
-                       |context, graphics| {
-                           clear(color::BLACK, graphics);
-                           text(color::WHITE,
-                                72,
-                                GAME_TITLE,
-                                &mut glyphs,
-                                context.transform
-                                    .trans(MENU_ALIGN, 80.0),
-                                graphics);
-                           text(color::WHITE,
-                                32,
-                                "Play",
-                                &mut glyphs,
-                                context.transform
-                                    .trans(MENU_ALIGN, 120.0),
-                                graphics);
-                           text(color::WHITE,
-                                32,
-                                "Story",
-                                &mut glyphs,
-                                context.transform
-                                    .trans(MENU_ALIGN, 160.0),
-                                graphics);
-                           text(color::WHITE,
-                                32,
-                                "Exit",
-                                &mut glyphs,
-                                context.transform
-                                    .trans(MENU_ALIGN, 200.0),
-                                graphics);
-                       });
+/// Stores Menu state.
+struct Menu {
+    menu_selection: MenuSelection,
+}
 
-        if event.press_args().is_some() {
-            GamePlay {
-                exit_button: Button::Keyboard(Key::X),
-                position: Position { x: 0.0, y: 0.0 },
-                rotation: 0.0,
-            }.run(&mut window);
+impl Menu {
+    fn run(&mut self, mut window: &mut PistonWindow) {
+        let assets = find_folder::Search::ParentsThenKids(3, 3)
+            .for_folder("assets").unwrap();
+        println!("{:?}", assets);
+        let ref font = assets.join("FiraSans-Regular.ttf");
+        let factory = window.factory.clone();
+        let mut glyphs = Glyphs::new(font, factory).unwrap();
+
+        // Menu screen.
+        while let Some(event) = window.next() {
+            const MENU_ALIGN: f64 = ((GAME_WINDOW_WIDTH / 2) - 120) as f64;
+
+            window.draw_2d(&event,
+                           |context, graphics| {
+                               clear(color::BLACK, graphics);
+                               text(color::WHITE,
+                                    72,
+                                    GAME_TITLE,
+                                    &mut glyphs,
+                                    context.transform
+                                        .trans(MENU_ALIGN, 80.0),
+                                    graphics);
+                               text(color::WHITE,
+                                    32,
+                                    "Play",
+                                    &mut glyphs,
+                                    context.transform
+                                        .trans(MENU_ALIGN, 120.0),
+                                    graphics);
+                               text(color::WHITE,
+                                    32,
+                                    "Story",
+                                    &mut glyphs,
+                                    context.transform
+                                        .trans(MENU_ALIGN, 160.0),
+                                    graphics);
+                               text(color::WHITE,
+                                    32,
+                                    "Exit",
+                                    &mut glyphs,
+                                    context.transform
+                                        .trans(MENU_ALIGN, 200.0),
+                                    graphics);
+                           });
+
+            if event.press_args().is_some() {
+                GamePlay {
+                    exit_button: Button::Keyboard(Key::X),
+                    position: Position { x: 0.0, y: 0.0 },
+                    rotation: 0.0,
+                }.run(&mut window);
+            }
         }
     }
 }
