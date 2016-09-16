@@ -28,14 +28,13 @@ fn main() {
         window.draw_2d(&event,
                        |context, graphics| {
                            clear(color::BLACK, graphics);
-                           text::Text::new_color([0.0, 1.0, 0.0, 1.0], 32).draw(
-                               "Hello world!",
-                               &mut glyphs,
-                               &context.draw_state,
-                               context.transform
-                                   .trans(10.0, 100.0),
-                               graphics
-                           );
+                           text([0.0, 1.0, 0.0, 1.0],
+                                32,
+                                "Hello world!",
+                                &mut glyphs,
+                                context.transform
+                                    .trans(10.0, 100.0),
+                                graphics);
                        });
 
         if event.press_args().is_some() {
