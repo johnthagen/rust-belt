@@ -36,11 +36,11 @@ fn main() {
                        |context, graphics| {
                            clear(color::BLACK, graphics);
                            text(color::WHITE,
-                                32,
+                                48,
                                 GAME_TITLE,
                                 &mut glyphs,
                                 context.transform
-                                    .trans((GAME_WINDOW_WIDTH / 2) as f64, 30.0),
+                                    .trans((GAME_WINDOW_WIDTH / 2) as f64, 40.0),
                                 graphics);
                        });
 
