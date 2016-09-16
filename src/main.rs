@@ -86,12 +86,22 @@ impl Menu {
                                     graphics);
                            });
 
-            if event.press_args().is_some() {
-                GamePlay {
-                    exit_button: Button::Keyboard(Key::X),
-                    position: Position { x: 0.0, y: 0.0 },
-                    rotation: 0.0,
-                }.run(&mut window);
+            if let Some(button) = event.press_args() {
+                match button {
+                    Button::Keyboard(Key::Space) => {
+                        match self.menu_selection {
+                            MenuSelection::Play => {
+                                GamePlay {
+                                    exit_button: Button::Keyboard(Key::X),
+                                    position: Position { x: 0.0, y: 0.0 },
+                                    rotation: 0.0,
+                                }.run(&mut window);
+                            }
+                            _ => { }
+                        }
+                    }
+                    _ => { }
+                }
             }
         }
     }
