@@ -30,6 +30,7 @@ fn main() {
     let factory = window.factory.clone();
     let mut glyphs = Glyphs::new(font, factory).unwrap();
 
+    // Menu screen.
     while let Some(event) = window.next() {
         window.draw_2d(&event,
                        |context, graphics| {
@@ -44,7 +45,7 @@ fn main() {
                        });
 
         if event.press_args().is_some() {
-            InnerApp {
+            GamePlay {
                 exit_button: Button::Keyboard(Key::X),
                 position: Position { x: 0.0, y: 0.0 },
                 rotation: 0.0,
@@ -68,13 +69,13 @@ struct Position {
 }
 
 /// Stores application state of inner event loop.
-struct InnerApp {
+struct GamePlay {
     exit_button: Button,
     position: Position,
     rotation: f64,
 }
 
-impl InnerApp {
+impl GamePlay {
     fn run(&mut self, window: &mut PistonWindow) {
         while let Some(event) = window.next() {
             window.draw_2d(&event,
