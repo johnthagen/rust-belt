@@ -68,7 +68,7 @@ struct Position {
     y: f64
 }
 
-/// Stores application state of inner event loop.
+/// Stores Game state.
 struct GamePlay {
     exit_button: Button,
     position: Position,
