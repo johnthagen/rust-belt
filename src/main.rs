@@ -229,6 +229,86 @@ fn run_story(window: &mut PistonWindow, font_file: &std::path::PathBuf) {
                                     .trans(LEFT_INDENT, STARTING_LINE_OFFSET +
                                         8.0 * NEW_LINE_OFFSET),
                                 graphics);
+                           text(JACK_COLOR,
+                                FONT_SIZE,
+                                "Kara, transmit me your coordinates.",
+                                &mut glyph_cache,
+                                context.transform
+                                    .trans(LEFT_INDENT, STARTING_LINE_OFFSET +
+                                        9.0 * NEW_LINE_OFFSET),
+                                graphics);
+                           text(NARRATOR_COLOR,
+                                FONT_SIZE,
+                                "The debris thickens, tightening its grip around you.",
+                                &mut glyph_cache,
+                                context.transform
+                                    .trans(LEFT_INDENT, STARTING_LINE_OFFSET +
+                                        10.0 * NEW_LINE_OFFSET),
+                                graphics);
+                           text(KARA_COLOR,
+                                FONT_SIZE,
+                                "Shields --- percent.  Jack, --- --- last Ranger.",
+                                &mut glyph_cache,
+                                context.transform
+                                    .trans(LEFT_INDENT, STARTING_LINE_OFFSET +
+                                        11.0 * NEW_LINE_OFFSET),
+                                graphics);
+                           text(KARA_COLOR,
+                                FONT_SIZE,
+                                "--- must relay the --- for as long as possible to --- the others.",
+                                &mut glyph_cache,
+                                context.transform
+                                    .trans(LEFT_INDENT, STARTING_LINE_OFFSET +
+                                        12.0 * NEW_LINE_OFFSET),
+                                graphics);
+                           text(JACK_COLOR,
+                                FONT_SIZE,
+                                "Kara, where are you?!",
+                                &mut glyph_cache,
+                                context.transform
+                                    .trans(LEFT_INDENT, STARTING_LINE_OFFSET +
+                                        13.0 * NEW_LINE_OFFSET),
+                                graphics);
+                           text(NARRATOR_COLOR,
+                                FONT_SIZE,
+                                "Heat shoots up your spine as you thrust your engines to full.",
+                                &mut glyph_cache,
+                                context.transform
+                                    .trans(LEFT_INDENT, STARTING_LINE_OFFSET +
+                                        14.0 * NEW_LINE_OFFSET),
+                                graphics);
+                           text(KARA_COLOR,
+                                FONT_SIZE,
+                                "Shields --- percent.  Diverting remaining --- ---",
+                                &mut glyph_cache,
+                                context.transform
+                                    .trans(LEFT_INDENT, STARTING_LINE_OFFSET +
+                                        15.0 * NEW_LINE_OFFSET),
+                                graphics);
+                           text(JACK_COLOR,
+                                FONT_SIZE,
+                                "Kara, stay will me, I’ll find you.",
+                                &mut glyph_cache,
+                                context.transform
+                                    .trans(LEFT_INDENT, STARTING_LINE_OFFSET +
+                                        16.0 * NEW_LINE_OFFSET),
+                                graphics);
+                           text(KARA_COLOR,
+                                FONT_SIZE,
+                                "--- Delta-Three --- signing off.  Jack, … Jack, I --- ---",
+                                &mut glyph_cache,
+                                context.transform
+                                    .trans(LEFT_INDENT, STARTING_LINE_OFFSET +
+                                        17.0 * NEW_LINE_OFFSET),
+                                graphics);
+                           text(JACK_COLOR,
+                                FONT_SIZE,
+                                "Kara!",
+                                &mut glyph_cache,
+                                context.transform
+                                    .trans(LEFT_INDENT, STARTING_LINE_OFFSET +
+                                        18.0 * NEW_LINE_OFFSET),
+                                graphics);
                        });
 
         if let Some(button) = event.press_args() {
