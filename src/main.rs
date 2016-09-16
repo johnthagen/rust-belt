@@ -32,15 +32,38 @@ fn main() {
 
     // Menu screen.
     while let Some(event) = window.next() {
+        const MENU_ALIGN: f64 = ((GAME_WINDOW_WIDTH / 2) - 120) as f64;
+
         window.draw_2d(&event,
                        |context, graphics| {
                            clear(color::BLACK, graphics);
                            text(color::WHITE,
-                                48,
+                                72,
                                 GAME_TITLE,
                                 &mut glyphs,
                                 context.transform
-                                    .trans((GAME_WINDOW_WIDTH / 2) as f64, 40.0),
+                                    .trans(MENU_ALIGN, 80.0),
+                                graphics);
+                           text(color::WHITE,
+                                32,
+                                "Play",
+                                &mut glyphs,
+                                context.transform
+                                    .trans(MENU_ALIGN, 120.0),
+                                graphics);
+                           text(color::WHITE,
+                                32,
+                                "Story",
+                                &mut glyphs,
+                                context.transform
+                                    .trans(MENU_ALIGN, 160.0),
+                                graphics);
+                           text(color::WHITE,
+                                32,
+                                "Exit",
+                                &mut glyphs,
+                                context.transform
+                                    .trans(MENU_ALIGN, 200.0),
                                 graphics);
                        });
 
