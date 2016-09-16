@@ -8,11 +8,17 @@ mod color {
     use piston_window::{types};
 
     pub const BLACK: types::Color = [0.0, 0.0, 0.0, 1.0];
+    pub const WHITE: types::Color = [1.0, 1.0, 1.0, 1.0];
     pub const CYAN: types::Color = [0.0, 1.0, 1.0, 1.0];
 }
 
 fn main() {
-    let mut window: PistonWindow = WindowSettings::new("Rust Belt", [640, 480])
+    const GAME_TITLE: &'static str = "Rust Belt";
+    const GAME_WINDOW_WIDTH: u32 = 640;
+    const GAME_WINDOW_HEIGHT: u32 = 480;
+
+    let mut window: PistonWindow = WindowSettings::new(GAME_TITLE,
+                                                       [GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT])
         .exit_on_esc(true)
         .build()
         .unwrap_or_else(|error| { panic!("Failed to build PistonWindow: {}", error) });
@@ -28,12 +34,12 @@ fn main() {
         window.draw_2d(&event,
                        |context, graphics| {
                            clear(color::BLACK, graphics);
-                           text([0.0, 1.0, 0.0, 1.0],
+                           text(color::WHITE,
                                 32,
-                                "Hello world!",
+                                GAME_TITLE,
                                 &mut glyphs,
                                 context.transform
-                                    .trans(10.0, 100.0),
+                                    .trans((GAME_WINDOW_WIDTH / 2) as f64, 30.0),
                                 graphics);
                        });
 
