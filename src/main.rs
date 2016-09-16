@@ -115,7 +115,7 @@ impl Menu {
                     Button::Keyboard(Key::Space) => {
                         match self.menu_selection {
                             MenuSelection::Play => {
-                                GamePlay {
+                                Game {
                                     position: Position { x: 0.0, y: 0.0 },
                                     rotation: 0.0,
                                 }.run(&mut window);
@@ -146,12 +146,12 @@ struct Position {
 }
 
 /// Stores Game state.
-struct GamePlay {
+struct Game {
     position: Position,
     rotation: f64,
 }
 
-impl GamePlay {
+impl Game {
     fn run(&mut self, window: &mut PistonWindow) {
         while let Some(event) = window.next() {
             window.draw_2d(&event,
