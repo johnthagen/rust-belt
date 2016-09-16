@@ -14,8 +14,8 @@ mod color {
 }
 
 const GAME_TITLE: &'static str = "Rust Belt";
-const GAME_WINDOW_WIDTH: u32 = 640;
-const GAME_WINDOW_HEIGHT: u32 = 480;
+const GAME_WINDOW_WIDTH: u32 = 1024;
+const GAME_WINDOW_HEIGHT: u32 = 768;
 
 
 fn main() {
@@ -71,28 +71,28 @@ impl Menu {
                                     GAME_TITLE,
                                     &mut glyphs,
                                     context.transform
-                                        .trans(MENU_ALIGN, 80.0),
+                                        .trans(MENU_ALIGN, 280.0),
                                     graphics);
                                text(play_color,
                                     32,
                                     "Play",
                                     &mut glyphs,
                                     context.transform
-                                        .trans(MENU_ALIGN, 120.0),
+                                        .trans(MENU_ALIGN, 320.0),
                                     graphics);
                                text(story_color,
                                     32,
                                     "Story",
                                     &mut glyphs,
                                     context.transform
-                                        .trans(MENU_ALIGN, 160.0),
+                                        .trans(MENU_ALIGN, 360.0),
                                     graphics);
                                text(exit_color,
                                     32,
                                     "Exit",
                                     &mut glyphs,
                                     context.transform
-                                        .trans(MENU_ALIGN, 200.0),
+                                        .trans(MENU_ALIGN, 400.0),
                                     graphics);
                            });
 
