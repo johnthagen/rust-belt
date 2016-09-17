@@ -144,13 +144,13 @@ fn run_story(window: &mut PistonWindow, font_file: &std::path::PathBuf) {
     let mut glyph_cache = Glyphs::new(font_file, window.factory.clone()).unwrap();
     while let Some(event) = window.next() {
         // TODO: Create a vector of tuples that map message and color and iterate.
-        const LEFT_INDENT: f64 = 10.0;
+        const LEFT_INDENT: f64 = 50.0;
         const NARRATOR_COLOR: types::Color = color::WHITE;
         const KARA_COLOR: types::Color = color::MAGENTA;
         const JACK_COLOR: types::Color = color::CYAN;
         const STARTING_LINE_OFFSET: f64 = 30.0;
         const NEW_LINE_OFFSET: f64 = 40.0;
-        const FONT_SIZE: u32 = 32;
+        const FONT_SIZE: u32 = 24;
 
         window.draw_2d(&event,
                        |context, graphics| {
