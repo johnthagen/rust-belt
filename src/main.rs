@@ -44,9 +44,9 @@ struct Menu {
 
 impl Menu {
     fn run(&mut self, mut window: &mut PistonWindow) {
-        let assets = find_folder::Search::ParentsThenKids(3, 3)
+        let assets_folder = find_folder::Search::ParentsThenKids(3, 3)
             .for_folder("assets").unwrap();
-        let ref font_file = assets.join("FiraSans-Regular.ttf");
+        let ref font_file = assets_folder.join("FiraSans-Regular.ttf");
         let factory = window.factory.clone();
         let mut glyph_cache = Glyphs::new(font_file, factory).unwrap();
 
