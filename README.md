@@ -40,3 +40,7 @@ $ cargo run --release
 # Maintainers
 * [@johnthagen](https://github.com/johnthagen)
 * [@theandrewdavis](https://github.com/theandrewdavis)
+
+## Music
+
+Music composed by [@johnthagen](https://github.com/johnthagen).  All rights reserved.

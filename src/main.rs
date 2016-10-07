@@ -1,5 +1,6 @@
 extern crate piston_window;
 extern crate find_folder;
+extern crate music;
 
 use piston_window::{Button, clear, Glyphs, Key, PressEvent, PistonWindow, polygon, text, types,
     Transformed, WindowSettings};
@@ -18,6 +19,11 @@ const GAME_TITLE: &'static str = "Rust Belt";
 const GAME_WINDOW_WIDTH: u32 = 1024;
 const GAME_WINDOW_HEIGHT: u32 = 768;
 
+#[derive(Copy, Clone, Hash, PartialEq, Eq)]
+enum Music {
+    Menu,
+    Action,
+}
 
 fn main() {
     let mut window: PistonWindow = WindowSettings::new(GAME_TITLE,
@@ -26,9 +32,15 @@ fn main() {
         .build()
         .unwrap_or_else(|error| { panic!("Failed to build PistonWindow: {}", error) });
 
-    Menu {
-        menu_selection: MenuSelection::Play,
-    }.run(&mut window);
+    music::start::<Music, _>(|| {
+        music::bind_file(Music::Menu, "./assets/The Last Ranger.mp3");
+        music::bind_file(Music::Action, "./assets/Into the Field.mp3");
+        music::play(&Music::Menu, music::Repeat::Forever);
+
+        Menu {
+            menu_selection: MenuSelection::Play,
+        }.run(&mut window);
+    });
 }
 
 enum MenuSelection {
