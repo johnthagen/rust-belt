@@ -161,8 +161,8 @@ fn run_story(window: &mut PistonWindow, font_file: &std::path::PathBuf) {
         const KARA_COLOR: types::Color = color::MAGENTA;
         const JACK_COLOR: types::Color = color::CYAN;
         const STARTING_LINE_OFFSET: f64 = 30.0;
-        const NEW_LINE_OFFSET: f64 = 40.0;
-        const FONT_SIZE: u32 = 24;
+        const NEW_LINE_OFFSET: f64 = 30.0;
+        const FONT_SIZE: u32 = 22;
 
         window.draw_2d(&event,
                        |context, graphics| {
