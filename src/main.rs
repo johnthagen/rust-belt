@@ -3,10 +3,11 @@ extern crate find_folder;
 extern crate music;
 
 mod color;
+mod game;
 mod story;
 
-use piston_window::{Button, clear, Glyphs, Key, PressEvent, PistonWindow, polygon, text,
-    Transformed, WindowSettings};
+use piston_window::{Button, clear, Glyphs, Key, PressEvent, PistonWindow, text, Transformed,
+    WindowSettings};
 
 const GAME_TITLE: &'static str = "Rust Belt";
 const GAME_WINDOW_WIDTH: u32 = 1024;
@@ -125,8 +126,8 @@ impl Menu {
                     Button::Keyboard(Key::Space) => {
                         match self.menu_selection {
                             MenuSelection::Play => {
-                                Game {
-                                    position: Position { x: 0.0, y: 0.0 },
+                                game::Game {
+                                    position: game::Position { x: 0.0, y: 0.0 },
                                     rotation: 0.0,
                                 }.run(&mut window);
                             }
@@ -136,59 +137,6 @@ impl Menu {
                             MenuSelection::Exit => { break }
                         }
                     }
-                    _ => {}
-                }
-            }
-        }
-    }
-}
-
-const SHIP_HEIGHT: f64 = 16.0;
-const SHIP_WIDTH: f64 = 20.0;
-
-const SHIP: &'static [[f64; 2]] = &[
-    [0.0, -1.0 * SHIP_HEIGHT / 2.0],
-    [SHIP_WIDTH, 0.0],
-    [0.0, SHIP_HEIGHT / 2.0]
-];
-
-struct Position {
-    x: f64,
-    y: f64,
-}
-
-/// Stores Game state.
-struct Game {
-    position: Position,
-    rotation: f64,
-}
-
-impl Game {
-    fn run(&mut self, window: &mut PistonWindow) {
-        while let Some(event) = window.next() {
-            window.draw_2d(&event,
-                           |context, graphics| {
-                               clear(color::BLACK, graphics);
-                               polygon(color::CYAN,
-                                       SHIP,
-                                       context.transform
-                                           .trans(self.position.x,
-                                                  self.position.y)
-                                           .rot_rad(self.rotation)
-                                           // Without this trans(), rotation occurs around the
-                                           // upper left corner rather than the center.
-                                           .trans(-1.0 * SHIP_HEIGHT / 2.0, 0.0),
-                                       graphics);
-                           });
-            if let Some(button) = event.press_args() {
-                match button {
-                    Button::Keyboard(Key::D) => { self.position.x += 1.0 }
-                    Button::Keyboard(Key::A) => { self.position.x -= 1.0 }
-                    Button::Keyboard(Key::S) => { self.position.y += 1.0 }
-                    Button::Keyboard(Key::W) => { self.position.y -= 1.0 }
-                    Button::Keyboard(Key::Q) => { self.rotation -= 0.1 }
-                    Button::Keyboard(Key::E) => { self.rotation += 0.1 }
-                    Button::Keyboard(Key::X) => { break }
                     _ => {}
                 }
             }
