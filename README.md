@@ -5,6 +5,8 @@
 [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game using
 the [Rust](https://www.rust-lang.org/en-US/) game engine, [Piston](http://www.piston.rs/).
 
+#![Rust Belt](./images/rust-belt-logo.jpg)
+
 # Requirements
 
 `rust_belt` targets the latest stable release of Rust.
