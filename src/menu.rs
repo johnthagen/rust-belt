@@ -1,8 +1,7 @@
 //! Main menu.
 
-use piston_window::{Button, clear, Glyphs, Key, PressEvent, PistonWindow, text, Transformed};
-
 use find_folder;
+use piston_window::{Button, clear, Glyphs, Key, PressEvent, PistonWindow, text, Transformed};
 
 use color;
 use game;
@@ -11,15 +10,22 @@ use story;
 pub enum MenuSelection {
     Play,
     Story,
+    Settings,
     Exit
 }
 
 /// Stores Menu state.
 pub struct Menu {
-    pub menu_selection: MenuSelection,
+    menu_selection: MenuSelection,
 }
 
 impl Menu {
+    pub fn new() -> Self {
+        Menu {
+            menu_selection: MenuSelection::Play,
+        }
+    }
+
     pub fn run(&mut self, mut window: &mut PistonWindow, game_title: &'static str,
                window_width: u32) {
         let assets_folder = find_folder::Search::ParentsThenKids(3, 3)
@@ -32,14 +38,17 @@ impl Menu {
             let menu_align: f64 = ((window_width / 2) - 120) as f64;
             const STARTING_LINE_OFFSET: f64 = 280.0;
             const NEW_LINE_OFFSET: f64 = 40.0;
+            const MENU_ITEM_FONT_SIZE: u32 = 32;
 
             // TODO: Can this be done better with 'if let' ?
             let mut play_color = color::WHITE;
             let mut story_color = color::WHITE;
+            let mut settings_color = color::WHITE;
             let mut exit_color = color::WHITE;
             match self.menu_selection {
                 MenuSelection::Play => { play_color = color::YELLOW }
                 MenuSelection::Story => { story_color = color::YELLOW }
+                MenuSelection::Settings => { settings_color = color::YELLOW }
                 MenuSelection::Exit => { exit_color = color::YELLOW }
             }
 
@@ -54,7 +63,7 @@ impl Menu {
                                         .trans(menu_align, STARTING_LINE_OFFSET),
                                     graphics);
                                text(play_color,
-                                    32,
+                                    MENU_ITEM_FONT_SIZE,
                                     "Play",
                                     &mut glyph_cache,
                                     context.transform
@@ -62,20 +71,28 @@ impl Menu {
                                             1.0 * NEW_LINE_OFFSET),
                                     graphics);
                                text(story_color,
-                                    32,
+                                    MENU_ITEM_FONT_SIZE,
                                     "Story",
                                     &mut glyph_cache,
                                     context.transform
                                         .trans(menu_align, STARTING_LINE_OFFSET +
                                             2.0 * NEW_LINE_OFFSET),
                                     graphics);
-                               text(exit_color,
-                                    32,
-                                    "Exit",
+                               text(settings_color,
+                                    MENU_ITEM_FONT_SIZE,
+                                    "Settings",
                                     &mut glyph_cache,
                                     context.transform
                                         .trans(menu_align, STARTING_LINE_OFFSET +
                                             3.0 * NEW_LINE_OFFSET),
+                                    graphics);
+                               text(exit_color,
+                                    MENU_ITEM_FONT_SIZE,
+                                    "Exit",
+                                    &mut glyph_cache,
+                                    context.transform
+                                        .trans(menu_align, STARTING_LINE_OFFSET +
+                                            4.0 * NEW_LINE_OFFSET),
                                     graphics);
                            });
 
@@ -85,13 +102,19 @@ impl Menu {
                         match self.menu_selection {
                             MenuSelection::Play => {}
                             MenuSelection::Story => { self.menu_selection = MenuSelection::Play }
-                            MenuSelection::Exit => { self.menu_selection = MenuSelection::Story }
+                            MenuSelection::Settings => {
+                                self.menu_selection = MenuSelection::Story
+                            }
+                            MenuSelection::Exit => { self.menu_selection = MenuSelection::Settings }
                         }
                     }
                     Button::Keyboard(Key::S) => {
                         match self.menu_selection {
                             MenuSelection::Play => { self.menu_selection = MenuSelection::Story }
-                            MenuSelection::Story => { self.menu_selection = MenuSelection::Exit }
+                            MenuSelection::Story => {
+                                self.menu_selection = MenuSelection::Settings
+                            }
+                            MenuSelection::Settings => { self.menu_selection = MenuSelection::Exit }
                             MenuSelection::Exit => {}
                         }
                     }
@@ -105,6 +128,9 @@ impl Menu {
                             }
                             MenuSelection::Story => {
                                 story::run(&mut window, font_file);
+                            }
+                            MenuSelection::Settings => {
+
                             }
                             MenuSelection::Exit => { break }
                         }

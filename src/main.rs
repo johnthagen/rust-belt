@@ -31,8 +31,6 @@ fn main() {
         music::bind_file(Music::Action, "./assets/Into the Field.mp3");
         music::play(&Music::Menu, music::Repeat::Forever);
 
-        menu::Menu {
-            menu_selection: menu::MenuSelection::Play,
-        }.run(&mut window, GAME_TITLE, GAME_WINDOW_WIDTH);
+        menu::Menu::new().run(&mut window, GAME_TITLE, GAME_WINDOW_WIDTH);
     });
 }
