@@ -125,8 +125,7 @@ impl Menu {
                     Button::Keyboard(Key::Space) => {
                         match self.menu_selection {
                             MenuSelection::Play => {
-                                let mut game = game::Game::new();
-                                game.run(&mut window);
+                                game::Game::new().run(&mut window);
                             }
                             MenuSelection::Story => {
                                 story::run(&mut window, font_file);
