@@ -9,7 +9,7 @@ use game;
 use settings;
 use story;
 
-pub enum MenuSelection {
+enum MenuSelection {
     Play,
     Story,
     Settings,
