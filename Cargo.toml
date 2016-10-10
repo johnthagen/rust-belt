@@ -1,5 +1,5 @@
 [package]
-name = "rust_belt"
+name = "rust-belt"
 version = "0.1.0"
 authors = [
     "johnthagen <johnthagen@gmail.com>",

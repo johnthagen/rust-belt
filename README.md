@@ -1,7 +1,7 @@
 # Rust Belt
 [![Build Status](https://travis-ci.org/johnthagen/rust-belt.svg)](https://travis-ci.org/johnthagen/rust-belt)
 
-`rust_belt` is a re-creation of the classic 
+`rust-belt` is a re-creation of the classic 
 [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game using
 the [Rust](https://www.rust-lang.org/en-US/) game engine, [Piston](http://www.piston.rs/).
 
@@ -9,11 +9,11 @@ the [Rust](https://www.rust-lang.org/en-US/) game engine, [Piston](http://www.pi
 
 # Requirements
 
-`rust_belt` targets the latest stable release of Rust.
+`rust-belt` targets the latest stable release of Rust.
 
 ## Music - [SDL2](https://www.libsdl.org/)
 
-`rust_belt` uses [`piston-music`](https://github.com/PistonDevelopers/music) to play music.  See
+`rust-belt` uses [`piston-music`](https://github.com/PistonDevelopers/music) to play music.  See
  its requirements for how to install its dependencies.
 
 ## Windows
