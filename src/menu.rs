@@ -33,9 +33,9 @@ impl Menu {
         let ref font_file = assets_folder.join("FiraSans-Regular.ttf");
         let factory = window.factory.clone();
         let mut glyph_cache = Glyphs::new(font_file, factory).unwrap();
+        let menu_align: f64 = ((window_width / 2) - 120) as f64;
 
         while let Some(event) = window.next() {
-            let menu_align: f64 = ((window_width / 2) - 120) as f64;
             const STARTING_LINE_OFFSET: f64 = 280.0;
             const NEW_LINE_OFFSET: f64 = 40.0;
             const MENU_ITEM_FONT_SIZE: u32 = 32;
