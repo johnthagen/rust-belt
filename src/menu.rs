@@ -124,7 +124,9 @@ pub fn run(mut window: &mut PistonWindow, game_title: &'static str, window_width
                     Button::Keyboard(Key::Space) => {
                         match menu_selection {
                             MenuSelection::Play => {
+                                music::play(&Music::Action, music::Repeat::Forever);
                                 game::Game::new().run(&mut window);
+                                music::play(&Music::Menu, music::Repeat::Forever);
                             }
                             MenuSelection::Story => {
                                 story::run(&mut window, font_file);
