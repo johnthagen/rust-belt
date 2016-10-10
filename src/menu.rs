@@ -121,10 +121,8 @@ impl Menu {
                     Button::Keyboard(Key::Space) => {
                         match self.menu_selection {
                             MenuSelection::Play => {
-                                game::Game {
-                                    position: game::Position { x: 0.0, y: 0.0 },
-                                    rotation: 0.0,
-                                }.run(&mut window);
+                                let mut game = game::Game::new();
+                                game.run(&mut window);
                             }
                             MenuSelection::Story => {
                                 story::run(&mut window, font_file);

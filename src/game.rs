@@ -14,17 +14,27 @@ const SHIP: &'static [[f64; 2]] = &[
 ];
 
 pub struct Position {
-    pub x: f64,
-    pub y: f64,
+    x: f64,
+    y: f64,
 }
 
 /// Stores Game state.
 pub struct Game {
-    pub position: Position,
-    pub rotation: f64,
+    position: Position,
+    rotation: f64,
 }
 
 impl Game {
+    pub fn new() -> Self {
+        Game {
+            position: Position {
+                x: 0.0,
+                y: 0.0,
+            },
+            rotation: 0.0,
+        }
+    }
+
     pub fn run(&mut self, window: &mut PistonWindow) {
         while let Some(event) = window.next() {
             window.draw_2d(&event,
