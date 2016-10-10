@@ -1,10 +1,12 @@
 //! Main menu.
 
 use find_folder;
+use music;
 use piston_window::{Button, clear, Glyphs, Key, PressEvent, PistonWindow, text, Transformed};
 
 use color;
 use game;
+use settings;
 use story;
 
 pub enum MenuSelection {
@@ -34,6 +36,8 @@ impl Menu {
         let factory = window.factory.clone();
         let mut glyph_cache = Glyphs::new(font_file, factory).unwrap();
         let menu_align: f64 = ((window_width / 2) - 120) as f64;
+
+        let mut volume = music::MAX_VOLUME;
 
         while let Some(event) = window.next() {
             const STARTING_LINE_OFFSET: f64 = 280.0;
@@ -128,7 +132,7 @@ impl Menu {
                                 story::run(&mut window, font_file);
                             }
                             MenuSelection::Settings => {
-
+                                settings::run(&mut window, font_file, &mut volume, menu_align);
                             }
                             MenuSelection::Exit => { break }
                         }

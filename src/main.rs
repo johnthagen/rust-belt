@@ -5,6 +5,7 @@ extern crate music;
 mod color;
 mod game;
 mod menu;
+mod settings;
 mod story;
 
 use piston_window::{ PistonWindow, WindowSettings};
