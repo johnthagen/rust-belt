@@ -3,7 +3,7 @@ name = "rust_belt"
 version = "0.1.0"
 dependencies = [
  "find_folder 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "piston-music 0.14.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "piston-music 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston_window 0.54.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -567,7 +567,7 @@ dependencies = [
 
 [[package]]
 name = "piston-music"
-version = "0.14.0"
+version = "0.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "current 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",

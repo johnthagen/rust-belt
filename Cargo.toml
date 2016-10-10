@@ -8,5 +8,5 @@ authors = [
 
 [dependencies]
 piston_window = "0.54.0"
-piston-music = "0.14.0"
+piston-music = "0.15.0"
 find_folder = "0.3.0"
