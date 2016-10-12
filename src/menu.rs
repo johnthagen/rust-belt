@@ -22,7 +22,7 @@ enum MenuSelection {
     Exit
 }
 
-pub fn run(mut window: &mut PistonWindow, game_title: &'static str, window_size: game::Size) {
+pub fn run(mut window: &mut PistonWindow, game_title: &'static str, window_size: &game::Size) {
     music::start::<Music, _>(|| {
         music::bind_file(Music::Menu, "./assets/The Last Ranger.mp3");
         music::bind_file(Music::Action, "./assets/Into the Field.mp3");
@@ -125,7 +125,7 @@ pub fn run(mut window: &mut PistonWindow, game_title: &'static str, window_size:
                         match menu_selection {
                             MenuSelection::Play => {
                                 music::play(&Music::Action, music::Repeat::Forever);
-                                game::Game::new().run(&mut window);
+                                game::Game::new().run(&mut window, window_size);
                                 music::play(&Music::Menu, music::Repeat::Forever);
                             }
                             MenuSelection::Story => {

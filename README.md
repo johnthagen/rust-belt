@@ -50,6 +50,9 @@ $ cargo run --release
 * [@johnthagen](https://github.com/johnthagen)
 * [@theandrewdavis](https://github.com/theandrewdavis)
 
+Special thanks to [@aochagavia](https://github.com/aochagavia) for his 
+[rocket](https://github.com/aochagavia/rocket) which provided many examples to pull from.
+
 ## Music
 
 Music composed by [@johnthagen](https://github.com/johnthagen).  All rights reserved.

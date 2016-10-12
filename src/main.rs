@@ -21,5 +21,5 @@ fn main() {
         .build()
         .unwrap_or_else(|error| { panic!("Failed to build PistonWindow: {}", error) });
 
-    menu::run(&mut window, GAME_TITLE, GAME_WINDOW_SIZE);
+    menu::run(&mut window, GAME_TITLE, &GAME_WINDOW_SIZE);
 }

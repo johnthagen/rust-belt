@@ -16,7 +16,7 @@ const SHIP: &'static types::Triangle = &[
 #[derive(Clone, Default)]
 pub struct Size {
     pub width: f64,
-    pub height: f64
+    pub height: f64,
 }
 
 pub struct Position {
@@ -27,6 +27,8 @@ pub struct Position {
 /// Stores Game state.
 pub struct Game {
     position: Position,
+
+    /// Rotation in radians.
     rotation: f64,
 }
 
@@ -34,15 +36,31 @@ impl Game {
     pub fn new() -> Self {
         Game {
             position: Position {
-                x: 0.0,
-                y: 0.0,
+                x: 10.0,
+                y: 10.0,
             },
             rotation: 0.0,
         }
     }
 
-    pub fn run(&mut self, window: &mut PistonWindow) {
+    fn wrap(k: &mut f64, bound: f64) {
+        if *k < 0.0 {
+            *k += bound;
+        } else if *k >= bound {
+            *k -= bound;
+        }
+    }
+
+    /// Wraps a position within a Size (e.g. the Window size).
+    fn wrap_position(position: &mut Position, size: &Size) {
+        Self::wrap(&mut position.x, size.width);
+        Self::wrap(&mut position.y, size.height);
+    }
+
+    pub fn run(&mut self, window: &mut PistonWindow, window_size: &Size) {
         while let Some(event) = window.next() {
+            Self::wrap_position(&mut self.position, window_size);
+
             window.draw_2d(&event,
                            |context, graphics| {
                                clear(color::BLACK, graphics);
