@@ -22,7 +22,7 @@ enum MenuSelection {
     Exit
 }
 
-pub fn run(mut window: &mut PistonWindow, game_title: &'static str, window_width: u32) {
+pub fn run(mut window: &mut PistonWindow, game_title: &'static str, window_size: game::Size) {
     music::start::<Music, _>(|| {
         music::bind_file(Music::Menu, "./assets/The Last Ranger.mp3");
         music::bind_file(Music::Action, "./assets/Into the Field.mp3");
@@ -33,7 +33,7 @@ pub fn run(mut window: &mut PistonWindow, game_title: &'static str, window_width
         let ref font_file = assets_folder.join("FiraSans-Regular.ttf");
         let factory = window.factory.clone();
         let mut glyph_cache = Glyphs::new(font_file, factory).unwrap();
-        let menu_align: f64 = ((window_width / 2) - 120) as f64;
+        let menu_align = (window_size.width / 2.0) - 120.0;
 
         let mut menu_selection = MenuSelection::Play;
         let mut volume = music::MAX_VOLUME;

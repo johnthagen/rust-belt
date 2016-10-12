@@ -10,16 +10,16 @@ mod story;
 
 use piston_window::{PistonWindow, WindowSettings};
 
-const GAME_TITLE: &'static str = "Rust Belt";
-const GAME_WINDOW_WIDTH: u32 = 1024;
-const GAME_WINDOW_HEIGHT: u32 = 768;
-
 fn main() {
+    const GAME_TITLE: &'static str = "Rust Belt";
+    const GAME_WINDOW_SIZE: game::Size = game::Size { width: 1024.0, height: 768.0 };
+
     let mut window: PistonWindow = WindowSettings::new(GAME_TITLE,
-                                                       [GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT])
+                                                       [GAME_WINDOW_SIZE.width as u32,
+                                                        GAME_WINDOW_SIZE.height as u32])
         .exit_on_esc(true)
         .build()
         .unwrap_or_else(|error| { panic!("Failed to build PistonWindow: {}", error) });
 
-    menu::run(&mut window, GAME_TITLE, GAME_WINDOW_WIDTH);
+    menu::run(&mut window, GAME_TITLE, GAME_WINDOW_SIZE);
 }
