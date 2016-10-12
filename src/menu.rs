@@ -2,7 +2,7 @@
 
 use find_folder;
 use music;
-use piston_window::{Button, clear, Glyphs, Key, PressEvent, PistonWindow, text, Transformed};
+use piston_window::{Button, clear, Glyphs, Key, PressEvent, PistonWindow, text, Transformed, types};
 
 use color;
 use game;
@@ -41,7 +41,7 @@ pub fn run(mut window: &mut PistonWindow, game_title: &'static str, window_width
         while let Some(event) = window.next() {
             const STARTING_LINE_OFFSET: f64 = 280.0;
             const NEW_LINE_OFFSET: f64 = 40.0;
-            const MENU_ITEM_FONT_SIZE: u32 = 32;
+            const MENU_ITEM_FONT_SIZE: types::FontSize = 32;
 
             // TODO: Can this be done better with 'if let' ?
             let mut play_color = color::WHITE;
