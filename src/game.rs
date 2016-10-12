@@ -1,13 +1,13 @@
 //! Defines the game component.
 
-use piston_window::{Button, clear, Key, PressEvent, PistonWindow, polygon, Transformed};
+use piston_window::{Button, clear, Key, PressEvent, PistonWindow, polygon, Transformed, types};
 
 use color;
 
 const SHIP_HEIGHT: f64 = 16.0;
 const SHIP_WIDTH: f64 = 20.0;
 
-const SHIP: &'static [[f64; 2]] = &[
+const SHIP: &'static types::Triangle = &[
     [0.0, -1.0 * SHIP_HEIGHT / 2.0],
     [SHIP_WIDTH, 0.0],
     [0.0, SHIP_HEIGHT / 2.0]
