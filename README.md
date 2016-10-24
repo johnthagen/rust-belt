@@ -30,7 +30,9 @@ version of `rustc`.
 
 ## Mac OSX
 
-TODO
+1. Install [Homebrew](http://brew.sh/) (by default this will install `gcc` via Xcode development 
+tools).
+2. Install [`rustup`](https://www.rustup.rs/) and use the default latest stable compiler.
 
 ## Build and Run
 
