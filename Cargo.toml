@@ -7,6 +7,6 @@ authors = [
 ]
 
 [dependencies]
-piston_window = "0.56.0"
+piston_window = "0.58.0"
 piston-music = "0.16.0"
 find_folder = "0.3.0"
