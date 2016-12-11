@@ -3,8 +3,8 @@
 use find_folder;
 use music;
 use opengl_graphics::GlGraphics;
-use piston_window::{Button, clear, Event, Glyphs, Input, Key, PressEvent, PistonWindow, text,
-    Transformed, types};
+use opengl_graphics::glyph_cache::GlyphCache;
+use piston_window::{Button, clear, Event, Input, Key, PistonWindow, text, Transformed, types};
 
 use color;
 use game;
@@ -24,18 +24,18 @@ enum MenuSelection {
     Exit
 }
 
-pub fn run(mut window: &mut PistonWindow, opengl: GlGraphics, game_title: &'static str,
+pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, game_title: &'static str,
            window_size: &game::Size) {
     music::start::<Music, _>(|| {
         music::bind_file(Music::Menu, "./assets/The Last Ranger.mp3");
         music::bind_file(Music::Action, "./assets/Into the Field.mp3");
         music::play(&Music::Menu, music::Repeat::Forever);
 
+        // TODO: Remove find_folder need.
         let assets_folder = find_folder::Search::ParentsThenKids(3, 3)
             .for_folder("assets").unwrap();
         let ref font_file = assets_folder.join("FiraSans-Regular.ttf");
-        let factory = window.factory.clone();
-        let mut glyph_cache = Glyphs::new(font_file, factory).unwrap();
+        let mut glyph_cache = GlyphCache::new(font_file).unwrap();
         let menu_align = (window_size.width / 2.0) - 120.0;
 
         let mut menu_selection = MenuSelection::Play;
@@ -60,49 +60,48 @@ pub fn run(mut window: &mut PistonWindow, opengl: GlGraphics, game_title: &'stat
 
             match event {
                 Event::Render(args) => {
-                    window.draw_2d(&event,
-                                   |context, graphics| {
-                                       clear(color::BLACK, graphics);
-                                       text(color::WHITE,
-                                            72,
-                                            game_title,
-                                            &mut glyph_cache,
-                                            context.transform
-                                                .trans(menu_align, STARTING_LINE_OFFSET),
-                                            graphics);
-                                       text(play_color,
-                                            MENU_ITEM_FONT_SIZE,
-                                            "Play",
-                                            &mut glyph_cache,
-                                            context.transform
-                                                .trans(menu_align, STARTING_LINE_OFFSET +
-                                                    1.0 * NEW_LINE_OFFSET),
-                                            graphics);
-                                       text(story_color,
-                                            MENU_ITEM_FONT_SIZE,
-                                            "Story",
-                                            &mut glyph_cache,
-                                            context.transform
-                                                .trans(menu_align, STARTING_LINE_OFFSET +
-                                                    2.0 * NEW_LINE_OFFSET),
-                                            graphics);
-                                       text(settings_color,
-                                            MENU_ITEM_FONT_SIZE,
-                                            "Settings",
-                                            &mut glyph_cache,
-                                            context.transform
-                                                .trans(menu_align, STARTING_LINE_OFFSET +
-                                                    3.0 * NEW_LINE_OFFSET),
-                                            graphics);
-                                       text(exit_color,
-                                            MENU_ITEM_FONT_SIZE,
-                                            "Exit",
-                                            &mut glyph_cache,
-                                            context.transform
-                                                .trans(menu_align, STARTING_LINE_OFFSET +
-                                                    4.0 * NEW_LINE_OFFSET),
-                                            graphics);
-                                   });
+                    opengl.draw(args.viewport(), |context, graphics| {
+                        clear(color::BLACK, graphics);
+                        text(color::WHITE,
+                             72,
+                             game_title,
+                             &mut glyph_cache,
+                             context.transform
+                                 .trans(menu_align, STARTING_LINE_OFFSET),
+                             graphics);
+                        text(play_color,
+                             MENU_ITEM_FONT_SIZE,
+                             "Play",
+                             &mut glyph_cache,
+                             context.transform
+                                 .trans(menu_align, STARTING_LINE_OFFSET +
+                                     1.0 * NEW_LINE_OFFSET),
+                             graphics);
+                        text(story_color,
+                             MENU_ITEM_FONT_SIZE,
+                             "Story",
+                             &mut glyph_cache,
+                             context.transform
+                                 .trans(menu_align, STARTING_LINE_OFFSET +
+                                     2.0 * NEW_LINE_OFFSET),
+                             graphics);
+                        text(settings_color,
+                             MENU_ITEM_FONT_SIZE,
+                             "Settings",
+                             &mut glyph_cache,
+                             context.transform
+                                 .trans(menu_align, STARTING_LINE_OFFSET +
+                                     3.0 * NEW_LINE_OFFSET),
+                             graphics);
+                        text(exit_color,
+                             MENU_ITEM_FONT_SIZE,
+                             "Exit",
+                             &mut glyph_cache,
+                             context.transform
+                                 .trans(menu_align, STARTING_LINE_OFFSET +
+                                     4.0 * NEW_LINE_OFFSET),
+                             graphics);
+                    });
                 }
 
                 Event::Input(Input::Press(Button::Keyboard(key))) => {
@@ -131,14 +130,15 @@ pub fn run(mut window: &mut PistonWindow, opengl: GlGraphics, game_title: &'stat
                             match menu_selection {
                                 MenuSelection::Play => {
                                     music::play(&Music::Action, music::Repeat::Forever);
-                                    game::Game::new().run(&mut window, window_size);
+                                    game::Game::new().run(&mut window, &mut opengl, window_size);
                                     music::play(&Music::Menu, music::Repeat::Forever);
                                 }
                                 MenuSelection::Story => {
-                                    story::run(&mut window, font_file);
+                                    story::run(&mut window, &mut opengl, font_file);
                                 }
                                 MenuSelection::Settings => {
-                                    settings::run(&mut window, font_file, &mut volume, menu_align);
+                                    settings::run(&mut window, &mut opengl, font_file, &mut volume,
+                                                  menu_align);
                                 }
                                 MenuSelection::Exit => { break }
                             }

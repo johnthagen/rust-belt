@@ -26,7 +26,7 @@ fn main() {
         .build()
         .unwrap_or_else(|error| { panic!("Failed to build PistonWindow: {}", error) });
 
-    let gl = GlGraphics::new(opengl);
+    let mut gl = GlGraphics::new(opengl);
 
-    menu::run(&mut window, gl, GAME_TITLE, &GAME_WINDOW_SIZE);
+    menu::run(&mut window, &mut gl, GAME_TITLE, &GAME_WINDOW_SIZE);
 }
