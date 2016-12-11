@@ -2,7 +2,9 @@
 
 use find_folder;
 use music;
-use piston_window::{Button, clear, Glyphs, Key, PressEvent, PistonWindow, text, Transformed, types};
+use opengl_graphics::GlGraphics;
+use piston_window::{Button, clear, Event, Glyphs, Input, Key, PressEvent, PistonWindow, text,
+    Transformed, types};
 
 use color;
 use game;
@@ -22,7 +24,8 @@ enum MenuSelection {
     Exit
 }
 
-pub fn run(mut window: &mut PistonWindow, game_title: &'static str, window_size: &game::Size) {
+pub fn run(mut window: &mut PistonWindow, opengl: GlGraphics, game_title: &'static str,
+           window_size: &game::Size) {
     music::start::<Music, _>(|| {
         music::bind_file(Music::Menu, "./assets/The Last Ranger.mp3");
         music::bind_file(Music::Action, "./assets/Into the Field.mp3");
@@ -55,90 +58,96 @@ pub fn run(mut window: &mut PistonWindow, game_title: &'static str, window_size:
                 MenuSelection::Exit => { exit_color = color::YELLOW }
             }
 
-            window.draw_2d(&event,
-                           |context, graphics| {
-                               clear(color::BLACK, graphics);
-                               text(color::WHITE,
-                                    72,
-                                    game_title,
-                                    &mut glyph_cache,
-                                    context.transform
-                                        .trans(menu_align, STARTING_LINE_OFFSET),
-                                    graphics);
-                               text(play_color,
-                                    MENU_ITEM_FONT_SIZE,
-                                    "Play",
-                                    &mut glyph_cache,
-                                    context.transform
-                                        .trans(menu_align, STARTING_LINE_OFFSET +
-                                            1.0 * NEW_LINE_OFFSET),
-                                    graphics);
-                               text(story_color,
-                                    MENU_ITEM_FONT_SIZE,
-                                    "Story",
-                                    &mut glyph_cache,
-                                    context.transform
-                                        .trans(menu_align, STARTING_LINE_OFFSET +
-                                            2.0 * NEW_LINE_OFFSET),
-                                    graphics);
-                               text(settings_color,
-                                    MENU_ITEM_FONT_SIZE,
-                                    "Settings",
-                                    &mut glyph_cache,
-                                    context.transform
-                                        .trans(menu_align, STARTING_LINE_OFFSET +
-                                            3.0 * NEW_LINE_OFFSET),
-                                    graphics);
-                               text(exit_color,
-                                    MENU_ITEM_FONT_SIZE,
-                                    "Exit",
-                                    &mut glyph_cache,
-                                    context.transform
-                                        .trans(menu_align, STARTING_LINE_OFFSET +
-                                            4.0 * NEW_LINE_OFFSET),
-                                    graphics);
-                           });
-
-            if let Some(button) = event.press_args() {
-                match button {
-                    Button::Keyboard(Key::W) => {
-                        match menu_selection {
-                            MenuSelection::Play => {}
-                            MenuSelection::Story => { menu_selection = MenuSelection::Play }
-                            MenuSelection::Settings => {
-                                menu_selection = MenuSelection::Story
-                            }
-                            MenuSelection::Exit => { menu_selection = MenuSelection::Settings }
-                        }
-                    }
-                    Button::Keyboard(Key::S) => {
-                        match menu_selection {
-                            MenuSelection::Play => { menu_selection = MenuSelection::Story }
-                            MenuSelection::Story => {
-                                menu_selection = MenuSelection::Settings
-                            }
-                            MenuSelection::Settings => { menu_selection = MenuSelection::Exit }
-                            MenuSelection::Exit => {}
-                        }
-                    }
-                    Button::Keyboard(Key::Space) => {
-                        match menu_selection {
-                            MenuSelection::Play => {
-                                music::play(&Music::Action, music::Repeat::Forever);
-                                game::Game::new().run(&mut window, window_size);
-                                music::play(&Music::Menu, music::Repeat::Forever);
-                            }
-                            MenuSelection::Story => {
-                                story::run(&mut window, font_file);
-                            }
-                            MenuSelection::Settings => {
-                                settings::run(&mut window, font_file, &mut volume, menu_align);
-                            }
-                            MenuSelection::Exit => { break }
-                        }
-                    }
-                    _ => {}
+            match event {
+                Event::Render(args) => {
+                    window.draw_2d(&event,
+                                   |context, graphics| {
+                                       clear(color::BLACK, graphics);
+                                       text(color::WHITE,
+                                            72,
+                                            game_title,
+                                            &mut glyph_cache,
+                                            context.transform
+                                                .trans(menu_align, STARTING_LINE_OFFSET),
+                                            graphics);
+                                       text(play_color,
+                                            MENU_ITEM_FONT_SIZE,
+                                            "Play",
+                                            &mut glyph_cache,
+                                            context.transform
+                                                .trans(menu_align, STARTING_LINE_OFFSET +
+                                                    1.0 * NEW_LINE_OFFSET),
+                                            graphics);
+                                       text(story_color,
+                                            MENU_ITEM_FONT_SIZE,
+                                            "Story",
+                                            &mut glyph_cache,
+                                            context.transform
+                                                .trans(menu_align, STARTING_LINE_OFFSET +
+                                                    2.0 * NEW_LINE_OFFSET),
+                                            graphics);
+                                       text(settings_color,
+                                            MENU_ITEM_FONT_SIZE,
+                                            "Settings",
+                                            &mut glyph_cache,
+                                            context.transform
+                                                .trans(menu_align, STARTING_LINE_OFFSET +
+                                                    3.0 * NEW_LINE_OFFSET),
+                                            graphics);
+                                       text(exit_color,
+                                            MENU_ITEM_FONT_SIZE,
+                                            "Exit",
+                                            &mut glyph_cache,
+                                            context.transform
+                                                .trans(menu_align, STARTING_LINE_OFFSET +
+                                                    4.0 * NEW_LINE_OFFSET),
+                                            graphics);
+                                   });
                 }
+
+                Event::Input(Input::Press(Button::Keyboard(key))) => {
+                    match key {
+                        Key::W => {
+                            match menu_selection {
+                                MenuSelection::Play => {}
+                                MenuSelection::Story => { menu_selection = MenuSelection::Play }
+                                MenuSelection::Settings => {
+                                    menu_selection = MenuSelection::Story
+                                }
+                                MenuSelection::Exit => { menu_selection = MenuSelection::Settings }
+                            }
+                        }
+                        Key::S => {
+                            match menu_selection {
+                                MenuSelection::Play => { menu_selection = MenuSelection::Story }
+                                MenuSelection::Story => {
+                                    menu_selection = MenuSelection::Settings
+                                }
+                                MenuSelection::Settings => { menu_selection = MenuSelection::Exit }
+                                MenuSelection::Exit => {}
+                            }
+                        }
+                        Key::Space => {
+                            match menu_selection {
+                                MenuSelection::Play => {
+                                    music::play(&Music::Action, music::Repeat::Forever);
+                                    game::Game::new().run(&mut window, window_size);
+                                    music::play(&Music::Menu, music::Repeat::Forever);
+                                }
+                                MenuSelection::Story => {
+                                    story::run(&mut window, font_file);
+                                }
+                                MenuSelection::Settings => {
+                                    settings::run(&mut window, font_file, &mut volume, menu_align);
+                                }
+                                MenuSelection::Exit => { break }
+                            }
+                        }
+                        _ => {}
+                    }
+                }
+
+                _ => {}
             }
         }
     });
