@@ -31,11 +31,7 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, game_titl
         music::bind_file(Music::Action, "./assets/Into the Field.mp3");
         music::play(&Music::Menu, music::Repeat::Forever);
 
-        // TODO: Remove find_folder need.
-        let assets_folder = find_folder::Search::ParentsThenKids(3, 3)
-            .for_folder("assets").unwrap();
-        let ref font_file = assets_folder.join("FiraSans-Regular.ttf");
-        let mut glyph_cache = GlyphCache::new(font_file).unwrap();
+        let mut glyph_cache = GlyphCache::new("./assets/FiraSans-Regular.ttf").unwrap();
         let menu_align = (window_size.width / 2.0) - 120.0;
 
         let mut menu_selection = MenuSelection::Play;
