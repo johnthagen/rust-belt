@@ -11,10 +11,10 @@ the [Rust](https://www.rust-lang.org/en-US/) game engine, [Piston](http://www.pi
 
 `rust-belt` targets the latest stable release of Rust.
 
-## Music - [SDL2](https://www.libsdl.org/)
+## Prerequisites
 
 `rust-belt` uses [`piston-music`](https://github.com/PistonDevelopers/music) to play music.  See
- its requirements for how to install its dependencies.
+ its requirements for how to install its [SDL2](https://www.libsdl.org/) dependencies.
 
 ## Windows
 
