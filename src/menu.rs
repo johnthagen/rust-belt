@@ -1,6 +1,5 @@
 //! Main menu.
 
-use find_folder;
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;

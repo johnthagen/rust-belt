@@ -1,6 +1,5 @@
 extern crate piston_window;
 extern crate opengl_graphics;
-extern crate find_folder;
 extern crate music;
 
 mod color;
