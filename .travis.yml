@@ -18,7 +18,6 @@ install:
 
 matrix:
   allow_failures:
-    - rust: beta
     - rust: nightly
 
 os:
