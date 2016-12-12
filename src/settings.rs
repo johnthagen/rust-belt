@@ -1,7 +1,5 @@
 //! Modify game settings.
 
-use std;
-
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
@@ -10,9 +8,8 @@ use piston_window::{Button, clear, Event, Input, Key, PistonWindow, text, Transf
 use color;
 
 
-pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, font_file: &std::path::PathBuf,
+pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, glyph_cache: &mut GlyphCache,
            volume: &mut f64, left_alignment: f64) {
-    let mut glyph_cache = GlyphCache::new(font_file).unwrap();
     let value_left_alignment = left_alignment + 300.0;
 
     while let Some(event) = window.next() {
@@ -25,14 +22,14 @@ pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, font_file: &std::
                     text(color::WHITE,
                          32,
                          "Volume",
-                         &mut glyph_cache,
+                         glyph_cache,
                          context.transform
                              .trans(left_alignment, STARTING_LINE_OFFSET),
                          graphics);
                     text(color::WHITE,
                          32,
                          &format!("{}%", ((*volume) * 100.0) as i32),
-                         &mut glyph_cache,
+                         glyph_cache,
                          context.transform
                              .trans(value_left_alignment, STARTING_LINE_OFFSET),
                          graphics);

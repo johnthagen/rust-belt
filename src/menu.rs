@@ -134,11 +134,11 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, game_titl
                                     music::play(&Music::Menu, music::Repeat::Forever);
                                 }
                                 MenuSelection::Story => {
-                                    story::run(&mut window, &mut opengl, font_file);
+                                    story::run(&mut window, &mut opengl, &mut glyph_cache);
                                 }
                                 MenuSelection::Settings => {
-                                    settings::run(&mut window, &mut opengl, font_file, &mut volume,
-                                                  menu_align);
+                                    settings::run(&mut window, &mut opengl, &mut glyph_cache,
+                                                  &mut volume, menu_align);
                                 }
                                 MenuSelection::Exit => { break }
                             }
