@@ -1,6 +1,9 @@
 # Rust Belt
-[![Build Status](https://travis-ci.org/johnthagen/rust-belt.svg)](https://travis-ci.org/johnthagen/rust-belt)
-[![Build status](https://ci.appveyor.com/api/projects/status/nbkgf5i3p4998a2j?svg=true)](https://ci.appveyor.com/project/johnthagen/rust-belt)
+
+| Build Status |                                                                                |
+|--------------|--------------------------------------------------------------------------------|
+| Travis       | [![Travis Build Status][travis-build-status-svg]][travis-build-status]         |
+| AppVeyor     | [![AppVeyor Build Status][appveyor-build-status-svg]][appveyor-build-status]   |
 
 `rust-belt` is a re-creation of the classic 
 [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game using
@@ -59,3 +62,10 @@ Special thanks to [@aochagavia](https://github.com/aochagavia) for his
 ## Music
 
 Music composed by [@johnthagen](https://github.com/johnthagen).  All rights reserved.
+
+<!-- Badges -->
+[travis-build-status]: https://travis-ci.org/intellij-rust/intellij-rust
+[travis-build-status-svg]: https://travis-ci.org/johnthagen/rust-belt.svg
+
+[appveyor-build-status]: https://ci.appveyor.com/project/johnthagen/rust-belt
+[appveyor-build-status-svg]: https://ci.appveyor.com/api/projects/status/nbkgf5i3p4998a2j?svg=true
