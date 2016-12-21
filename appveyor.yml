@@ -21,6 +21,16 @@ install:
   - if "%TARGET%" == "i686-pc-windows-gnu" set PATH=%PATH%;C:\msys64\mingw32\bin
   - if "%TARGET%" == "x86_64-pc-windows-gnu" set PATH=%PATH%;C:\msys64\mingw64\bin
 
+  # Install SDL2 (Steps copied from the rust-sdl2 project.)
+  - wget https://www.libsdl.org/release/SDL2-2.0.4.tar.gz -O sdl2.tar.gz
+  - tar xzf sdl2.tar.gz
+  - pushd SDL2-2.0.4 && ./configure && make && sudo make install && popd
+
+  # Install SDL2_Mixer (Steps copied from rust-sdl2_mixer project.)
+  - wget https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.1.tar.gz -O sdl2_mixer.tar.gz
+  - tar xzf sdl2_mixer.tar.gz
+  - pushd SDL2_mixer-2.0.1 && ./configure && make && sudo make install && popd
+
 # 'cargo test' takes care of building for us, so disable Appveyor's build stage. This prevents
 # the "directory does not contain a project or solution file" error.
 # source: https://github.com/starkat99/appveyor-rust/blob/master/appveyor.yml#L113
