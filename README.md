@@ -1,5 +1,6 @@
 # Rust Belt
 [![Build Status](https://travis-ci.org/johnthagen/rust-belt.svg)](https://travis-ci.org/johnthagen/rust-belt)
+[![Build status](https://ci.appveyor.com/api/projects/status/nbkgf5i3p4998a2j?svg=true)](https://ci.appveyor.com/project/johnthagen/rust-belt)
 
 `rust-belt` is a re-creation of the classic 
 [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game using
