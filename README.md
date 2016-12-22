@@ -13,7 +13,8 @@ the [Rust](https://www.rust-lang.org/en-US/) game engine, [Piston](http://www.pi
 
 # Requirements
 
-`rust-belt` targets the latest stable release of Rust.
+1. `rust-belt` targets the latest stable release of Rust.
+    1. Install [`rustup`](https://www.rustup.rs/).
 
 ## Prerequisites
 
@@ -22,12 +23,16 @@ the [Rust](https://www.rust-lang.org/en-US/) game engine, [Piston](http://www.pi
 
 ## Windows
 
-1. **Recommended:** Install [`rustup`](https://www.rustup.rs/), which will automatically configure
-the latest stable 64-bit [GNU ABI](https://www.rust-lang.org/en-US/downloads.html#win-foot)
-version of `rustc`.
-    * *Alternative:* Manually install the latest 64-bit
-[GNU ABI](https://www.rust-lang.org/en-US/downloads.html#win-foot) version of
-[`rustc`](https://www.rust-lang.org/downloads.html).
+Select to proceed with either the MSVC or GNU toolchains.
+
+### MSVC
+
+1. Ensure you are using the latest stable 64-bit MVSC toolchain with `rustup show`.
+2. Ensure you have installed the [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools)
+
+### GNU/MinGW-w64
+
+1. Ensure you using the latest 64-bit GNU ABI toolchain with `rustup show`.
 2. Install [MSYS2](https://msys2.github.io/).
 3. In an MSYS2 terminal: `pacman --sync mingw-w64-x86_64-gcc`
 4. Add `C:\msys64\mingw64\bin` to system `PATH`.
@@ -36,7 +41,6 @@ version of `rustc`.
 
 1. Install [Homebrew](http://brew.sh/) (by default this will install `gcc` via Xcode development 
 tools).
-2. Install [`rustup`](https://www.rustup.rs/) and use the default latest stable compiler.
 
 ## Build and Run
 
@@ -64,7 +68,7 @@ Special thanks to [@aochagavia](https://github.com/aochagavia) for his
 Music composed by [@johnthagen](https://github.com/johnthagen).  All rights reserved.
 
 <!-- Badges -->
-[travis-build-status]: https://travis-ci.org/intellij-rust/intellij-rust
+[travis-build-status]: https://travis-ci.org/johnthagen/rust-belt
 [travis-build-status-svg]: https://travis-ci.org/johnthagen/rust-belt.svg
 
 [appveyor-build-status]: https://ci.appveyor.com/project/johnthagen/rust-belt
