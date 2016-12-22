@@ -12,6 +12,7 @@ environment:
 install:
   # Print Powershell version.
   - ps: $PSVersionTable.PSVersion
+  - ps: pwd
 
   # Install Rust and Cargo
   - curl -sSf -o rustup-init.exe https://win.rustup.rs
