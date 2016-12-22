@@ -28,7 +28,7 @@ Select to proceed with either the MSVC or GNU toolchains.
 ### MSVC
 
 1. Ensure you are using the latest stable 64-bit MVSC toolchain with `rustup show`.
-2. Ensure you have installed the [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools)
+2. Ensure you have installed the [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools).
 
 ### GNU/MinGW-w64
 
