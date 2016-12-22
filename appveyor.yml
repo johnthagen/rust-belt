@@ -28,10 +28,13 @@ install:
   # Install SDL2.
   - ps: Start-FileDownload https://www.libsdl.org/release/SDL2-devel-2.0.5-VC.zip -FileName sdl2.zip
   - ps: Expand-Archive sdl2.zip -DestinationPath sdl2
+  - set LIB=%LIB%;C:\projects\rust-belt\sdl2\SDL2-2.0.5\lib\x64
 
   # Install SDL2_Mixer.
   - ps: Start-FileDownload https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-2.0.1-VC.zip -FileName sdl2_mixer.zip
   - ps: Expand-Archive sdl2.zip -DestinationPath sdl2_mixer
+  - set LIB=%LIB%;C:\projects\rust-belt\sdl2\SDL2_mixer-2.0.1\lib\x64
+  - ps: Get-ChildItem -Recurse -Depth 4
 
 # 'cargo test' takes care of building for us, so disable Appveyor's build stage. This prevents
 # the "directory does not contain a project or solution file" error.
