@@ -3,7 +3,7 @@ environment:
     PROJECT_NAME: rust-belt
 
   matrix:
-      - TARGET: x86_64-pc-windows-gnu
+      - TARGET: x86_64-pc-windows-msvc
         CHANNEL: stable
       - TARGET: x86_64-pc-windows-msvc
         CHANNEL: beta
@@ -22,14 +22,12 @@ install:
   - if "%TARGET%" == "x86_64-pc-windows-gnu" set PATH=%PATH%;C:\msys64\mingw64\bin
 
   # Install SDL2.
-  - ps: Start-FileDownload https://www.libsdl.org/release/SDL2-2.0.4.tar.gz -FileName sdl2.tar.gz
-  - tar xzf sdl2.tar.gz
-  - pushd SDL2-2.0.4 && ./configure && make && sudo make install && popd
+  - ps: Start-FileDownload https://www.libsdl.org/release/SDL2-devel-2.0.5-VC.zip -FileName sdl2.zip
+  # TODO: Unpack SDL2.
 
   # Install SDL2_Mixer.
-  - ps: Start-FileDownload https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.1.tar.gz -FileName sdl2_mixer.tar.gz
-  - tar xzf sdl2_mixer.tar.gz
-  - pushd SDL2_mixer-2.0.1 && ./configure && make && sudo make install && popd
+  - ps: Start-FileDownload https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-2.0.1-VC.zip -FileName sdl2_mixer.zip
+  # TODO: Unpack SDL2_mixer.
 
 # 'cargo test' takes care of building for us, so disable Appveyor's build stage. This prevents
 # the "directory does not contain a project or solution file" error.
