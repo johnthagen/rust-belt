@@ -25,15 +25,16 @@ the [Rust](https://www.rust-lang.org/) game engine, [Piston](http://www.piston.r
 
 Select to proceed with either the MSVC or GNU toolchains.
 
-### MSVC
+### MSVC (Recommended)
 
 1. Ensure you are using the latest stable 64-bit MVSC toolchain with `rustup show`.
 2. Ensure you have installed the 
-   [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools).
+   [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools)
+   (as recommended by `rustup` during install).
 
 ### GNU/MinGW-w64
 
-1. Ensure you using the latest 64-bit GNU ABI toolchain with `rustup show`.
+1. Ensure you using the latest stable 64-bit GNU ABI toolchain with `rustup show`.
 2. Install [MSYS2](https://msys2.github.io/).
 3. In an MSYS2 terminal: `pacman --sync mingw-w64-x86_64-gcc`
 4. Add `C:\msys64\mingw64\bin` to system `PATH`.
