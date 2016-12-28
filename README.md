@@ -7,19 +7,19 @@
 
 `rust-belt` is a re-creation of the classic 
 [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game using
-the [Rust](https://www.rust-lang.org/en-US/) game engine, [Piston](http://www.piston.rs/).
+the [Rust](https://www.rust-lang.org/) game engine, [Piston](http://www.piston.rs/).
 
 #![Rust Belt](./images/rust-belt-logo.jpg)
 
 # Requirements
 
-1. `rust-belt` targets the latest stable release of Rust.
-    1. Install [`rustup`](https://www.rustup.rs/).
-
 ## Prerequisites
 
-`rust-belt` uses [`piston-music`](https://github.com/PistonDevelopers/music) to play music.  See
- its requirements for how to install its [SDL2](https://www.libsdl.org/) dependencies.
+1. The latest stable release of Rust.
+    1. Install [`rustup`](https://www.rustup.rs/).
+
+2. `rust-belt` uses [`piston-music`](https://github.com/PistonDevelopers/music) to play music. 
+    See its requirements for how to install its [SDL2](https://www.libsdl.org/) dependencies.
 
 ## Windows
 
@@ -28,7 +28,8 @@ Select to proceed with either the MSVC or GNU toolchains.
 ### MSVC
 
 1. Ensure you are using the latest stable 64-bit MVSC toolchain with `rustup show`.
-2. Ensure you have installed the [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools).
+2. Ensure you have installed the 
+   [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools).
 
 ### GNU/MinGW-w64
 
@@ -60,8 +61,8 @@ $ cargo run --release
 * [@johnthagen](https://github.com/johnthagen)
 * [@theandrewdavis](https://github.com/theandrewdavis)
 
-Special thanks to [@aochagavia](https://github.com/aochagavia) for his 
-[rocket](https://github.com/aochagavia/rocket) which provided many examples to pull from.
+Special thanks to [@aochagavia](https://github.com/aochagavia) for 
+[rocket](https://github.com/aochagavia/rocket), which provided many examples to pull from.
 
 ## Music
 
