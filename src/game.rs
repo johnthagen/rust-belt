@@ -1,8 +1,7 @@
 //! Defines the game component.
 
 use opengl_graphics::GlGraphics;
-use piston_window::{Button, clear, Event, Input, Key, PistonWindow, polygon,
-    Transformed, types};
+use piston_window::{Button, clear, Event, Input, Key, PistonWindow, polygon, Transformed, types};
 
 use color;
 
