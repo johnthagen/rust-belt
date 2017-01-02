@@ -1,6 +1,6 @@
 [root]
 name = "rust-belt"
-version = "0.1.0"
+version = "0.4.0"
 dependencies = [
  "piston-music 0.17.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston2d-opengl_graphics 0.36.1 (registry+https://github.com/rust-lang/crates.io-index)",
