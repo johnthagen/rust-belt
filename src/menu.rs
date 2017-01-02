@@ -3,10 +3,9 @@
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, clear, Context, Event, Input, Key, PistonWindow, text, Transformed,
-    types};
+use piston_window::{Button, clear, Context, Event, Input, Key, PistonWindow, text, Transformed};
 
-use color;
+use color::{self, ColoredText};
 use game;
 use settings;
 use story;
@@ -28,8 +27,6 @@ enum MenuSelection {
 fn render(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache,
           menu_align: f64, menu_selection: MenuSelection, game_title: &'static str) {
     const STARTING_LINE_OFFSET: f64 = 280.0;
-    const NEW_LINE_OFFSET: f64 = 40.0;
-    const MENU_ITEM_FONT_SIZE: types::FontSize = 32;
 
     // TODO: Can this be done better with 'if let' ?
     let mut play_color = color::WHITE;
@@ -43,6 +40,25 @@ fn render(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCa
         MenuSelection::Exit => { exit_color = color::YELLOW }
     }
 
+    let menu_lines = [
+        ColoredText {
+            color: play_color,
+            text: "Play",
+        },
+        ColoredText {
+            color: story_color,
+            text: "Story",
+        },
+        ColoredText {
+            color: settings_color,
+            text: "Settings",
+        },
+        ColoredText {
+            color: exit_color,
+            text: "Exit",
+        },
+    ];
+
     clear(color::BLACK, graphics);
     text(color::WHITE,
          72,
@@ -51,38 +67,18 @@ fn render(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCa
          context.transform
              .trans(menu_align, STARTING_LINE_OFFSET),
          graphics);
-    text(play_color,
-         MENU_ITEM_FONT_SIZE,
-         "Play",
-         glyph_cache,
-         context.transform
-             .trans(menu_align, STARTING_LINE_OFFSET +
-                 1.0 * NEW_LINE_OFFSET),
-         graphics);
-    text(story_color,
-         MENU_ITEM_FONT_SIZE,
-         "Story",
-         glyph_cache,
-         context.transform
-             .trans(menu_align, STARTING_LINE_OFFSET +
-                 2.0 * NEW_LINE_OFFSET),
-         graphics);
-    text(settings_color,
-         MENU_ITEM_FONT_SIZE,
-         "Settings",
-         glyph_cache,
-         context.transform
-             .trans(menu_align, STARTING_LINE_OFFSET +
-                 3.0 * NEW_LINE_OFFSET),
-         graphics);
-    text(exit_color,
-         MENU_ITEM_FONT_SIZE,
-         "Exit",
-         glyph_cache,
-         context.transform
-             .trans(menu_align, STARTING_LINE_OFFSET +
-                 4.0 * NEW_LINE_OFFSET),
-         graphics);
+
+    for (index, line) in menu_lines.iter().enumerate() {
+        const NEW_LINE_OFFSET: f64 = 40.0;
+        text(line.color,
+             32,
+             line.text,
+             glyph_cache,
+             context.transform
+                 .trans(menu_align,
+                        STARTING_LINE_OFFSET + ((index as f64 + 1.0) * NEW_LINE_OFFSET)),
+             graphics);
+    }
 }
 
 pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, game_title: &'static str,

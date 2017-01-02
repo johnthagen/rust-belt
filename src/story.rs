@@ -5,12 +5,7 @@ use opengl_graphics::glyph_cache::GlyphCache;
 use piston_window::{Button, clear, Context, Event, Input, Key, PistonWindow, text, types,
     Transformed};
 
-use color;
-
-struct ColoredText {
-    color: types::Color,
-    text: &'static str,
-}
+use color::{self, ColoredText};
 
 fn render(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache) {
     const NARRATOR_COLOR: types::Color = color::WHITE;
