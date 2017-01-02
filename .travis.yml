@@ -7,9 +7,9 @@ rust:
 
 install:
   # Steps copied from the rust-sdl2 project.
-  - wget https://www.libsdl.org/release/SDL2-2.0.4.tar.gz -O sdl2.tar.gz
+  - wget https://www.libsdl.org/release/SDL2-2.0.5.tar.gz -O sdl2.tar.gz
   - tar xzf sdl2.tar.gz
-  - pushd SDL2-2.0.4 && ./configure && make && sudo make install && popd
+  - pushd SDL2-2.0.5 && ./configure && make && sudo make install && popd
 
   # Steps copied from rust-sdl2_mixer project.
   - wget https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.1.tar.gz -O sdl2_mixer.tar.gz
