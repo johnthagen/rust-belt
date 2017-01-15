@@ -12,17 +12,6 @@ env:
   global:
     - CLIPPY_VERSION=0.0.108
 
-before_script:
-  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-03" ]]; then
-      cargo install clippy --vers $CLIPPY_VERSION --force;
-    fi'
-
-script:
-  - cargo test
-  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-03" ]]; then
-      cargo clippy -- -D warnings;
-    fi'
-
 install:
   # Steps copied from the rust-sdl2 project.
   - wget https://www.libsdl.org/release/SDL2-2.0.5.tar.gz -O sdl2.tar.gz
@@ -42,5 +31,13 @@ os:
   - linux
   - osx
 
+before_script:
+  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-03" ]]; then
+      cargo install clippy --vers $CLIPPY_VERSION --force;
+    fi'
+
 script:
   - cargo build --verbose
+  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-03" ]]; then
+      cargo clippy -- -D warnings;
+    fi'
