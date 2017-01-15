@@ -39,5 +39,5 @@ before_script:
 script:
   - cargo build --verbose
   - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-13" ]]; then
-      cargo clippy -- -D warnings;
+      cargo clippy -- --deny warnings;
     fi'
