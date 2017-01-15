@@ -4,6 +4,13 @@ rust:
   - stable
   - beta
   - nightly
+  - nightly-2017-01-13
+
+# Specific clippy versions generally are only supported against specific
+# nightly versions, so select a nightly/clippy combination known to work.
+env:
+  global:
+    - CLIPPY_VERSION=0.0.108
 
 install:
   # Steps copied from the rust-sdl2 project.
@@ -24,5 +31,13 @@ os:
   - linux
   - osx
 
+before_script:
+  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-03" ]]; then
+      cargo install clippy --vers $CLIPPY_VERSION --force;
+    fi'
+
 script:
   - cargo build --verbose
+  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-03" ]]; then
+      cargo clippy -- -D warnings;
+    fi'
