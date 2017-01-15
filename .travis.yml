@@ -32,12 +32,12 @@ os:
   - osx
 
 before_script:
-  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-03" ]]; then
+  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-13" ]]; then
       cargo install clippy --vers $CLIPPY_VERSION --force;
     fi'
 
 script:
   - cargo build --verbose
-  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-03" ]]; then
+  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-13" ]]; then
       cargo clippy -- -D warnings;
     fi'
