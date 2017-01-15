@@ -56,7 +56,7 @@ add that folder to the `LIBRARY_PATH` system environment variable.
 7. Copy `SDL2.dll` into the `rust-belt` project folder, next to `Cargo.toml`.
 8. [Download](https://www.libsdl.org/projects/SDL_mixer/) the latest SDL2_mixer MinGW development library 
 (`SDL2_mixer-devel-2.0.x-mingw.tar.gz`).
-9. Unpack and copy all `.lib` files from `SDL2_mixer-devel-2.0.x-mingw\SDL2_mixer-2.0.1\x86_64-w64-mingw32\lib\` into
+9. Unpack and copy all `.lib` files from `SDL2_mixer-devel-2.0.x-mingw\SDL2_mixer-2.0.x\x86_64-w64-mingw32\lib\` into
 the same folder added in step 6 that was added to the `LIB` system environment variable.
 10. Copy `SDL2_mixer.dll` and `smpeg2.dll` into the `rust-belt` project folder, next to `Cargo.toml`.
 
