@@ -32,6 +32,7 @@ Select to proceed with either the MSVC or GNU toolchain.
 2. Ensure you have installed the 
    [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools)
    (as recommended by `rustup` during install).
+   (e.g. `C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\cl.exe`).
 3. [Download](https://www.libsdl.org/download-2.0.php) the latest SDL2 MSVC development library 
 (`SDL2-devel-2.0.x-VC.zip`).
 4. Unpack and copy all `.lib` files from `SDL2-devel-2.0.x-VC\SDL2-2.0.x\lib\x64\` into a folder and add that folder
