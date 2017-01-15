@@ -4,7 +4,7 @@ rust:
   - stable
   - beta
   - nightly
-  - nightly-2017-01-03
+  - nightly-2017-01-13
 
 # Specific clippy versions generally are only supported against specific
 # nightly versions, so select a nightly/clippy combination known to work.
