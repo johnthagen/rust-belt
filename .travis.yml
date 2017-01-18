@@ -37,7 +37,7 @@ os:
 before_script:
   - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == $NIGHTLY_VERSION ]]; then
       cargo install clippy --vers $CLIPPY_VERSION --force;
-      cargo install rustfmt;
+      cargo install rustfmt --force;
     fi'
 
 script:
