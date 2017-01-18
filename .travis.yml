@@ -11,6 +11,7 @@ rust:
 env:
   global:
     - CLIPPY_VERSION=0.0.108
+    - NIGHTLY_VERSION=nightly-2017-01-13
 
 install:
   # Steps copied from the rust-sdl2 project.
@@ -32,12 +33,16 @@ os:
   - osx
 
 before_script:
-  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-13" ]]; then
+  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == $NIGHTLY_VERSION ]]; then
       cargo install clippy --vers $CLIPPY_VERSION --force;
+      cargo install rustfmt;
     fi'
 
 script:
   - cargo build --verbose
-  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly-2017-01-13" ]]; then
+  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == $NIGHTLY_VERSION ]]; then
       cargo clippy -- --deny warnings;
+    fi'
+  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == $NIGHTLY_VERSION ]]; then
+      cargo fmt -- --write-mode diff;
     fi'
