@@ -8,8 +8,11 @@ use piston_window::{Button, clear, Event, Input, Key, PistonWindow, text, Transf
 use color;
 
 
-pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, glyph_cache: &mut GlyphCache,
-           volume: &mut f64, left_alignment: f64) {
+pub fn run(window: &mut PistonWindow,
+           opengl: &mut GlGraphics,
+           glyph_cache: &mut GlyphCache,
+           volume: &mut f64,
+           left_alignment: f64) {
     let value_left_alignment = left_alignment + 300.0;
 
     while let Some(event) = window.next() {
@@ -41,9 +44,9 @@ pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, glyph_cache: &mut
                 const VOLUME_STEP: f64 = 0.1;
 
                 match key {
-                    Key::D => { *volume = *volume + VOLUME_STEP }
-                    Key::A => { *volume = *volume - VOLUME_STEP }
-                    Key::Space => { break }
+                    Key::D => *volume = *volume + VOLUME_STEP,
+                    Key::A => *volume = *volume - VOLUME_STEP,
+                    Key::Space => break,
                     _ => {}
                 }
 

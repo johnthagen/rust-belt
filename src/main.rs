@@ -13,7 +13,10 @@ use opengl_graphics::GlGraphics;
 
 fn main() {
     const GAME_TITLE: &'static str = "Rust Belt";
-    const GAME_WINDOW_SIZE: game::Size = game::Size { width: 1024.0, height: 768.0 };
+    const GAME_WINDOW_SIZE: game::Size = game::Size {
+        width: 1024.0,
+        height: 768.0,
+    };
 
     let opengl = OpenGL::V3_2;
 
@@ -23,7 +26,7 @@ fn main() {
         .opengl(opengl)
         .exit_on_esc(true)
         .build()
-        .unwrap_or_else(|error| { panic!("Failed to build PistonWindow: {}", error) });
+        .unwrap_or_else(|error| panic!("Failed to build PistonWindow: {}", error));
 
     let mut gl = GlGraphics::new(opengl);
 

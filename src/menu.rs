@@ -21,11 +21,15 @@ enum MenuSelection {
     Play,
     Story,
     Settings,
-    Exit
+    Exit,
 }
 
-fn render(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache,
-          menu_align: f64, menu_selection: MenuSelection, game_title: &'static str) {
+fn render(context: Context,
+          graphics: &mut GlGraphics,
+          glyph_cache: &mut GlyphCache,
+          menu_align: f64,
+          menu_selection: MenuSelection,
+          game_title: &'static str) {
     const STARTING_LINE_OFFSET: f64 = 280.0;
 
     // TODO: Can this be done better with 'if let' ?
@@ -34,30 +38,28 @@ fn render(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCa
     let mut settings_color = color::WHITE;
     let mut exit_color = color::WHITE;
     match menu_selection {
-        MenuSelection::Play => { play_color = color::YELLOW }
-        MenuSelection::Story => { story_color = color::YELLOW }
-        MenuSelection::Settings => { settings_color = color::YELLOW }
-        MenuSelection::Exit => { exit_color = color::YELLOW }
+        MenuSelection::Play => play_color = color::YELLOW,
+        MenuSelection::Story => story_color = color::YELLOW,
+        MenuSelection::Settings => settings_color = color::YELLOW,
+        MenuSelection::Exit => exit_color = color::YELLOW,
     }
 
-    let menu_lines = [
-        ColoredText {
-            color: play_color,
-            text: "Play",
-        },
-        ColoredText {
-            color: story_color,
-            text: "Story",
-        },
-        ColoredText {
-            color: settings_color,
-            text: "Settings",
-        },
-        ColoredText {
-            color: exit_color,
-            text: "Exit",
-        },
-    ];
+    let menu_lines = [ColoredText {
+                          color: play_color,
+                          text: "Play",
+                      },
+                      ColoredText {
+                          color: story_color,
+                          text: "Story",
+                      },
+                      ColoredText {
+                          color: settings_color,
+                          text: "Settings",
+                      },
+                      ColoredText {
+                          color: exit_color,
+                          text: "Exit",
+                      }];
 
     clear(color::BLACK, graphics);
     text(color::WHITE,
@@ -81,7 +83,9 @@ fn render(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCa
     }
 }
 
-pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, game_title: &'static str,
+pub fn run(mut window: &mut PistonWindow,
+           mut opengl: &mut GlGraphics,
+           game_title: &'static str,
            window_size: &game::Size) {
     music::start::<Music, _>(|| {
         music::bind_file(Music::Menu, "./assets/The Last Ranger.mp3");
@@ -98,11 +102,14 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, game_titl
         while let Some(event) = window.next() {
             match event {
                 Event::Render(args) => {
-                    opengl.draw(args.viewport(),
-                                |context, graphics| {
-                                    render(context, graphics, &mut glyph_cache, menu_align,
-                                           menu_selection, game_title)
-                                });
+                    opengl.draw(args.viewport(), |context, graphics| {
+                        render(context,
+                               graphics,
+                               &mut glyph_cache,
+                               menu_align,
+                               menu_selection,
+                               game_title)
+                    });
                 }
 
                 Event::Input(Input::Press(Button::Keyboard(key))) => {
@@ -110,20 +117,16 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, game_titl
                         Key::W => {
                             match menu_selection {
                                 MenuSelection::Play => {}
-                                MenuSelection::Story => { menu_selection = MenuSelection::Play }
-                                MenuSelection::Settings => {
-                                    menu_selection = MenuSelection::Story
-                                }
-                                MenuSelection::Exit => { menu_selection = MenuSelection::Settings }
+                                MenuSelection::Story => menu_selection = MenuSelection::Play,
+                                MenuSelection::Settings => menu_selection = MenuSelection::Story,
+                                MenuSelection::Exit => menu_selection = MenuSelection::Settings,
                             }
                         }
                         Key::S => {
                             match menu_selection {
-                                MenuSelection::Play => { menu_selection = MenuSelection::Story }
-                                MenuSelection::Story => {
-                                    menu_selection = MenuSelection::Settings
-                                }
-                                MenuSelection::Settings => { menu_selection = MenuSelection::Exit }
+                                MenuSelection::Play => menu_selection = MenuSelection::Story,
+                                MenuSelection::Story => menu_selection = MenuSelection::Settings,
+                                MenuSelection::Settings => menu_selection = MenuSelection::Exit,
                                 MenuSelection::Exit => {}
                             }
                         }
@@ -138,10 +141,13 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, game_titl
                                     story::run(&mut window, &mut opengl, &mut glyph_cache);
                                 }
                                 MenuSelection::Settings => {
-                                    settings::run(&mut window, &mut opengl, &mut glyph_cache,
-                                                  &mut volume, menu_align);
+                                    settings::run(&mut window,
+                                                  &mut opengl,
+                                                  &mut glyph_cache,
+                                                  &mut volume,
+                                                  menu_align);
                                 }
-                                MenuSelection::Exit => { break }
+                                MenuSelection::Exit => break,
                             }
                         }
                         _ => {}

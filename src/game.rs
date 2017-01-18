@@ -8,11 +8,8 @@ use color;
 const SHIP_HEIGHT: f64 = 16.0;
 const SHIP_WIDTH: f64 = 20.0;
 
-const SHIP: &'static types::Triangle = &[
-    [0.0, -1.0 * SHIP_HEIGHT / 2.0],
-    [SHIP_WIDTH, 0.0],
-    [0.0, SHIP_HEIGHT / 2.0]
-];
+const SHIP: &'static types::Triangle =
+    &[[0.0, -1.0 * SHIP_HEIGHT / 2.0], [SHIP_WIDTH, 0.0], [0.0, SHIP_HEIGHT / 2.0]];
 
 #[derive(Clone, Default)]
 pub struct Size {
@@ -36,10 +33,7 @@ pub struct Game {
 impl Game {
     pub fn new() -> Self {
         Game {
-            position: Position {
-                x: 10.0,
-                y: 10.0,
-            },
+            position: Position { x: 10.0, y: 10.0 },
             rotation: 0.0,
         }
     }
@@ -81,13 +75,13 @@ impl Game {
 
                 Event::Input(Input::Press(Button::Keyboard(key))) => {
                     match key {
-                        Key::D => { self.position.x += 1.0 }
-                        Key::A => { self.position.x -= 1.0 }
-                        Key::S => { self.position.y += 1.0 }
-                        Key::W => { self.position.y -= 1.0 }
-                        Key::Q => { self.rotation -= 0.1 }
-                        Key::E => { self.rotation += 0.1 }
-                        Key::X => { break }
+                        Key::D => self.position.x += 1.0,
+                        Key::A => self.position.x -= 1.0,
+                        Key::S => self.position.y += 1.0,
+                        Key::W => self.position.y -= 1.0,
+                        Key::Q => self.rotation -= 0.1,
+                        Key::E => self.rotation += 0.1,
+                        Key::X => break,
                         _ => {}
                     }
                 }
