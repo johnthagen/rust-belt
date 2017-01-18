@@ -6,6 +6,8 @@ rust:
   - nightly
   - nightly-2017-01-13
 
+cache: cargo
+
 # Specific clippy versions generally are only supported against specific
 # nightly versions, so select a nightly/clippy combination known to work.
 env:
@@ -44,5 +46,6 @@ script:
       cargo clippy -- --deny warnings;
     fi'
   - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == $NIGHTLY_VERSION ]]; then
+      export PATH=$PATH:~/.cargo/bin &&
       cargo fmt -- --write-mode diff;
     fi'
