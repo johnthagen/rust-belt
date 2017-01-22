@@ -5,9 +5,10 @@
 | Travis       | [![Travis Build Status][travis-build-status-svg]][travis-build-status]         |
 | AppVeyor     | [![AppVeyor Build Status][appveyor-build-status-svg]][appveyor-build-status]   |
 
-`rust-belt` is a re-creation of the classic 
-[Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game using
-the [Rust](https://www.rust-lang.org/) game engine, [Piston](http://www.piston.rs/).
+`rust-belt` is a 2D video game featuring an original soundtrack :musical_score: inspired by the 
+classic [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game. It is 
+implemented  using the [Rust](https://www.rust-lang.org/) game engine, 
+[Piston](http://www.piston.rs/).
 
 #![Rust Belt](./images/rust-belt-logo.jpg)
 
