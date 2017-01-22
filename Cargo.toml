@@ -7,6 +7,6 @@ authors = [
 ]
 
 [dependencies]
-piston_window = "0.60.0"
-piston2d-opengl_graphics = "0.36.1"
+piston_window = "0.61.0"
+piston2d-opengl_graphics = "0.37.0"
 piston-music = "0.17.0"
