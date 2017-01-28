@@ -2,8 +2,7 @@
 
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, clear, Context, Event, Input, Key, PistonWindow, text, types,
-                    Transformed};
+use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, types, Transformed};
 
 use color::{self, ColoredText};
 
@@ -115,12 +114,12 @@ fn render(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCa
 pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, glyph_cache: &mut GlyphCache) {
     while let Some(event) = window.next() {
         match event {
-            Event::Render(args) => {
+            Input::Render(args) => {
                 opengl.draw(args.viewport(),
                             |context, graphics| render(context, graphics, glyph_cache));
             }
 
-            Event::Input(Input::Press(Button::Keyboard(key))) => {
+            Input::Press(Button::Keyboard(key)) => {
                 match key {
                     Key::Space => break,
                     _ => {}

@@ -3,7 +3,7 @@
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, clear, Context, Event, Input, Key, PistonWindow, text, Transformed};
+use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, Transformed};
 
 use color::{self, ColoredText};
 use game;
@@ -101,7 +101,7 @@ pub fn run(mut window: &mut PistonWindow,
 
         while let Some(event) = window.next() {
             match event {
-                Event::Render(args) => {
+                Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
                         render(context,
                                graphics,
@@ -112,7 +112,7 @@ pub fn run(mut window: &mut PistonWindow,
                     });
                 }
 
-                Event::Input(Input::Press(Button::Keyboard(key))) => {
+                Input::Press(Button::Keyboard(key)) => {
                     match key {
                         Key::W => {
                             match menu_selection {

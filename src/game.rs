@@ -1,7 +1,7 @@
 //! Defines the game component.
 
 use opengl_graphics::GlGraphics;
-use piston_window::{Button, clear, Event, Input, Key, PistonWindow, polygon, Transformed, types};
+use piston_window::{Button, clear, Input, Key, PistonWindow, polygon, Transformed, types};
 
 use color;
 
@@ -57,7 +57,7 @@ impl Game {
             Self::wrap_position(&mut self.position, window_size);
 
             match event {
-                Event::Render(args) => {
+                Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
                         clear(color::BLACK, graphics);
                         polygon(color::CYAN,
@@ -73,7 +73,7 @@ impl Game {
                     });
                 }
 
-                Event::Input(Input::Press(Button::Keyboard(key))) => {
+                Input::Press(Button::Keyboard(key)) => {
                     match key {
                         Key::D => self.position.x += 1.0,
                         Key::A => self.position.x -= 1.0,

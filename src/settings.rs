@@ -3,7 +3,7 @@
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, clear, Event, Input, Key, PistonWindow, text, Transformed};
+use piston_window::{Button, clear, Input, Key, PistonWindow, text, Transformed};
 
 use color;
 
@@ -19,7 +19,7 @@ pub fn run(window: &mut PistonWindow,
         const STARTING_LINE_OFFSET: f64 = 280.0;
 
         match event {
-            Event::Render(args) => {
+            Input::Render(args) => {
                 opengl.draw(args.viewport(), |context, graphics| {
                     clear(color::BLACK, graphics);
                     text(color::WHITE,
@@ -40,7 +40,7 @@ pub fn run(window: &mut PistonWindow,
             }
 
             // TODO: Known precision problem related to stepping f64 instead of integers.
-            Event::Input(Input::Press(Button::Keyboard(key))) => {
+            Input::Press(Button::Keyboard(key)) => {
                 const VOLUME_STEP: f64 = 0.1;
 
                 match key {
