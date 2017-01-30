@@ -10,7 +10,7 @@ const SHIP_HEIGHT: f64 = 16.0;
 const SHIP_WIDTH: f64 = 20.0;
 
 const SHIP: &'static types::Triangle =
-    &[[0.0, -1.0 * SHIP_HEIGHT / 2.0], [SHIP_WIDTH, 0.0], [0.0, SHIP_HEIGHT / 2.0]];
+&[[0.0, -1.0 * SHIP_HEIGHT / 2.0], [SHIP_WIDTH, 0.0], [0.0, SHIP_HEIGHT / 2.0]];
 
 #[derive(Clone, Default)]
 pub struct Size {
@@ -28,6 +28,8 @@ impl Game {
         Game { player: player::Player::new() }
     }
 
+    // TODO: Use `args.dt`
+    #[allow(unused_variables)]
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: &Size) {
         self.player.set_window_size(window_size.width, window_size.height);
         while let Some(event) = window.next() {
@@ -35,7 +37,6 @@ impl Game {
             let rot = self.player.get_rotation();
             match event {
                 Input::Render(args) => {
-                    self.player.update();
                     opengl.draw(args.viewport(), |context, graphics| {
                         clear(color::BLACK, graphics);
                         polygon(color::CYAN,
@@ -48,6 +49,10 @@ impl Game {
                                     .trans(-1.0 * SHIP_HEIGHT / 2.0, 0.0),
                                 graphics);
                     });
+                }
+
+                Input::Update(args) => {
+                    self.player.update();
                 }
 
                 Input::Press(Button::Keyboard(key)) => {
