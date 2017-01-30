@@ -4,7 +4,6 @@ use opengl_graphics::GlGraphics;
 use piston_window::{Button, clear, Input, Key, PistonWindow, polygon, Transformed, types};
 
 use color;
-
 use player;
 
 const SHIP_HEIGHT: f64 = 16.0;
@@ -32,7 +31,6 @@ impl Game {
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: &Size) {
         self.player.set_window_size(window_size.width, window_size.height);
         while let Some(event) = window.next() {
-            //Self::wrap_position(&mut self.position, window_size);
             let (x, y) = self.player.get_position();
             let rot = self.player.get_rotation();
             match event {
@@ -43,8 +41,7 @@ impl Game {
                         polygon(color::CYAN,
                                 SHIP,
                                 context.transform
-                                    .trans(x,
-                                           y)
+                                    .trans(x, y)
                                     .rot_rad(rot)
                                     // Without this trans(), rotation occurs around the
                                     // upper left corner rather than the center.
@@ -59,8 +56,6 @@ impl Game {
                         Key::A => self.player.rotate_ccw(),
                         Key::S => self.player.fire_rev_boosters(),
                         Key::W => self.player.fire_boosters(),
-                        //Key::Q => self.rotation -= 0.1,
-                        //Key::E => self.rotation += 0.1,
                         Key::X => break,
                         _ => {}
                     }

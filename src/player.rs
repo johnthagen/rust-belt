@@ -29,6 +29,7 @@ impl Player {
         self.max_pos.x = width;
         self.max_pos.y = height;
     }
+
     pub fn get_position(&self) -> (f64, f64) {
         (self.pos.x, self.pos.y)
     }
@@ -36,6 +37,7 @@ impl Player {
     pub fn get_rotation(&self) -> f64 {
         self.rot
     }
+
     pub fn update(&mut self) {
         let x = self.pos.x + self.vel.x + self.max_pos.x;
         let y = self.pos.y + self.vel.y + self.max_pos.y;
