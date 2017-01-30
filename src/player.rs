@@ -7,7 +7,7 @@ pub struct Vect {
 
 pub struct Player {
     pos: Vect,
-    maxPos: Vect,
+    max_pos: Vect,
     vel: Vect,
     rot: f64,
 }
@@ -16,7 +16,7 @@ impl Player {
     pub fn new() -> Player {
         Player {
             pos: Vect { x: 10.0, y: 10.0 },
-            maxPos: Vect {
+            max_pos: Vect {
                 x: 1000.0,
                 y: 1000.0,
             },
@@ -25,22 +25,22 @@ impl Player {
         }
     }
 
-    pub fn setWindowSize(&mut self, width: f64, height: f64) {
-        self.maxPos.x = width;
-        self.maxPos.y = height;
+    pub fn set_window_size(&mut self, width: f64, height: f64) {
+        self.max_pos.x = width;
+        self.max_pos.y = height;
     }
-    pub fn getPosition(&self) -> (f64, f64) {
+    pub fn get_position(&self) -> (f64, f64) {
         (self.pos.x, self.pos.y)
     }
 
-    pub fn getRotation(&self) -> f64 {
+    pub fn get_rotation(&self) -> f64 {
         self.rot
     }
     pub fn update(&mut self) {
-        let x = self.pos.x + self.vel.x + self.maxPos.x;
-        let y = self.pos.y + self.vel.y + self.maxPos.y;
-        self.pos.x = x % self.maxPos.x;
-        self.pos.y = y % self.maxPos.y;
+        let x = self.pos.x + self.vel.x + self.max_pos.x;
+        let y = self.pos.y + self.vel.y + self.max_pos.y;
+        self.pos.x = x % self.max_pos.x;
+        self.pos.y = y % self.max_pos.y;
 
     }
 

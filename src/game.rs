@@ -19,11 +19,6 @@ pub struct Size {
     pub height: f64,
 }
 
-pub struct Position {
-    x: f64,
-    y: f64,
-}
-
 /// Stores Game state.
 pub struct Game {
     player: player::Player,
@@ -34,26 +29,12 @@ impl Game {
         Game { player: player::Player::new() }
     }
 
-    fn wrap(k: &mut f64, bound: f64) {
-        if *k < 0.0 {
-            *k += bound;
-        } else if *k >= bound {
-            *k -= bound;
-        }
-    }
-
-    /// Wraps a position within a Size (e.g. the Window size).
-    fn wrap_position(position: &mut Position, size: &Size) {
-        Self::wrap(&mut position.x, size.width);
-        Self::wrap(&mut position.y, size.height);
-    }
-
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: &Size) {
-        self.player.setWindowSize(window_size.width, window_size.height);
+        self.player.set_window_size(window_size.width, window_size.height);
         while let Some(event) = window.next() {
             //Self::wrap_position(&mut self.position, window_size);
-            let (x, y) = self.player.getPosition();
-            let rot = self.player.getRotation();
+            let (x, y) = self.player.get_position();
+            let rot = self.player.get_rotation();
             match event {
                 Input::Render(args) => {
                     self.player.update();
