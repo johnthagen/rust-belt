@@ -33,8 +33,7 @@ impl Game {
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: &Size) {
         self.player.set_window_size(window_size.width, window_size.height);
         while let Some(event) = window.next() {
-            let (x, y) = self.player.get_position();
-            let rot = self.player.get_rotation();
+            let (pos_x, pos_y) = self.player.pos();
             match event {
                 Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
@@ -42,8 +41,8 @@ impl Game {
                         polygon(color::CYAN,
                                 SHIP,
                                 context.transform
-                                    .trans(x, y)
-                                    .rot_rad(rot)
+                                    .trans(pos_x, pos_y)
+                                    .rot_rad(self.player.rot())
                                     // Without this trans(), rotation occurs around the
                                     // upper left corner rather than the center.
                                     .trans(-1.0 * SHIP_HEIGHT / 2.0, 0.0),
