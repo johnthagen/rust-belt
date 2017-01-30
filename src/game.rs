@@ -49,9 +49,9 @@ impl Game {
     }
 
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: &Size) {
+        self.player.setWindowSize(window_size.width, window_size.height);
         while let Some(event) = window.next() {
             //Self::wrap_position(&mut self.position, window_size);
-            self.player.setWindowSize(window_size.width, window_size.height);
             let (x, y) = self.player.getPosition();
             let rot = self.player.getRotation();
             match event {
