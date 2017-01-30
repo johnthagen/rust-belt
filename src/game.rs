@@ -5,6 +5,8 @@ use piston_window::{Button, clear, Input, Key, PistonWindow, polygon, Transforme
 
 use color;
 
+use player;
+
 const SHIP_HEIGHT: f64 = 16.0;
 const SHIP_WIDTH: f64 = 20.0;
 
@@ -24,18 +26,12 @@ pub struct Position {
 
 /// Stores Game state.
 pub struct Game {
-    position: Position,
-
-    /// Rotation in radians.
-    rotation: f64,
+    player: player::Player,
 }
 
 impl Game {
     pub fn new() -> Self {
-        Game {
-            position: Position { x: 10.0, y: 10.0 },
-            rotation: 0.0,
-        }
+        Game { player: player::Player::new() }
     }
 
     fn wrap(k: &mut f64, bound: f64) {
@@ -54,18 +50,21 @@ impl Game {
 
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: &Size) {
         while let Some(event) = window.next() {
-            Self::wrap_position(&mut self.position, window_size);
-
+            //Self::wrap_position(&mut self.position, window_size);
+            self.player.setWindowSize(window_size.width, window_size.height);
+            let (x, y) = self.player.getPosition();
+            let rot = self.player.getRotation();
             match event {
                 Input::Render(args) => {
+                    self.player.update();
                     opengl.draw(args.viewport(), |context, graphics| {
                         clear(color::BLACK, graphics);
                         polygon(color::CYAN,
                                 SHIP,
                                 context.transform
-                                    .trans(self.position.x,
-                                           self.position.y)
-                                    .rot_rad(self.rotation)
+                                    .trans(x,
+                                           y)
+                                    .rot_rad(rot)
                                     // Without this trans(), rotation occurs around the
                                     // upper left corner rather than the center.
                                     .trans(-1.0 * SHIP_HEIGHT / 2.0, 0.0),
@@ -75,12 +74,12 @@ impl Game {
 
                 Input::Press(Button::Keyboard(key)) => {
                     match key {
-                        Key::D => self.position.x += 1.0,
-                        Key::A => self.position.x -= 1.0,
-                        Key::S => self.position.y += 1.0,
-                        Key::W => self.position.y -= 1.0,
-                        Key::Q => self.rotation -= 0.1,
-                        Key::E => self.rotation += 0.1,
+                        Key::D => self.player.rotate_cw(),
+                        Key::A => self.player.rotate_ccw(),
+                        Key::S => self.player.fire_rev_boosters(),
+                        Key::W => self.player.fire_boosters(),
+                        //Key::Q => self.rotation -= 0.1,
+                        //Key::E => self.rotation += 0.1,
                         Key::X => break,
                         _ => {}
                     }
