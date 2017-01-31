@@ -41,8 +41,6 @@ impl Game {
         }
     }
 
-    // TODO: Use `args.dt`
-    #[allow(unused_variables)]
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: &Size) {
         self.player.set_window_size(window_size.width, window_size.height);
         while let Some(event) = window.next() {
@@ -65,16 +63,16 @@ impl Game {
 
                 Input::Update(args) => {
                     if self.actions.rotate_cw {
-                        self.player.rotate_cw()
+                        self.player.rotate_cw(args.dt)
                     }
                     if self.actions.rotate_ccw {
-                        self.player.rotate_ccw()
+                        self.player.rotate_ccw(args.dt)
                     }
                     if self.actions.fire_rev_boosters {
-                        self.player.fire_rev_boosters()
+                        self.player.fire_rev_boosters(args.dt)
                     }
                     if self.actions.fire_boosters {
-                        self.player.fire_boosters()
+                        self.player.fire_boosters(args.dt)
                     }
                     self.player.update();
                 }
