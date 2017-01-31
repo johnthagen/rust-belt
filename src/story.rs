@@ -120,9 +120,8 @@ pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, glyph_cache: &mut
             }
 
             Input::Press(Button::Keyboard(key)) => {
-                match key {
-                    Key::Space => break,
-                    _ => {}
+                if key == Key::Space {
+                    break;
                 }
             }
 

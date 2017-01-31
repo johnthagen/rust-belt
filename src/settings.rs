@@ -44,8 +44,8 @@ pub fn run(window: &mut PistonWindow,
                 const VOLUME_STEP: f64 = 0.1;
 
                 match key {
-                    Key::D => *volume = *volume + VOLUME_STEP,
-                    Key::A => *volume = *volume - VOLUME_STEP,
+                    Key::D => *volume += VOLUME_STEP,
+                    Key::A => *volume -= VOLUME_STEP,
                     Key::Space => break,
                     _ => {}
                 }
