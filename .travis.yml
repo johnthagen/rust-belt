@@ -49,3 +49,6 @@ script:
       export PATH=$PATH:~/.cargo/bin &&
       cargo fmt -- --write-mode diff;
     fi'
+
+notifications:
+  email: false
