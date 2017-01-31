@@ -21,11 +21,24 @@ pub struct Size {
 /// Stores Game state.
 pub struct Game {
     player: player::Player,
+    actions: Actions
+}
+
+/// Currently active user actions.
+#[derive(Default)]
+pub struct Actions {
+    rotate_cw: bool,
+    rotate_ccw: bool,
+    fire_boosters: bool,
+    fire_rev_boosters: bool,
 }
 
 impl Game {
     pub fn new() -> Self {
-        Game { player: player::Player::new() }
+        Game {
+            player: player::Player::new(),
+            actions: Actions::default()
+        }
     }
 
     // TODO: Use `args.dt`
@@ -51,16 +64,38 @@ impl Game {
                 }
 
                 Input::Update(args) => {
+                    if self.actions.rotate_cw {
+                        self.player.rotate_cw()
+                    }
+                    if self.actions.rotate_ccw {
+                        self.player.rotate_ccw()
+                    }
+                    if self.actions.fire_rev_boosters {
+                        self.player.fire_rev_boosters()
+                    }
+                    if self.actions.fire_boosters {
+                        self.player.fire_boosters()
+                    }
                     self.player.update();
                 }
 
                 Input::Press(Button::Keyboard(key)) => {
                     match key {
-                        Key::D => self.player.rotate_cw(),
-                        Key::A => self.player.rotate_ccw(),
-                        Key::S => self.player.fire_rev_boosters(),
-                        Key::W => self.player.fire_boosters(),
+                        Key::D => self.actions.rotate_cw = true,
+                        Key::A => self.actions.rotate_ccw = true,
+                        Key::S => self.actions.fire_rev_boosters = true,
+                        Key::W => self.actions.fire_boosters = true,
                         Key::X => break,
+                        _ => {}
+                    }
+                }
+
+                Input::Release(Button::Keyboard(key)) => {
+                    match key {
+                        Key::D => self.actions.rotate_cw = false,
+                        Key::A => self.actions.rotate_ccw = false,
+                        Key::S => self.actions.fire_rev_boosters = false,
+                        Key::W => self.actions.fire_boosters = false,
                         _ => {}
                     }
                 }
