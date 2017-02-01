@@ -93,6 +93,7 @@ $ cargo run --release
 # Maintainers
 * [@johnthagen](https://github.com/johnthagen)
 * [@theandrewdavis](https://github.com/theandrewdavis)
+* [@mcdenhoed](https://github.com/mcdenhoed)
 
 Special thanks to [@aochagavia](https://github.com/aochagavia) for 
 [rocket](https://github.com/aochagavia/rocket), which provided many examples to pull from.
