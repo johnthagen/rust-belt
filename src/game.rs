@@ -21,7 +21,7 @@ pub struct Size {
 /// Stores Game state.
 pub struct Game {
     player: player::Player,
-    actions: Actions
+    actions: Actions,
 }
 
 /// Currently active user actions.
@@ -37,7 +37,7 @@ impl Game {
     pub fn new() -> Self {
         Game {
             player: player::Player::new(),
-            actions: Actions::default()
+            actions: Actions::default(),
         }
     }
 
