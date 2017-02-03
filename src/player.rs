@@ -12,8 +12,8 @@ pub struct Player {
     rot: f64,
 }
 
-const ROTATION_INCREMENT: f64 = 0.1;
-const THRUST_INCREMENT: f64 = 0.1;
+const ROTATION_INCREMENT: f64 = 5.0;
+const THRUST_INCREMENT: f64 = 5.0;
 
 impl Player {
     pub fn new() -> Player {
@@ -53,24 +53,24 @@ impl Player {
         self.rot += rot;
     }
 
-    pub fn rotate_cw(&mut self) {
-        self.rotate(ROTATION_INCREMENT)
+    pub fn rotate_cw(&mut self, delta: f64) {
+        self.rotate(ROTATION_INCREMENT * delta)
     }
 
-    pub fn rotate_ccw(&mut self) {
-        self.rotate(-1.0 * ROTATION_INCREMENT)
+    pub fn rotate_ccw(&mut self, delta: f64) {
+        self.rotate(-1.0 * ROTATION_INCREMENT * delta)
     }
 
-    pub fn fire_boosters(&mut self) {
-        let boost_x = self.rot.cos() * THRUST_INCREMENT;
-        let boost_y = self.rot.sin() * THRUST_INCREMENT;
+    pub fn fire_boosters(&mut self, delta: f64) {
+        let boost_x = self.rot.cos() * THRUST_INCREMENT * delta;
+        let boost_y = self.rot.sin() * THRUST_INCREMENT * delta;
         self.vel.x += boost_x;
         self.vel.y += boost_y;
     }
 
-    pub fn fire_rev_boosters(&mut self) {
-        let boost_x = self.rot.cos() * THRUST_INCREMENT;
-        let boost_y = self.rot.sin() * THRUST_INCREMENT;
+    pub fn fire_rev_boosters(&mut self, delta: f64) {
+        let boost_x = self.rot.cos() * THRUST_INCREMENT * delta;
+        let boost_y = self.rot.sin() * THRUST_INCREMENT * delta;
         self.vel.x -= boost_x;
         self.vel.y -= boost_y;
     }
