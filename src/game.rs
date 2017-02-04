@@ -1,7 +1,7 @@
 //! Defines the game component.
 
 use opengl_graphics::GlGraphics;
-use piston_window::{Button, clear, Input, Key, PistonWindow, polygon, Transformed, types};
+use piston_window::{Button, clear, Input, Key, PistonWindow, polygon, Transformed, types, Size};
 
 use color;
 use player;
@@ -11,12 +11,6 @@ const SHIP_WIDTH: f64 = 20.0;
 
 const SHIP: &'static types::Triangle =
     &[[0.0, -1.0 * SHIP_HEIGHT / 2.0], [SHIP_WIDTH, 0.0], [0.0, SHIP_HEIGHT / 2.0]];
-
-#[derive(Clone, Default)]
-pub struct Size {
-    pub width: f64,
-    pub height: f64,
-}
 
 /// Stores Game state.
 pub struct Game {
@@ -41,7 +35,7 @@ impl Game {
         }
     }
 
-    pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: &Size) {
+    pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: Size) {
         self.player.set_window_size(window_size.width, window_size.height);
         while let Some(event) = window.next() {
             let (pos_x, pos_y) = self.player.pos();
