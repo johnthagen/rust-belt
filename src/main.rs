@@ -4,6 +4,8 @@ extern crate music;
 
 mod color;
 mod game;
+mod actor;
+mod enemy;
 mod player;
 mod menu;
 mod settings;

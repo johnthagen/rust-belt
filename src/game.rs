@@ -5,6 +5,7 @@ use piston_window::{Button, clear, Input, Key, PistonWindow, polygon, Transforme
 
 use color;
 use player;
+use enemy;
 
 const SHIP_HEIGHT: f64 = 16.0;
 const SHIP_WIDTH: f64 = 20.0;
@@ -41,10 +42,21 @@ impl Game {
         }
     }
 
+
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: &Size) {
         self.player.set_window_size(window_size.width, window_size.height);
+
+        let mut test_enemy = enemy::Enemy::new(500.0,
+                                               500.0,
+                                               window_size.width,
+                                               window_size.height,
+                                               0.0,
+                                               0.0,
+                                               0.0);
         while let Some(event) = window.next() {
-            let (pos_x, pos_y) = self.player.pos();
+            let (player_x, player_y) = self.player.pos();
+            let (enemy_x, enemy_y) = test_enemy.pos();
+
             match event {
                 Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
@@ -52,13 +64,24 @@ impl Game {
                         polygon(color::CYAN,
                                 SHIP,
                                 context.transform
-                                    .trans(pos_x, pos_y)
+                                    .trans(player_x, player_y)
                                     .rot_rad(self.player.rot())
                                     // Without this trans(), rotation occurs around the
                                     // upper left corner rather than the center.
                                     .trans(-1.0 * SHIP_HEIGHT / 2.0, 0.0),
                                 graphics);
+                        polygon(color::MAGENTA,
+                                SHIP,
+                                context.transform
+                                    .trans(enemy_x, enemy_y)
+                                    .rot_rad(test_enemy.rot())
+                                    // Without this trans(), rotation occurs around the
+                                    // upper left corner rather than the center.
+                                    .trans(-1.0 * SHIP_HEIGHT / 2.0, 0.0),
+                                graphics);
+
                     });
+
                 }
 
                 Input::Update(args) => {
@@ -75,6 +98,7 @@ impl Game {
                         self.player.fire_boosters(args.dt)
                     }
                     self.player.update();
+                    test_enemy.update(args.dt, player_x, player_y);
                 }
 
                 Input::Press(Button::Keyboard(key)) => {
