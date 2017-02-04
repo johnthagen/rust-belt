@@ -1,4 +1,5 @@
 //! Defines the player component.
+use std::f64;
 
 pub struct Vect {
     x: f64,
@@ -14,6 +15,7 @@ pub struct Player {
 
 const ROTATION_INCREMENT: f64 = 5.0;
 const THRUST_INCREMENT: f64 = 5.0;
+const PI_TIMES_2: f64 = f64::consts::PI * 2.0;
 
 impl Player {
     pub fn new() -> Player {
@@ -50,7 +52,7 @@ impl Player {
     }
 
     fn rotate(&mut self, rot: f64) {
-        self.rot += rot;
+        self.rot = (self.rot + rot) % PI_TIMES_2;
     }
 
     pub fn rotate_cw(&mut self, delta: f64) {
