@@ -76,12 +76,12 @@ impl Actor {
         let mut diff_y = dest_y - my_y;
         if diff_x > self.max_pos.x / 2.0 {
             diff_x -= self.max_pos.x;
-        }else if diff_x < -self.max_pos.x / 2.0 {
+        } else if diff_x < -self.max_pos.x / 2.0 {
             diff_x += self.max_pos.x;
         }
         if diff_y > self.max_pos.y / 2.0 {
             diff_y -= self.max_pos.y;
-        }else if diff_y < -self.max_pos.y / 2.0 {
+        } else if diff_y < -self.max_pos.y / 2.0 {
             diff_y += self.max_pos.y;
         }
         let mut angle_to_point = (diff_y / diff_x).atan();
