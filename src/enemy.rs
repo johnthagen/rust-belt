@@ -20,7 +20,7 @@ impl Enemy {
                -> Enemy {
         Enemy { actor: Actor::new(pos_x, pos_y, width, height, vel_x, vel_y, rot) }
     }
-    #[-D dead-code]
+    #[allow(dead_code)]
     pub fn set_window_size(&mut self, width: f64, height: f64) {
         self.actor.set_window_size(width, height)
     }
@@ -68,7 +68,7 @@ impl Enemy {
         self.actor.fire_boosters(delta / 2.0)
     }
 
-    #[-D dead-code]
+    #[allow(dead_code)]
     fn fire_rev_boosters(&mut self, delta: f64) {
         self.actor.fire_rev_boosters(delta / 2.0)
     }
