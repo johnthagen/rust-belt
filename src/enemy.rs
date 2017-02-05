@@ -44,7 +44,7 @@ impl Enemy {
         if (angle_diff > -PI && angle_diff < -PI_OVER_16) ||
            (angle_diff < PI_TIMES_2 && angle_diff > PI) {
             self.rotate_ccw(delta);
-        } else if angle_diff < PI && angle_diff > PI_OVER_16{
+        } else if angle_diff < PI && angle_diff > PI_OVER_16 {
             self.rotate_cw(delta);
         } else {
 
@@ -57,18 +57,18 @@ impl Enemy {
     }
 
     fn rotate_cw(&mut self, delta: f64) {
-        self.actor.rotate_cw(delta/2.0)
+        self.actor.rotate_cw(delta / 2.0)
     }
 
     fn rotate_ccw(&mut self, delta: f64) {
-        self.actor.rotate_ccw(delta/2.0)
+        self.actor.rotate_ccw(delta / 2.0)
     }
 
     fn fire_boosters(&mut self, delta: f64) {
-        self.actor.fire_boosters(delta/2.0)
+        self.actor.fire_boosters(delta / 2.0)
     }
 
     fn fire_rev_boosters(&mut self, delta: f64) {
-        self.actor.fire_rev_boosters(delta/2.0)
+        self.actor.fire_rev_boosters(delta / 2.0)
     }
 }

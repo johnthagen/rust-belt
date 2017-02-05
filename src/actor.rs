@@ -93,7 +93,7 @@ impl Actor {
         } else if diff_x < 0.0 {
             angle_to_point += PI;
         }
-        return angle_to_point;
+        angle_to_point
     }
     pub fn rotate_cw(&mut self, delta: f64) {
         self.rotate(ROTATION_INCREMENT * delta)
