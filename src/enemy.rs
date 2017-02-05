@@ -48,7 +48,7 @@ impl Enemy {
             self.rotate_cw(delta);
         } else {
 
-            self.fire_boosters(delta / 8.0);
+            self.fire_boosters(delta);
         }
 
         //self.rotate_cw(delta);
@@ -57,18 +57,18 @@ impl Enemy {
     }
 
     fn rotate_cw(&mut self, delta: f64) {
-        self.actor.rotate_cw(delta)
+        self.actor.rotate_cw(delta/2.0)
     }
 
     fn rotate_ccw(&mut self, delta: f64) {
-        self.actor.rotate_ccw(delta)
+        self.actor.rotate_ccw(delta/2.0)
     }
 
     fn fire_boosters(&mut self, delta: f64) {
-        self.actor.fire_boosters(delta)
+        self.actor.fire_boosters(delta/2.0)
     }
 
     fn fire_rev_boosters(&mut self, delta: f64) {
-        self.actor.fire_rev_boosters(delta)
+        self.actor.fire_rev_boosters(delta/2.0)
     }
 }
