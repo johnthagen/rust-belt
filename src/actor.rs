@@ -72,8 +72,18 @@ impl Actor {
     pub fn get_angle_to_point(&self, dest_x: f64, dest_y: f64) -> f64 {
 
         let (my_x, my_y) = self.pos();
-        let diff_x = dest_x - my_x;
-        let diff_y = dest_y - my_y;
+        let mut diff_x = dest_x - my_x;
+        let mut diff_y = dest_y - my_y;
+        if diff_x > self.max_pos.x/2.0{
+            diff_x -= self.max_pos.x;
+        }else if diff_x < -self.max_pos.x/2.0{
+            diff_x += self.max_pos.x;
+        }
+        if diff_y > self.max_pos.y/2.0{
+            diff_y -= self.max_pos.y;
+        }else if diff_y < -self.max_pos.y/2.0{
+            diff_y += self.max_pos.y;
+        }
         let mut angle_to_point = (diff_y / diff_x).atan();
         if diff_y < 0.0 {
             angle_to_point += PI;
