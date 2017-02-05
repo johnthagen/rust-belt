@@ -1,4 +1,5 @@
 //! Defines the game component.
+use std::f64;
 
 use opengl_graphics::GlGraphics;
 use piston_window::{Button, clear, Input, Key, PistonWindow, polygon, Transformed, types, Size};
@@ -8,9 +9,13 @@ use player;
 
 const SHIP_HEIGHT: f64 = 16.0;
 const SHIP_WIDTH: f64 = 20.0;
-
 const SHIP: &'static types::Triangle =
     &[[0.0, -1.0 * SHIP_HEIGHT / 2.0], [SHIP_WIDTH, 0.0], [0.0, SHIP_HEIGHT / 2.0]];
+
+const BOOSTER_HEIGHT: f64 = 8.0;
+const BOOSTER_WIDTH: f64 = 10.0;
+const BOOSTER: &'static types::Triangle =
+    &[[0.0, -1.0 * BOOSTER_HEIGHT / 2.0], [BOOSTER_WIDTH, 0.0], [0.0, BOOSTER_HEIGHT / 2.0]];
 
 /// Stores Game state.
 pub struct Game {
@@ -43,6 +48,40 @@ impl Game {
                 Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
                         clear(color::BLACK, graphics);
+                        if self.actions.fire_boosters {
+                            polygon(color::DIM_RED,
+                                    BOOSTER,
+                                    context.transform
+                                        .trans(pos_x, pos_y)
+                                        .rot_rad(self.player.rot() + f64::consts::PI)
+                                        .trans(BOOSTER_HEIGHT, 0.0),
+                                    graphics);
+                        }
+                        if self.actions.fire_rev_boosters {
+                            polygon(color::DIM_RED,
+                                    BOOSTER,
+                                    context.transform
+                                        .trans(pos_x, pos_y)
+                                        .rot_rad(self.player.rot())
+                                        .trans(SHIP_HEIGHT - BOOSTER_HEIGHT, 0.0),
+                                    graphics);
+                        }
+                        if self.actions.rotate_cw {
+                            polygon(color::DIM_RED,
+                                    BOOSTER,
+                                    context.transform
+                                        .trans(pos_x, pos_y)
+                                        .rot_rad(self.player.rot() - f64::consts::FRAC_PI_3),
+                                    graphics);
+                        }
+                        if self.actions.rotate_ccw {
+                            polygon(color::DIM_RED,
+                                    BOOSTER,
+                                    context.transform
+                                        .trans(pos_x, pos_y)
+                                        .rot_rad(self.player.rot() + f64::consts::FRAC_PI_3),
+                                    graphics);
+                        }
                         polygon(color::CYAN,
                                 SHIP,
                                 context.transform
