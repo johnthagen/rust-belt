@@ -3,6 +3,7 @@ extern crate opengl_graphics;
 extern crate music;
 
 mod color;
+mod drawable;
 mod game;
 mod player;
 mod menu;

@@ -1,6 +1,12 @@
 //! Defines the player component.
 use std::f64;
 
+use opengl_graphics::GlGraphics;
+use piston_window::{Context, polygon, Transformed, types};
+
+use color;
+use drawable::Drawable;
+
 pub struct Vect {
     x: f64,
     y: f64,
@@ -11,6 +17,16 @@ pub struct Player {
     max_pos: Vect,
     vel: Vect,
     rot: f64,
+    actions: Actions,
+}
+
+/// Currently active user actions.
+#[derive(Default)]
+struct Actions {
+    rotate_cw: bool,
+    rotate_ccw: bool,
+    fire_boosters: bool,
+    fire_rev_boosters: bool,
 }
 
 const ROTATION_INCREMENT: f64 = 5.0;
@@ -27,6 +43,7 @@ impl Player {
             },
             vel: Vect { x: 0.0, y: 0.0 },
             rot: 0.0,
+            actions: Actions::default(),
         }
     }
 
@@ -48,7 +65,6 @@ impl Player {
         let y = self.pos.y + self.vel.y + self.max_pos.y;
         self.pos.x = x % self.max_pos.x;
         self.pos.y = y % self.max_pos.y;
-
     }
 
     fn rotate(&mut self, rot: f64) {
@@ -75,5 +91,63 @@ impl Player {
         let boost_y = self.rot.sin() * THRUST_INCREMENT * delta;
         self.vel.x -= boost_x;
         self.vel.y -= boost_y;
+    }
+}
+
+const SHIP_HEIGHT: f64 = 16.0;
+const SHIP_WIDTH: f64 = 20.0;
+const SHIP: &'static types::Triangle =
+&[[0.0, -1.0 * SHIP_HEIGHT / 2.0], [SHIP_WIDTH, 0.0], [0.0, SHIP_HEIGHT / 2.0]];
+
+const BOOSTER_HEIGHT: f64 = 8.0;
+const BOOSTER_WIDTH: f64 = 10.0;
+const BOOSTER: &'static types::Triangle =
+&[[0.0, -1.0 * BOOSTER_HEIGHT / 2.0], [BOOSTER_WIDTH, 0.0], [0.0, BOOSTER_HEIGHT / 2.0]];
+
+impl Drawable for Player {
+    fn draw(&self, context: Context, graphics: &mut GlGraphics) {
+        //        if self.actions.fire_boosters {
+        //            polygon(color::DIM_RED,
+        //                    BOOSTER,
+        //                    context.transform
+        //                        .trans(pos_x, pos_y)
+        //                        .rot_rad(self.player.rot() + f64::consts::PI)
+        //                        .trans(BOOSTER_HEIGHT, 0.0),
+        //                    graphics);
+        //        }
+        //        if self.actions.fire_rev_boosters {
+        //            polygon(color::DIM_RED,
+        //                    BOOSTER,
+        //                    context.transform
+        //                        .trans(pos_x, pos_y)
+        //                        .rot_rad(self.player.rot())
+        //                        .trans(SHIP_HEIGHT - BOOSTER_HEIGHT, 0.0),
+        //                    graphics);
+        //        }
+        //        if self.actions.rotate_cw {
+        //            polygon(color::DIM_RED,
+        //                    BOOSTER,
+        //                    context.transform
+        //                        .trans(pos_x, pos_y)
+        //                        .rot_rad(self.player.rot() - f64::consts::FRAC_PI_3),
+        //                    graphics);
+        //        }
+        //        if self.actions.rotate_ccw {
+        //            polygon(color::DIM_RED,
+        //                    BOOSTER,
+        //                    context.transform
+        //                        .trans(pos_x, pos_y)
+        //                        .rot_rad(self.player.rot() + f64::consts::FRAC_PI_3),
+        //                    graphics);
+        //        }
+        polygon(color::CYAN,
+                SHIP,
+                context.transform
+                    .trans(self.pos.x, self.pos.y)
+                    .rot_rad(self.rot())
+                    // Without this trans(), rotation occurs around the
+                    // upper left corner rather than the center.
+                    .trans(-1.0 * SHIP_HEIGHT / 2.0, 0.0),
+                graphics);
     }
 }
