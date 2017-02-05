@@ -2,7 +2,7 @@
 use std::f64;
 
 use opengl_graphics::GlGraphics;
-use piston_window::{Button, clear, Input, Key, PistonWindow, polygon, Transformed, types};
+use piston_window::{Button, clear, Input, Key, PistonWindow, polygon, Transformed, types, Size};
 
 use color;
 use player;
@@ -16,12 +16,6 @@ const BOOSTER_HEIGHT: f64 = 8.0;
 const BOOSTER_WIDTH: f64 = 10.0;
 const BOOSTER: &'static types::Triangle =
     &[[0.0, -1.0 * BOOSTER_HEIGHT / 2.0], [BOOSTER_WIDTH, 0.0], [0.0, BOOSTER_HEIGHT / 2.0]];
-
-#[derive(Clone, Default)]
-pub struct Size {
-    pub width: f64,
-    pub height: f64,
-}
 
 /// Stores Game state.
 pub struct Game {
@@ -46,7 +40,7 @@ impl Game {
         }
     }
 
-    pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: &Size) {
+    pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: Size) {
         self.player.set_window_size(window_size.width, window_size.height);
         while let Some(event) = window.next() {
             let (pos_x, pos_y) = self.player.pos();

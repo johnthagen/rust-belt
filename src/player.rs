@@ -30,9 +30,9 @@ impl Player {
         }
     }
 
-    pub fn set_window_size(&mut self, width: f64, height: f64) {
-        self.max_pos.x = width;
-        self.max_pos.y = height;
+    pub fn set_window_size(&mut self, width: u32, height: u32) {
+        self.max_pos.x = width as f64;
+        self.max_pos.y = height as f64;
     }
 
     pub fn pos(&self) -> (f64, f64) {
