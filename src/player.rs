@@ -1,6 +1,7 @@
 //! Defines the player component.
 use std::f64;
 
+
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, polygon, Size, Transformed, types, UpdateArgs};
 
@@ -8,14 +9,16 @@ use color;
 use drawable::Drawable;
 use updateable::Updateable;
 
-pub struct Vect {
+
+pub struct Vector {
     x: f64,
     y: f64,
 }
 
 pub struct Player {
-    pos: Vect,
-    vel: Vect,
+    pos: Vector,
+    max_pos: Vector,
+    vel: Vector,
     rot: f64,
     pub actions: Actions,
     window_size: Size,
@@ -37,8 +40,12 @@ const PI_TIMES_2: f64 = f64::consts::PI * 2.0;
 impl Player {
     pub fn new(window_size: Size) -> Player {
         Player {
-            pos: Vect { x: 10.0, y: 10.0 },
-            vel: Vect { x: 0.0, y: 0.0 },
+            pos: Vector { x: 10.0, y: 10.0 },
+            max_pos: Vector {
+                x: 1000.0,
+                y: 1000.0,
+            },
+            vel: Vector { x: 0.0, y: 0.0 },
             rot: 0.0,
             actions: Actions::default(),
             window_size: window_size,
