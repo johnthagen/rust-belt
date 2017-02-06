@@ -1,12 +1,11 @@
 //! Defines the game component.
-use std::f64;
-
 use opengl_graphics::GlGraphics;
-use piston_window::{Button, clear, Input, Key, PistonWindow, polygon, Transformed, types, Size};
+use piston_window::{Button, clear, Input, Key, PistonWindow, Size};
 
 use color;
 use drawable::Drawable;
 use player;
+use updateable::Updateable;
 
 /// Stores Game state.
 pub struct Game {
@@ -14,14 +13,11 @@ pub struct Game {
 }
 
 impl Game {
-    pub fn new() -> Self {
-        Game {
-            player: player::Player::new(),
-        }
+    pub fn new(window_size: Size) -> Self {
+        Game { player: player::Player::new(window_size) }
     }
 
-    pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: Size) {
-        self.player.set_window_size(window_size.width, window_size.height);
+    pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics) {
         while let Some(event) = window.next() {
             match event {
                 Input::Render(args) => {
@@ -32,19 +28,7 @@ impl Game {
                 }
 
                 Input::Update(args) => {
-                    if self.player.actions.rotate_cw {
-                        self.player.rotate_cw(args.dt)
-                    }
-                    if self.player.actions.rotate_ccw {
-                        self.player.rotate_ccw(args.dt)
-                    }
-                    if self.player.actions.fire_rev_boosters {
-                        self.player.fire_rev_boosters(args.dt)
-                    }
-                    if self.player.actions.fire_boosters {
-                        self.player.fire_boosters(args.dt)
-                    }
-                    self.player.update();
+                    self.player.update(args);
                 }
 
                 Input::Press(Button::Keyboard(key)) => {
