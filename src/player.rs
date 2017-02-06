@@ -1,15 +1,15 @@
 //! Defines the player component.
 use std::f64;
 
-pub struct Vect {
+pub struct Vector {
     x: f64,
     y: f64,
 }
 
 pub struct Player {
-    pos: Vect,
-    max_pos: Vect,
-    vel: Vect,
+    pos: Vector,
+    max_pos: Vector,
+    vel: Vector,
     rot: f64,
 }
 
@@ -20,12 +20,12 @@ const PI_TIMES_2: f64 = f64::consts::PI * 2.0;
 impl Player {
     pub fn new() -> Player {
         Player {
-            pos: Vect { x: 10.0, y: 10.0 },
-            max_pos: Vect {
+            pos: Vector { x: 10.0, y: 10.0 },
+            max_pos: Vector {
                 x: 1000.0,
                 y: 1000.0,
             },
-            vel: Vect { x: 0.0, y: 0.0 },
+            vel: Vector { x: 0.0, y: 0.0 },
             rot: 0.0,
         }
     }
