@@ -17,7 +17,6 @@ pub struct Vector {
 
 pub struct Player {
     pos: Vector,
-    max_pos: Vector,
     vel: Vector,
     rot: f64,
     pub actions: Actions,
@@ -41,10 +40,6 @@ impl Player {
     pub fn new(window_size: Size) -> Player {
         Player {
             pos: Vector { x: 10.0, y: 10.0 },
-            max_pos: Vector {
-                x: 1000.0,
-                y: 1000.0,
-            },
             vel: Vector { x: 0.0, y: 0.0 },
             rot: 0.0,
             actions: Actions::default(),
