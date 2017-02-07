@@ -3,11 +3,13 @@ extern crate opengl_graphics;
 extern crate music;
 
 mod color;
+mod drawable;
 mod game;
 mod player;
 mod menu;
 mod settings;
 mod story;
+mod updateable;
 
 use piston_window::{OpenGL, PistonWindow, WindowSettings, Size};
 use opengl_graphics::GlGraphics;
