@@ -38,8 +38,9 @@ Select to proceed with either the MSVC or GNU toolchain.
    (e.g. `C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\cl.exe`).
 3. [Download](https://www.libsdl.org/download-2.0.php) the latest SDL2 MSVC development library 
 (`SDL2-devel-2.0.x-VC.zip`).
-4. Unpack and copy all `.lib` files from `SDL2-devel-2.0.x-VC\SDL2-2.0.x\lib\x64\` into a folder 
-   and add that folder to the `LIB` system environment variable.
+4. Unpack and copy all `.lib` files from `SDL2-devel-2.0.x-VC\SDL2-2.0.x\lib\x64\` into a folder. 
+   If the `LIB` system environment variable does not exist, create it. Add that folder path to 
+   `LIB`.
 5. Copy `SDL2.dll` into the `rust-belt` project folder, next to `Cargo.toml`.
 6. [Download](https://www.libsdl.org/projects/SDL_mixer/) the latest SDL2_mixer MSVC development
    library (`SDL2_mixer-devel-2.0.x-VC.zip`).
@@ -56,9 +57,10 @@ Select to proceed with either the MSVC or GNU toolchain.
 3. In an MSYS2 terminal: `pacman --sync mingw-w64-x86_64-gcc`
 4. Add `C:\msys64\mingw64\bin` to system `PATH`.
 5. [Download](https://www.libsdl.org/download-2.0.php) the latest SDL2 MinGW development library 
-(`SDL2-devel-2.0.x-mingw.tar.gz`).
+   (`SDL2-devel-2.0.x-mingw.tar.gz`).
 6. Unpack and copy all `.lib` files from `SDL2-devel-2.0.x-mingw\SDL2-2.0.x\x86_64-w64-mingw32\lib`
-   into a folder and add that folder to the `LIBRARY_PATH` system environment variable.
+   into a folder. If the `LIBRARY_PATH` system environment variable does not exist, create it. Add 
+   that folder to `LIBRARY_PATH`.
 7. Copy `SDL2.dll` into the `rust-belt` project folder, next to `Cargo.toml`.
 8. [Download](https://www.libsdl.org/projects/SDL_mixer/) the latest SDL2_mixer MinGW development 
    library (`SDL2_mixer-devel-2.0.x-mingw.tar.gz`).
@@ -71,10 +73,10 @@ Select to proceed with either the MSVC or GNU toolchain.
 ## Mac OSX
 
 1. Install [Homebrew](http://brew.sh/) (by default this will install `gcc` via Xcode development 
-tools).
+   tools).
 2. `brew install sdl2`
 3. `brew install sdl2_mixer --with-flac --with-fluid-synth --with-libmikmod --with-libmodplug 
---with-libvorbis --with-smpeg2`
+   --with-libvorbis --with-smpeg2`
 
 ## Build and Run
 
