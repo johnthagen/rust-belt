@@ -4,7 +4,7 @@ use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
 use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, types, Transformed};
 
-use color::{self, ColoredText};
+use game::color::{self, ColoredText};
 
 fn render(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache) {
     const NARRATOR_COLOR: types::Color = color::WHITE;
