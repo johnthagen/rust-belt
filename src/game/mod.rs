@@ -2,10 +2,10 @@
 use opengl_graphics::GlGraphics;
 use piston_window::{Button, clear, Input, Key, PistonWindow, Size};
 
-use color;
-use drawable::Drawable;
-use player;
-use updateable::Updateable;
+pub mod color;
+mod models;
+
+use self::models::{Drawable, player, Updateable};
 
 /// Stores Game state.
 pub struct Game {
