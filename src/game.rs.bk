@@ -16,10 +16,8 @@ pub struct Game {
 
 impl Game {
     pub fn new(window_size: Size) -> Self {
-        Game {
-            player: player::Player::new(window_size),
-            enemy: enemy::Enemy::new(100.0, 100.0, 0.0, 0.0, 0.0, window_size),
-        }
+        Game { player: player::Player::new(window_size),
+            enemy: enemy::Enemy::new(100.0, 100.0, 0.0, 0.0, 0.0, window_size)}
     }
 
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics) {

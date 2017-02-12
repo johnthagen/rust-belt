@@ -3,7 +3,7 @@
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, Transformed};
+use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, Transformed, Size};
 
 use color::{self, ColoredText};
 use game;
@@ -86,7 +86,7 @@ fn render(context: Context,
 pub fn run(mut window: &mut PistonWindow,
            mut opengl: &mut GlGraphics,
            game_title: &'static str,
-           window_size: &game::Size) {
+           window_size: Size) {
     music::start::<Music, _>(|| {
         music::bind_file(Music::Menu, "./assets/The Last Ranger.mp3");
         music::bind_file(Music::Action, "./assets/Into the Field.mp3");
@@ -95,9 +95,9 @@ pub fn run(mut window: &mut PistonWindow,
         let mut glyph_cache = GlyphCache::new("./assets/FiraSans-Regular.ttf").unwrap();
 
         let mut menu_selection = MenuSelection::Play;
-        let mut volume = music::MAX_VOLUME;
+        let mut volume = music::MIN_VOLUME;
 
-        let menu_align = (window_size.width / 2.0) - 120.0;
+        let menu_align = (window_size.width / 2 - 120) as f64;
 
         while let Some(event) = window.next() {
             match event {
@@ -134,7 +134,7 @@ pub fn run(mut window: &mut PistonWindow,
                             match menu_selection {
                                 MenuSelection::Play => {
                                     music::play(&Music::Action, music::Repeat::Forever);
-                                    game::Game::new().run(&mut window, &mut opengl, window_size);
+                                    game::Game::new(window_size).run(&mut window, &mut opengl);
                                     music::play(&Music::Menu, music::Repeat::Forever);
                                 }
                                 MenuSelection::Story => {

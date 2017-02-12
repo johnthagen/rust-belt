@@ -7,6 +7,7 @@ pub const WHITE: types::Color = [1.0, 1.0, 1.0, 1.0];
 pub const CYAN: types::Color = [0.0, 1.0, 1.0, 1.0];
 pub const YELLOW: types::Color = [1.0, 1.0, 0.0, 1.0];
 pub const MAGENTA: types::Color = [1.0, 0.0, 1.0, 1.0];
+pub const DIM_RED: types::Color = [1.0, 0.0, 0.0, 0.5];
 
 pub struct ColoredText {
     pub color: types::Color,
