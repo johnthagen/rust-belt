@@ -5,8 +5,8 @@ use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
 use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, Transformed, Size};
 
-use color::{self, ColoredText};
 use game;
+use game::color::{self, ColoredText};
 use settings;
 use story;
 

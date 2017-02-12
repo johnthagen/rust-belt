@@ -5,15 +5,9 @@ use std::f64;
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, polygon, Size, Transformed, types, UpdateArgs};
 
-use color;
-use drawable::Drawable;
-use updateable::Updateable;
+use super::super::color;
+use super::{Drawable, Updateable, Vector};
 
-
-pub struct Vector {
-    x: f64,
-    y: f64,
-}
 
 pub struct Player {
     pos: Vector,
