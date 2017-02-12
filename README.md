@@ -78,6 +78,10 @@ Select to proceed with either the MSVC or GNU toolchain.
 3. `brew install sdl2_mixer --with-flac --with-fluid-synth --with-libmikmod --with-libmodplug 
    --with-libvorbis --with-smpeg2`
 
+## Ubuntu
+
+1. `sudo apt install libsdl2-dev libsdl2-mixer-dev`
+
 ## Build and Run
 
 To build:
