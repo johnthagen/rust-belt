@@ -10,11 +10,11 @@ use super::{Drawable, Updateable, Vector};
 
 
 pub struct Player {
-    pos: Vector,
-    vel: Vector,
-    rot: f64,
+    pub pos: Vector,
+    pub vel: Vector,
+    pub rot: f64,
     pub actions: Actions,
-    window_size: Size,
+    pub window_size: Size,
 }
 
 /// Currently active user actions.

@@ -1,11 +1,13 @@
 //! Traits and types common to models.
 
 pub mod player;
+pub mod bullet;
 
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs};
 
 /// Models an (x, y) coordinate value (such as position or velocity).
+#[derive(Copy, Clone)]
 pub struct Vector {
     x: f64,
     y: f64,

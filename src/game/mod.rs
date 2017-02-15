@@ -5,16 +5,17 @@ use piston_window::{Button, clear, Input, Key, PistonWindow, Size};
 pub mod color;
 mod models;
 
-use self::models::{Drawable, player, Updateable};
+use self::models::{Drawable, player, Updateable, bullet};
 
 /// Stores Game state.
 pub struct Game {
     player: player::Player,
+    bullets:  Vec<bullet::Bullet>,
 }
 
 impl Game {
     pub fn new(window_size: Size) -> Self {
-        Game { player: player::Player::new(window_size) }
+        Game { player: player::Player::new(window_size), bullets: Vec::new()}
     }
 
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics) {
@@ -24,11 +25,18 @@ impl Game {
                     opengl.draw(args.viewport(), |context, graphics| {
                         clear(color::BLACK, graphics);
                         self.player.draw(context, graphics);
+                        for bullet in &self.bullets{
+                            bullet.draw(context, graphics);
+                        }
                     });
                 }
 
                 Input::Update(args) => {
                     self.player.update(args);
+                    for bullet in &mut self.bullets{
+                        bullet.update(args);
+                    }
+                    self.bullets.retain(|ref x| x.ttl != 0);
                 }
 
                 Input::Press(Button::Keyboard(key)) => {
@@ -38,6 +46,7 @@ impl Game {
                         Key::S => self.player.actions.fire_rev_boosters = true,
                         Key::W => self.player.actions.fire_boosters = true,
                         Key::X => break,
+                        Key::Space => self.bullets.push(bullet::Bullet::new(self.player.pos, self.player.rot, &self.player.window_size)),
                         _ => {}
                     }
                 }
