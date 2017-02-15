@@ -10,12 +10,15 @@ use self::models::{Drawable, player, Updateable, bullet};
 /// Stores Game state.
 pub struct Game {
     player: player::Player,
-    bullets:  Vec<bullet::Bullet>,
+    bullets: Vec<bullet::Bullet>,
 }
 
 impl Game {
     pub fn new(window_size: Size) -> Self {
-        Game { player: player::Player::new(window_size), bullets: Vec::new()}
+        Game {
+            player: player::Player::new(window_size),
+            bullets: Vec::new(),
+        }
     }
 
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics) {
@@ -25,7 +28,7 @@ impl Game {
                     opengl.draw(args.viewport(), |context, graphics| {
                         clear(color::BLACK, graphics);
                         self.player.draw(context, graphics);
-                        for bullet in &self.bullets{
+                        for bullet in &self.bullets {
                             bullet.draw(context, graphics);
                         }
                     });
@@ -33,7 +36,7 @@ impl Game {
 
                 Input::Update(args) => {
                     self.player.update(args);
-                    for bullet in &mut self.bullets{
+                    for bullet in &mut self.bullets {
                         bullet.update(args);
                     }
                     self.bullets.retain(|ref x| x.ttl != 0);
@@ -46,7 +49,12 @@ impl Game {
                         Key::S => self.player.actions.fire_rev_boosters = true,
                         Key::W => self.player.actions.fire_boosters = true,
                         Key::X => break,
-                        Key::Space => self.bullets.push(bullet::Bullet::new(self.player.pos, self.player.rot, &self.player.window_size)),
+                        Key::Space => {
+                            self.bullets.push(bullet::Bullet::new(self.player.pos,
+                                                                  self.player.vel,
+                                                                  self.player.rot,
+                                                                  &self.player.window_size))
+                        }
                         _ => {}
                     }
                 }

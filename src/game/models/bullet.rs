@@ -16,10 +16,13 @@ pub struct Bullet {
 }
 
 impl Bullet {
-    pub fn new(position: Vector, direction: f64, window_size: &Size) -> Bullet {
+    pub fn new(position: Vector, velocity: Vector, direction: f64, window_size: &Size) -> Bullet {
         Bullet {
             pos: position,
-            vel: Vector{x: direction.cos(), y: direction.sin()},
+            vel: Vector {
+                x: direction.cos() + velocity.x,
+                y: direction.sin() + velocity.y,
+            },
             ttl: 200,
             window_size: *window_size,
         }
@@ -37,11 +40,13 @@ impl Updateable for Bullet {
     }
 }
 
-const BULLET: &'static types::Triangle =
-    &[[0.0, -1.0 * 8.0 / 2.0], [10.0, 0.0], [0.0, 8.0 / 2.0]];
+const BULLET: &'static types::Triangle = &[[0.0, -1.0 * 8.0 / 2.0], [10.0, 0.0], [0.0, 8.0 / 2.0]];
 
 impl Drawable for Bullet {
     fn draw(&self, context: Context, graphics: &mut GlGraphics) {
-        polygon(color::WHITE, BULLET, context.transform.trans(self.pos.x, self.pos.y), graphics)
+        polygon(color::WHITE,
+                BULLET,
+                context.transform.trans(self.pos.x, self.pos.y),
+                graphics)
     }
 }
