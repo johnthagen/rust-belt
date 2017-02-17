@@ -36,7 +36,6 @@ impl Bullet {
 }
 
 impl Updateable for Bullet {
-    #[allow(unused_variables)]
     fn update(&mut self, args: UpdateArgs) {
         let x = self.pos.x + self.vel.x + self.window_size.width as f64;
         let y = self.pos.y + self.vel.y + self.window_size.height as f64;
