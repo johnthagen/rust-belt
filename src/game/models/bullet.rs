@@ -1,4 +1,4 @@
-//! Defines the player component.
+//! Defines the bullet component.
 use std::f64;
 
 
