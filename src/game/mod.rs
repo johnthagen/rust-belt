@@ -39,7 +39,7 @@ impl Game {
                     for bullet in &mut self.bullets {
                         bullet.update(args);
                     }
-                    self.bullets.retain(|ref x| x.ttl > 0.0);
+                    self.bullets.retain(|x| x.ttl() > 0.0);
                 }
 
                 Input::Press(Button::Keyboard(key)) => {

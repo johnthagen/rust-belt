@@ -29,6 +29,10 @@ impl Bullet {
             window_size: window_size,
         }
     }
+
+    pub fn ttl(&self) -> f64 {
+        self.ttl
+    }
 }
 
 impl Updateable for Bullet {
