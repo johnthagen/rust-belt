@@ -15,15 +15,15 @@ pub struct Bullet {
     window_size: Size,
 }
 
-const SPEED_MULTIPLIER : f64 = 4.0;
+const SPEED_MULTIPLIER: f64 = 4.0;
 
 impl Bullet {
     pub fn new(position: Vector, velocity: Vector, direction: f64, window_size: Size) -> Bullet {
         Bullet {
             pos: position,
             vel: Vector {
-                x: SPEED_MULTIPLIER*direction.cos() + velocity.x,
-                y: SPEED_MULTIPLIER*direction.sin() + velocity.y,
+                x: SPEED_MULTIPLIER * direction.cos() + velocity.x,
+                y: SPEED_MULTIPLIER * direction.sin() + velocity.y,
             },
             ttl: 2.0,
             window_size: window_size,
@@ -42,7 +42,7 @@ impl Updateable for Bullet {
     }
 }
 
-const BULLET_DIAMETER: f64  = 3.0;
+const BULLET_DIAMETER: f64 = 3.0;
 const BULLET: types::Rectangle = [0.0, 0.0, BULLET_DIAMETER, BULLET_DIAMETER];
 
 impl Drawable for Bullet {
