@@ -24,6 +24,7 @@ pub struct Actions {
     pub rotate_ccw: bool,
     pub fire_boosters: bool,
     pub fire_rev_boosters: bool,
+    pub is_shooting: bool,
 }
 
 const ROTATION_INCREMENT: f64 = 5.0;
