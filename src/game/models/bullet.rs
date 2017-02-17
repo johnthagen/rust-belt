@@ -11,7 +11,7 @@ use super::{Drawable, Updateable, Vector};
 pub struct Bullet {
     pos: Vector,
     vel: Vector,
-    pub ttl: f64,
+    ttl: f64,
     window_size: Size,
 }
 
