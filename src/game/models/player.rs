@@ -10,11 +10,12 @@ use super::{Drawable, Updateable, Vector};
 
 
 pub struct Player {
-    pos: Vector,
-    vel: Vector,
-    rot: f64,
+    pub pos: Vector,
+    pub vel: Vector,
+    pub rot: f64,
     pub actions: Actions,
-    window_size: Size,
+    fire_cooldown: f64,
+    pub window_size: Size,
 }
 
 /// Currently active user actions.
@@ -24,6 +25,7 @@ pub struct Actions {
     pub rotate_ccw: bool,
     pub fire_boosters: bool,
     pub fire_rev_boosters: bool,
+    pub is_shooting: bool,
 }
 
 const ROTATION_INCREMENT: f64 = 5.0;
@@ -37,6 +39,7 @@ impl Player {
             vel: Vector { x: 0.0, y: 0.0 },
             rot: 0.0,
             actions: Actions::default(),
+            fire_cooldown: 0.0,
             window_size: window_size,
         }
     }
@@ -66,6 +69,14 @@ impl Player {
         self.vel.x -= boost_x;
         self.vel.y -= boost_y;
     }
+
+    pub fn reset_cooldown(&mut self) {
+        self.fire_cooldown = 0.25;
+    }
+
+    pub fn should_shoot(&self) -> bool {
+        self.fire_cooldown == 0.0 && self.actions.is_shooting
+    }
 }
 
 impl Updateable for Player {
@@ -86,6 +97,10 @@ impl Updateable for Player {
         }
         if self.actions.fire_boosters {
             self.fire_boosters(args.dt)
+        }
+
+        if self.fire_cooldown > 0.0 {
+            self.fire_cooldown = (self.fire_cooldown - args.dt).max(0.0);
         }
     }
 }
