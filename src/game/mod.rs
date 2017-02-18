@@ -36,7 +36,7 @@ impl Game {
 
                 Input::Update(args) => {
                     self.player.update(args);
-                    if self.player.actions.is_shooting == true && self.player.can_shoot() {
+                    if self.player.actions.is_shooting && self.player.can_shoot() {
                         self.bullets.push(bullet::Bullet::new(self.player.pos,
                                                               self.player.vel,
                                                               self.player.rot,
