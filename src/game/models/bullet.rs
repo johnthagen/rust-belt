@@ -15,15 +15,14 @@ pub struct Bullet {
     window_size: Size,
 }
 
-const SPEED_MULTIPLIER: f64 = 4.0;
-
 impl Bullet {
     pub fn new(position: Vector, velocity: Vector, direction: f64, window_size: Size) -> Bullet {
+        let speed_multiplier: f64 = 4.0;
         Bullet {
             pos: position,
             vel: Vector {
-                x: SPEED_MULTIPLIER * direction.cos() + velocity.x,
-                y: SPEED_MULTIPLIER * direction.sin() + velocity.y,
+                x: speed_multiplier * direction.cos() + velocity.x,
+                y: speed_multiplier * direction.sin() + velocity.y,
             },
             ttl: 2.0,
             window_size: window_size,

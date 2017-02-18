@@ -14,7 +14,7 @@ pub struct Player {
     pub vel: Vector,
     pub rot: f64,
     pub actions: Actions,
-    pub fire_cooldown: f64,
+    fire_cooldown: f64,
     pub window_size: Size,
 }
 
@@ -74,8 +74,8 @@ impl Player {
         self.fire_cooldown = 0.25;
     }
 
-    pub fn can_shoot(&self) -> bool {
-        self.fire_cooldown == 0.0
+    pub fn should_shoot(&self) -> bool {
+        self.fire_cooldown == 0.0 && self.actions.is_shooting
     }
 }
 

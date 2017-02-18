@@ -36,7 +36,7 @@ impl Game {
 
                 Input::Update(args) => {
                     self.player.update(args);
-                    if self.player.actions.is_shooting && self.player.can_shoot() {
+                    if self.player.should_shoot() {
                         self.bullets.push(bullet::Bullet::new(self.player.pos,
                                                               self.player.vel,
                                                               self.player.rot,
@@ -56,6 +56,7 @@ impl Game {
                         Key::S => self.player.actions.fire_rev_boosters = true,
                         Key::W => self.player.actions.fire_boosters = true,
                         Key::Space => self.player.actions.is_shooting = true,
+                        Key::X => break,
                         _ => {}
                     }
                 }
