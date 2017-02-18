@@ -36,11 +36,12 @@ impl Game {
 
                 Input::Update(args) => {
                     self.player.update(args);
-                    if self.player.actions.is_shooting == true {
+                    if self.player.actions.is_shooting == true && self.player.can_shoot() {
                         self.bullets.push(bullet::Bullet::new(self.player.pos,
                                                               self.player.vel,
                                                               self.player.rot,
-                                                              self.player.window_size))
+                                                              self.player.window_size));
+                        self.player.reset_cooldown();
                     }
                     for bullet in &mut self.bullets {
                         bullet.update(args);
