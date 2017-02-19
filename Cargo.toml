@@ -1,9 +1,10 @@
 [package]
 name = "rust-belt"
-version = "0.4.0"
+version = "0.5.0"
 authors = [
     "johnthagen <johnthagen@gmail.com>",
-    "theandrewdavis <theandrewdavis@gmail.com>"
+    "theandrewdavis <theandrewdavis@gmail.com>",
+    "mcdenhoed <mcdenhoed@gmail.com>",
 ]
 
 [dependencies]
