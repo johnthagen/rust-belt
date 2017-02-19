@@ -14,7 +14,7 @@ pub struct Player {
     pub vel: Vector,
     pub rot: f64,
     pub actions: Actions,
-    fire_cooldown: f64,
+    weapon_cooldown: f64,
     pub window_size: Size,
 }
 
@@ -43,7 +43,7 @@ impl Player {
             vel: Vector { x: 0.0, y: 0.0 },
             rot: 0.0,
             actions: Actions::default(),
-            fire_cooldown: 0.0,
+            weapon_cooldown: 0.0,
             window_size: window_size,
         }
     }
@@ -82,11 +82,11 @@ impl Player {
     }
 
     pub fn reset_cooldown(&mut self) {
-        self.fire_cooldown = 0.25;
+        self.weapon_cooldown = 0.25;
     }
 
     pub fn should_shoot(&self) -> bool {
-        self.fire_cooldown == 0.0 && self.actions.is_shooting
+        self.weapon_cooldown == 0.0 && self.actions.is_shooting
     }
 }
 
@@ -110,8 +110,8 @@ impl Updateable for Player {
             self.fire_forward_boosters(args.dt)
         }
 
-        if self.fire_cooldown > 0.0 {
-            self.fire_cooldown = (self.fire_cooldown - args.dt).max(0.0);
+        if self.weapon_cooldown > 0.0 {
+            self.weapon_cooldown = (self.weapon_cooldown - args.dt).max(0.0);
         }
     }
 }
