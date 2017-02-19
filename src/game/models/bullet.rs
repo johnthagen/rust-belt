@@ -44,11 +44,11 @@ impl Updateable for Bullet {
     }
 }
 
-const BULLET_DIAMETER: f64 = 3.0;
-const BULLET: types::Rectangle = [0.0, 0.0, BULLET_DIAMETER, BULLET_DIAMETER];
-
 impl Drawable for Bullet {
     fn draw(&self, context: Context, graphics: &mut GlGraphics) {
+        const BULLET_DIAMETER: f64 = 3.0;
+        const BULLET: types::Rectangle = [0.0, 0.0, BULLET_DIAMETER, BULLET_DIAMETER];
+
         ellipse(color::WHITE,
                 BULLET,
                 context.transform.trans(self.pos.x, self.pos.y),

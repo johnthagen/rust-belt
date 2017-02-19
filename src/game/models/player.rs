@@ -35,7 +35,6 @@ enum Direction {
 
 const ROTATION_INCREMENT: f64 = 5.0;
 const THRUST_INCREMENT: f64 = 5.0;
-const PI_TIMES_2: f64 = f64::consts::PI * 2.0;
 
 impl Player {
     pub fn new(window_size: Size) -> Player {
@@ -50,7 +49,8 @@ impl Player {
     }
 
     fn rotate(&mut self, rot: f64) {
-        self.rot = (self.rot + rot) % PI_TIMES_2;
+        const TAU: f64 = 2.0 * f64::consts::PI;
+        self.rot = (self.rot + rot) % TAU;
     }
 
     fn rotate_cw(&mut self, delta: f64) {
@@ -116,18 +116,18 @@ impl Updateable for Player {
     }
 }
 
-const SHIP_HEIGHT: f64 = 16.0;
-const SHIP_WIDTH: f64 = 20.0;
-const SHIP: &'static types::Triangle =
-    &[[0.0, -1.0 * SHIP_HEIGHT / 2.0], [SHIP_WIDTH, 0.0], [0.0, SHIP_HEIGHT / 2.0]];
-
-const BOOSTER_HEIGHT: f64 = 8.0;
-const BOOSTER_WIDTH: f64 = 10.0;
-const BOOSTER: &'static types::Triangle =
-    &[[0.0, -1.0 * BOOSTER_HEIGHT / 2.0], [BOOSTER_WIDTH, 0.0], [0.0, BOOSTER_HEIGHT / 2.0]];
 
 impl Drawable for Player {
     fn draw(&self, context: Context, graphics: &mut GlGraphics) {
+        const SHIP_HEIGHT: f64 = 16.0;
+        const SHIP_WIDTH: f64 = 20.0;
+        const SHIP: &'static types::Triangle =
+            &[[0.0, -1.0 * SHIP_HEIGHT / 2.0], [SHIP_WIDTH, 0.0], [0.0, SHIP_HEIGHT / 2.0]];
+        const BOOSTER_HEIGHT: f64 = 8.0;
+        const BOOSTER_WIDTH: f64 = 10.0;
+        const BOOSTER: &'static types::Triangle = &[[0.0, -1.0 * BOOSTER_HEIGHT / 2.0],
+                                                    [BOOSTER_WIDTH, 0.0],
+                                                    [0.0, BOOSTER_HEIGHT / 2.0]];
         if self.actions.fire_boosters {
             polygon(color::DIM_RED,
                     BOOSTER,
