@@ -3,6 +3,8 @@
 pub mod player;
 pub mod bullet;
 
+use std::ops::{Add, AddAssign, Sub, SubAssign};
+
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs};
 
@@ -11,6 +13,40 @@ use piston_window::{Context, UpdateArgs};
 pub struct Vector {
     x: f64,
     y: f64,
+}
+
+impl Add for Vector {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        Vector {
+            x: self.x + other.x,
+            y: self.y + other.y,
+        }
+    }
+}
+
+impl AddAssign for Vector {
+    fn add_assign(&mut self, other: Self) {
+        *self = *self + other;
+    }
+}
+
+impl Sub for Vector {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self {
+        Vector {
+            x: self.x - other.x,
+            y: self.y - other.y,
+        }
+    }
+}
+
+impl SubAssign for Vector {
+    fn sub_assign(&mut self, other: Self) {
+        *self = *self - other;
+    }
 }
 
 /// Trait implemented by types that can be drawn to a window.

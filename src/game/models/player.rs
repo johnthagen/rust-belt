@@ -28,6 +28,11 @@ pub struct Actions {
     pub is_shooting: bool,
 }
 
+enum Direction {
+    Forward,
+    Backward,
+}
+
 const ROTATION_INCREMENT: f64 = 5.0;
 const THRUST_INCREMENT: f64 = 5.0;
 const PI_TIMES_2: f64 = f64::consts::PI * 2.0;
@@ -56,18 +61,24 @@ impl Player {
         self.rotate(-1.0 * ROTATION_INCREMENT * delta)
     }
 
-    fn fire_boosters(&mut self, delta: f64) {
-        let boost_x = self.rot.cos() * THRUST_INCREMENT * delta;
-        let boost_y = self.rot.sin() * THRUST_INCREMENT * delta;
-        self.vel.x += boost_x;
-        self.vel.y += boost_y;
+    fn accelerate(&mut self, delta: f64, direction: Direction) {
+        let acceleration = Vector {
+            x: self.rot.cos() * THRUST_INCREMENT * delta,
+            y: self.rot.sin() * THRUST_INCREMENT * delta,
+        };
+
+        match direction {
+            Direction::Forward => self.vel += acceleration,
+            Direction::Backward => self.vel -= acceleration,
+        }
+    }
+
+    fn fire_forward_boosters(&mut self, delta: f64) {
+        self.accelerate(delta, Direction::Forward);
     }
 
     fn fire_rev_boosters(&mut self, delta: f64) {
-        let boost_x = self.rot.cos() * THRUST_INCREMENT * delta;
-        let boost_y = self.rot.sin() * THRUST_INCREMENT * delta;
-        self.vel.x -= boost_x;
-        self.vel.y -= boost_y;
+        self.accelerate(delta, Direction::Backward);
     }
 
     pub fn reset_cooldown(&mut self) {
@@ -96,7 +107,7 @@ impl Updateable for Player {
             self.fire_rev_boosters(args.dt)
         }
         if self.actions.fire_boosters {
-            self.fire_boosters(args.dt)
+            self.fire_forward_boosters(args.dt)
         }
 
         if self.fire_cooldown > 0.0 {
