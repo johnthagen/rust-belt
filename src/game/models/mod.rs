@@ -2,6 +2,7 @@
 
 pub mod player;
 pub mod bullet;
+pub mod asteroid;
 
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 
