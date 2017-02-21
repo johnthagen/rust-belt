@@ -8,7 +8,7 @@ use piston_window::{Context, Size, polygon, Transformed, types, UpdateArgs};
 use super::super::color;
 use super::{Drawable, Updateable, Vector};
 
-const NUM_SEGMENTS : usize = 40;
+const NUM_SEGMENTS : usize = 20;
 const ANGULAR_SEGMENT : f64 = f64::consts::PI*2.0/NUM_SEGMENTS as f64;
 pub struct Asteroid {
     pos: Vector,
@@ -29,7 +29,7 @@ fn generate_circle(radius: f64) -> [[f64;2]; NUM_SEGMENTS]{
 }
 
 fn generate_shape() -> [[f64;2]; NUM_SEGMENTS]{
-    let radius = 50.0;
+    let radius = 70.0;
     let new_shape : [[f64;2];NUM_SEGMENTS] = generate_circle(radius);
     new_shape
 }
