@@ -9,8 +9,6 @@ matrix:
 
     - os: linux
       rust: beta
-    - os: osx
-      rust: beta
 
     - os: linux
       rust: nightly
