@@ -96,6 +96,18 @@ To run:
 $ cargo run --release
 ```
 
+## How to Play
+
+Keyboard         | Action
+---------------- | -------------------------------
+<kbd>W</kbd>     | Accelerate Forward / Menu Up
+<kbd>S</kbd>     | Accelerate Backward / Menu Down
+<kbd>A</kbd>     | Rotate left
+<kbd>D</kbd>     | Rotate right
+<kbd>Space</kbd> | Shoot / Menu Select
+<kbd>X</kbd>     | Return to Menu
+<kbd>Esc</kbd>   | Exit
+
 # Maintainers
 * [@johnthagen](https://github.com/johnthagen)
 * [@theandrewdavis](https://github.com/theandrewdavis)
