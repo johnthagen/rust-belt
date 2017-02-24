@@ -50,6 +50,7 @@ impl Game {
                         bullet.update(args);
                     }
                     self.bullets.retain(|bullet| bullet.ttl() > 0.0);
+                    self.asteroid.update(args);
                 }
 
                 Input::Press(Button::Keyboard(key)) => {

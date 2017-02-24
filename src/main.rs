@@ -1,6 +1,7 @@
 extern crate piston_window;
 extern crate opengl_graphics;
 extern crate music;
+extern crate rand;
 
 mod game;
 mod menu;

@@ -5,6 +5,7 @@ dependencies = [
  "piston-music 0.19.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston2d-opengl_graphics 0.42.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston_window 0.64.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rand 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
