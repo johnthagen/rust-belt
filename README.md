@@ -98,15 +98,15 @@ $ cargo run --release
 
 ## How to Play
 
-Keyboard         | Action
----------------- | -------------------------------
-<kbd>W</kbd>     | Accelerate Forward / Menu Up
-<kbd>S</kbd>     | Accelerate Backward / Menu Down
-<kbd>A</kbd>     | Rotate left
-<kbd>D</kbd>     | Rotate right
-<kbd>Space</kbd> | Shoot / Menu Select
-<kbd>X</kbd>     | Return to Menu
-<kbd>Esc</kbd>   | Exit
+Keyboard         | Menu        | Game
+---------------- | ----------- | -------------------
+<kbd>W</kbd>     | Up          | Accelerate Forward 
+<kbd>S</kbd>     | Down        | Accelerate Backward
+<kbd>A</kbd>     |             | Rotate left
+<kbd>D</kbd>     |             | Rotate right
+<kbd>Space</kbd> | Select      | Shoot
+<kbd>X</kbd>     |             | Return to Menu
+<kbd>Esc</kbd>   | Exit        | Exit
 
 # Maintainers
 * [@johnthagen](https://github.com/johnthagen)
