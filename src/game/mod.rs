@@ -5,12 +5,13 @@ use piston_window::{Button, clear, Input, Key, PistonWindow, Size};
 pub mod color;
 mod models;
 
-use self::models::{Drawable, player, Updateable, bullet};
+use self::models::{Drawable, player, Updateable, bullet, asteroid};
 
 /// Stores Game state.
 pub struct Game {
     player: player::Player,
     bullets: Vec<bullet::Bullet>,
+    asteroids: Vec<asteroid::Asteroid>,
 }
 
 impl Game {
@@ -18,10 +19,12 @@ impl Game {
         Game {
             player: player::Player::new(window_size),
             bullets: Vec::new(),
+            asteroids: Vec::new(),
         }
     }
 
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics) {
+        self.asteroids.push(asteroid::Asteroid::new(self.player.window_size));
         while let Some(event) = window.next() {
             match event {
                 Input::Render(args) => {
@@ -31,6 +34,9 @@ impl Game {
                             bullet.draw(context, graphics);
                         }
                         self.player.draw(context, graphics);
+                        for asteroid in &self.asteroids {
+                            asteroid.draw(context, graphics);
+                        }
                     });
                 }
 
@@ -47,6 +53,9 @@ impl Game {
                         bullet.update(args);
                     }
                     self.bullets.retain(|bullet| bullet.ttl() > 0.0);
+                    for asteroid in &mut self.asteroids {
+                        asteroid.update(args);
+                    }
                 }
 
                 Input::Press(Button::Keyboard(key)) => {
