@@ -33,7 +33,7 @@ fn generate_circle(radius: f64) -> [[f64; 2]; NUM_SEGMENTS] {
 fn randomize_shape(mut shape: [[f64; 2]; NUM_SEGMENTS], max: f64) -> [[f64; 2]; NUM_SEGMENTS] {
     let mut av_x = 0.0;
     let mut av_y = 0.0;
-    for mut vertex in shape.iter_mut() {
+    for mut vertex in &mut shape {
         vertex[0] += rand::random::<f64>() * max; // % max;
         vertex[1] += rand::random::<f64>() * max;
         av_x += vertex[0];
@@ -41,7 +41,7 @@ fn randomize_shape(mut shape: [[f64; 2]; NUM_SEGMENTS], max: f64) -> [[f64; 2]; 
     }
     av_x /= NUM_SEGMENTS as f64;
     av_y /= NUM_SEGMENTS as f64;
-    for mut vertex in shape.iter_mut() {
+    for mut vertex in &mut shape {
         vertex[0] -= av_x; // % max;
         vertex[1] -= av_y;
     }
@@ -75,6 +75,7 @@ impl Asteroid {
 }
 
 impl Updateable for Asteroid {
+    #[allow(unused_variables)]
     fn update(&mut self, args: UpdateArgs) {
         let x = self.pos.x + self.vel.x + self.window_size.width as f64;
         let y = self.pos.y + self.vel.y + self.window_size.height as f64;
