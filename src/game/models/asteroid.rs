@@ -9,32 +9,32 @@ use rand;
 use super::super::color;
 use super::{Drawable, Updateable, Vector};
 
-const NUM_SEGMENTS : usize = 20;
-const ANGULAR_SEGMENT : f64 = f64::consts::PI*2.0/NUM_SEGMENTS as f64;
+const NUM_SEGMENTS: usize = 20;
+const ANGULAR_SEGMENT: f64 = f64::consts::PI * 2.0 / NUM_SEGMENTS as f64;
 pub struct Asteroid {
     pos: Vector,
     vel: Vector,
     rot: f64,
     spin: f64,
-    shape: [[f64;2];NUM_SEGMENTS],
+    shape: [[f64; 2]; NUM_SEGMENTS],
     window_size: Size,
 }
 
-fn generate_circle(radius: f64) -> [[f64;2]; NUM_SEGMENTS]{
-    let mut circle : [[f64;2];NUM_SEGMENTS] = [[0.0;2]; NUM_SEGMENTS];
+fn generate_circle(radius: f64) -> [[f64; 2]; NUM_SEGMENTS] {
+    let mut circle: [[f64; 2]; NUM_SEGMENTS] = [[0.0; 2]; NUM_SEGMENTS];
     for (index, mut vertex) in circle.iter_mut().enumerate() {
         let index_float = index as f64;
-        vertex[0] = radius*(index_float*ANGULAR_SEGMENT).cos();
-        vertex[1] = radius*(index_float*ANGULAR_SEGMENT).sin();
+        vertex[0] = radius * (index_float * ANGULAR_SEGMENT).cos();
+        vertex[1] = radius * (index_float * ANGULAR_SEGMENT).sin();
     }
     circle
 }
 
-fn randomize_shape(mut shape: [[f64;2]; NUM_SEGMENTS], max: f64) -> [[f64;2]; NUM_SEGMENTS]{
+fn randomize_shape(mut shape: [[f64; 2]; NUM_SEGMENTS], max: f64) -> [[f64; 2]; NUM_SEGMENTS] {
     let mut av_x = 0.0;
     let mut av_y = 0.0;
     for mut vertex in shape.iter_mut() {
-        vertex[0] += rand::random::<f64>() * max;// % max;
+        vertex[0] += rand::random::<f64>() * max; // % max;
         vertex[1] += rand::random::<f64>() * max;
         av_x += vertex[0];
         av_y += vertex[1];
@@ -42,15 +42,15 @@ fn randomize_shape(mut shape: [[f64;2]; NUM_SEGMENTS], max: f64) -> [[f64;2]; NU
     av_x /= NUM_SEGMENTS as f64;
     av_y /= NUM_SEGMENTS as f64;
     for mut vertex in shape.iter_mut() {
-        vertex[0] -= av_x;// % max;
+        vertex[0] -= av_x; // % max;
         vertex[1] -= av_y;
     }
     shape
 }
 
-fn generate_shape() -> [[f64;2]; NUM_SEGMENTS]{
+fn generate_shape() -> [[f64; 2]; NUM_SEGMENTS] {
     let radius = 70.0;
-    let new_shape : [[f64;2];NUM_SEGMENTS] = generate_circle(radius);
+    let new_shape: [[f64; 2]; NUM_SEGMENTS] = generate_circle(radius);
     let max_mut = radius / 4.0;
     randomize_shape(new_shape, max_mut)
 }
@@ -58,10 +58,13 @@ fn generate_shape() -> [[f64;2]; NUM_SEGMENTS]{
 impl Asteroid {
     pub fn new(window_size: Size) -> Asteroid {
         Asteroid {
-            pos: Vector{x: 400.0, y: 400.0},
-            vel: Vector{
+            pos: Vector {
+                x: 400.0,
+                y: 400.0,
+            },
+            vel: Vector {
                 x: rand::random::<f64>() - 0.5,
-                y: rand::random::<f64>() - 0.5
+                y: rand::random::<f64>() - 0.5,
             },
             rot: 0.0,
             spin: rand::random::<f64>() * f64::consts::PI / 180.0,
@@ -86,8 +89,8 @@ impl Drawable for Asteroid {
         polygon(color::WHITE,
                 &self.shape,
                 context.transform
-                .trans(self.pos.x, self.pos.y)
-                .rot_rad(self.rot),
+                    .trans(self.pos.x, self.pos.y)
+                    .rot_rad(self.rot),
                 graphics)
     }
 }

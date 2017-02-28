@@ -11,7 +11,7 @@ use self::models::{Drawable, player, Updateable, bullet, asteroid};
 pub struct Game {
     player: player::Player,
     bullets: Vec<bullet::Bullet>,
-    asteroid: asteroid::Asteroid,
+    asteroids: Vec<asteroid::Asteroid>,
 }
 
 impl Game {
@@ -19,11 +19,12 @@ impl Game {
         Game {
             player: player::Player::new(window_size),
             bullets: Vec::new(),
-            asteroid: asteroid::Asteroid::new(window_size),
+            asteroids: Vec::new(),
         }
     }
 
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics) {
+        self.asteroids.push(asteroid::Asteroid::new(self.player.window_size));
         while let Some(event) = window.next() {
             match event {
                 Input::Render(args) => {
@@ -33,7 +34,9 @@ impl Game {
                             bullet.draw(context, graphics);
                         }
                         self.player.draw(context, graphics);
-                        self.asteroid.draw(context, graphics);
+                        for asteroid in &self.asteroids {
+                            asteroid.draw(context, graphics);
+                        }
                     });
                 }
 
@@ -50,7 +53,9 @@ impl Game {
                         bullet.update(args);
                     }
                     self.bullets.retain(|bullet| bullet.ttl() > 0.0);
-                    self.asteroid.update(args);
+                    for asteroid in &mut self.asteroids {
+                        asteroid.update(args);
+                    }
                 }
 
                 Input::Press(Button::Keyboard(key)) => {
