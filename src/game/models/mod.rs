@@ -66,7 +66,7 @@ pub trait Positioned {
     fn pos(&self) -> Vector;
 }
 
-pub trait Collidable : Positioned {
+pub trait Collidable: Positioned {
     fn radius(&self) -> f64;
 
     fn collides_with<C: Collidable>(&self, other: &C) -> bool;
