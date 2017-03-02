@@ -63,13 +63,13 @@ impl Game {
                         let asteroids = &mut self.asteroids;
 
                         bullets.retain(|bullet| {
-                            let num_asteroids = asteroids.len();
-                            asteroids.retain(|asteroid| !asteroid.collides_with(bullet));
-
-                            // TODO: Need to fix this. This is the result of a failed battle
-                            // with the borrow checker, and it's late. Probably need some
-                            // functional programming foo that I have yet to fully grasp.
-                            asteroids.len() == num_asteroids
+                            // Remove the first asteroid that collides with a bullet, if any.
+                            if let Some(index) = asteroids.iter()
+                                .position(|asteroid| asteroid.collides_with(bullet)) {
+                                asteroids.remove(index);
+                                return false;
+                            }
+                            true
                         });
                     }
                 }

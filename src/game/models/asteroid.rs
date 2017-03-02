@@ -104,6 +104,6 @@ impl Positioned for Asteroid {
 
 impl Collidable for Asteroid {
     fn radius(&self) -> f64 {
-        RADIUS / 2.0
+        RADIUS
     }
 }
