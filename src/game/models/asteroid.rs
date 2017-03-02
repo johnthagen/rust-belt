@@ -10,18 +10,20 @@ use super::super::color;
 use super::{Drawable, Updateable, Vector};
 
 const NUM_SEGMENTS: usize = 20;
-const ANGULAR_SEGMENT: f64 = f64::consts::PI * 2.0 / NUM_SEGMENTS as f64;
+type CircularPolygon = [[f64; 2]; NUM_SEGMENTS];
+
 pub struct Asteroid {
     pos: Vector,
     vel: Vector,
     rot: f64,
     spin: f64,
-    shape: [[f64; 2]; NUM_SEGMENTS],
+    shape: CircularPolygon,
     window_size: Size,
 }
 
-fn generate_circle(radius: f64) -> [[f64; 2]; NUM_SEGMENTS] {
-    let mut circle: [[f64; 2]; NUM_SEGMENTS] = [[0.0; 2]; NUM_SEGMENTS];
+fn generate_circle(radius: f64) -> CircularPolygon {
+    const ANGULAR_SEGMENT: f64 = f64::consts::PI * 2.0 / NUM_SEGMENTS as f64;
+    let mut circle = [[0.0; 2]; NUM_SEGMENTS];
     for (index, mut vertex) in circle.iter_mut().enumerate() {
         let index_float = index as f64;
         vertex[0] = radius * (index_float * ANGULAR_SEGMENT).cos();
@@ -30,29 +32,29 @@ fn generate_circle(radius: f64) -> [[f64; 2]; NUM_SEGMENTS] {
     circle
 }
 
-fn randomize_shape(mut shape: [[f64; 2]; NUM_SEGMENTS], max: f64) -> [[f64; 2]; NUM_SEGMENTS] {
-    let mut av_x = 0.0;
-    let mut av_y = 0.0;
+fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
+    let mut average_x = 0.0;
+    let mut average_y = 0.0;
     for mut vertex in &mut shape {
-        vertex[0] += rand::random::<f64>() * max; // % max;
+        vertex[0] += rand::random::<f64>() * max;
         vertex[1] += rand::random::<f64>() * max;
-        av_x += vertex[0];
-        av_y += vertex[1];
+        average_x += vertex[0];
+        average_y += vertex[1];
     }
-    av_x /= NUM_SEGMENTS as f64;
-    av_y /= NUM_SEGMENTS as f64;
+    average_x /= NUM_SEGMENTS as f64;
+    average_y /= NUM_SEGMENTS as f64;
     for mut vertex in &mut shape {
-        vertex[0] -= av_x; // % max;
-        vertex[1] -= av_y;
+        vertex[0] -= average_x;
+        vertex[1] -= average_y;
     }
     shape
 }
 
-fn generate_shape() -> [[f64; 2]; NUM_SEGMENTS] {
-    let radius = 70.0;
-    let new_shape: [[f64; 2]; NUM_SEGMENTS] = generate_circle(radius);
-    let max_mut = radius / 4.0;
-    randomize_shape(new_shape, max_mut)
+fn generate_jagged_shape() -> CircularPolygon {
+    const RADIUS: f64 = 70.0;
+    let new_shape = generate_circle(RADIUS);
+    const MAX_MUT: f64 = RADIUS / 4.0;
+    randomize_shape(new_shape, MAX_MUT)
 }
 
 impl Asteroid {
@@ -68,7 +70,7 @@ impl Asteroid {
             },
             rot: 0.0,
             spin: rand::random::<f64>() * f64::consts::PI / 180.0,
-            shape: generate_shape(),
+            shape: generate_jagged_shape(),
             window_size: window_size,
         }
     }
