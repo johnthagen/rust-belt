@@ -7,7 +7,7 @@ use piston_window::{Context, Size, polygon, Transformed, UpdateArgs};
 use rand;
 
 use super::super::color;
-use super::{Drawable, Updateable, Vector};
+use super::{Collidable, Drawable, Updateable, Vector};
 
 const NUM_SEGMENTS: usize = 20;
 const ANGULAR_SEGMENT: f64 = f64::consts::PI * 2.0 / NUM_SEGMENTS as f64;

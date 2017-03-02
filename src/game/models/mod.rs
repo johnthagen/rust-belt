@@ -63,11 +63,23 @@ pub trait Updateable {
 }
 
 pub trait Positioned {
+    fn x(&self) -> f64 {
+        self.pos().x
+    }
+
+    fn y(&self) -> f64 {
+        self.pos().y
+    }
+
     fn pos(&self) -> Vector;
 }
 
 pub trait Collidable: Positioned {
     fn radius(&self) -> f64;
 
-    fn collides_with<C: Collidable>(&self, other: &C) -> bool;
+    fn collides_with<C: Collidable>(&self, other: &C) -> bool {
+        // The Distance Formula.
+        let distance = ((self.x() - other.x()).powi(2) + (self.y() - other.y()).powi(2)).sqrt();
+        distance < self.radius() && distance < self.radius()
+    }
 }
