@@ -95,7 +95,8 @@ pub fn run(mut window: &mut PistonWindow,
         let mut glyph_cache = GlyphCache::new("./assets/FiraSans-Regular.ttf").unwrap();
 
         let mut menu_selection = MenuSelection::Play;
-        let mut volume = music::MAX_VOLUME;
+        let mut volume = 0.0;
+        music::set_volume(volume);
 
         let menu_align = (window_size.width / 2 - 120) as f64;
 

@@ -80,6 +80,6 @@ pub trait Collidable: Positioned {
     fn collides_with<C: Collidable>(&self, other: &C) -> bool {
         // The Distance Formula.
         let distance = ((self.x() - other.x()).powi(2) + (self.y() - other.y()).powi(2)).sqrt();
-        distance < self.radius() && distance < self.radius()
+        distance < self.radius() + other.radius()
     }
 }

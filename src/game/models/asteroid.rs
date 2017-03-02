@@ -7,7 +7,7 @@ use piston_window::{Context, Size, polygon, Transformed, UpdateArgs};
 use rand;
 
 use super::super::color;
-use super::{Collidable, Drawable, Updateable, Vector};
+use super::{Collidable, Drawable, Positioned, Updateable, Vector};
 
 const NUM_SEGMENTS: usize = 20;
 const ANGULAR_SEGMENT: f64 = f64::consts::PI * 2.0 / NUM_SEGMENTS as f64;
@@ -48,10 +48,10 @@ fn randomize_shape(mut shape: [[f64; 2]; NUM_SEGMENTS], max: f64) -> [[f64; 2]; 
     shape
 }
 
+const RADIUS: f64 = 70.0;
 fn generate_shape() -> [[f64; 2]; NUM_SEGMENTS] {
-    let radius = 70.0;
-    let new_shape: [[f64; 2]; NUM_SEGMENTS] = generate_circle(radius);
-    let max_mut = radius / 4.0;
+    let new_shape: [[f64; 2]; NUM_SEGMENTS] = generate_circle(RADIUS);
+    let max_mut = RADIUS / 4.0;
     randomize_shape(new_shape, max_mut)
 }
 
@@ -93,5 +93,17 @@ impl Drawable for Asteroid {
                     .trans(self.pos.x, self.pos.y)
                     .rot_rad(self.rot),
                 graphics)
+    }
+}
+
+impl Positioned for Asteroid {
+    fn pos(&self) -> Vector {
+        self.pos
+    }
+}
+
+impl Collidable for Asteroid {
+    fn radius(&self) -> f64 {
+        RADIUS / 2.0
     }
 }

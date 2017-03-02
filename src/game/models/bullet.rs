@@ -62,7 +62,7 @@ impl Positioned for Bullet {
     }
 }
 
-impl Collidable for Positioned {
+impl Collidable for Bullet {
     fn radius(&self) -> f64 {
         BULLET_DIAMETER / 2.0
     }
