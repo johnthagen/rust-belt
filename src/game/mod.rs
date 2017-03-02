@@ -61,6 +61,7 @@ impl Game {
                     {
                         let bullets = &mut self.bullets;
                         let asteroids = &mut self.asteroids;
+                        let player = &mut self.player;
 
                         bullets.retain(|bullet| {
                             // Remove the first asteroid that collides with a bullet, if any.
@@ -71,6 +72,11 @@ impl Game {
                             }
                             true
                         });
+
+                        // If player hits an asteroid, return to the main menu.
+                        if asteroids.iter().any(|asteroid| asteroid.collides_with(player)) {
+                            break;
+                        }
                     }
                 }
 
