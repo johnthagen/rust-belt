@@ -3,7 +3,7 @@ name = "rust-belt"
 version = "0.5.0"
 dependencies = [
  "piston-music 0.19.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "piston2d-opengl_graphics 0.42.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "piston2d-opengl_graphics 0.42.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston_window 0.64.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -633,7 +633,7 @@ dependencies = [
 
 [[package]]
 name = "piston2d-opengl_graphics"
-version = "0.42.0"
+version = "0.42.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "fnv 1.0.5 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1093,7 +1093,7 @@ dependencies = [
 "checksum piston-viewport 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "9c5548a838fd9dc604c96d886c03c303f043a2d85f88719cca59dc7991d86343"
 "checksum piston2d-gfx_graphics 0.38.0 (registry+https://github.com/rust-lang/crates.io-index)" = "979168115843b215398597e6b8ffcb77558ed6bb6a59abc66fe7087c36a39069"
 "checksum piston2d-graphics 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)" = "2d72cce9e129be5f50f5f26b69a064481664b6eccbdf643139563ea20485419f"
-"checksum piston2d-opengl_graphics 0.42.0 (registry+https://github.com/rust-lang/crates.io-index)" = "0d6713ba76a0b5fa6c386ba32b30a697c8add1a1b9bc4cec883060ed081eef58"
+"checksum piston2d-opengl_graphics 0.42.1 (registry+https://github.com/rust-lang/crates.io-index)" = "6957211d21d3349d1da08f82f8705d38ada2a57c90ef1a1d3dcc5c7155c1b32c"
 "checksum piston_window 0.64.0 (registry+https://github.com/rust-lang/crates.io-index)" = "9bf4d1f734e32a4e0ce552bc7ce9a8caaa8f5427cb50b68d84f68c76d31e0ab1"
 "checksum pistoncore-event_loop 0.31.1 (registry+https://github.com/rust-lang/crates.io-index)" = "9aee055fd3c72d3aa75e4e6adebb7c62a8db1a686a03ff73250f213b2d7bbac9"
 "checksum pistoncore-glutin_window 0.35.0 (registry+https://github.com/rust-lang/crates.io-index)" = "78eadd1ac8d08ba2d5813ace5e0ed80dd5c99d381d4a5d0a54701ae765fcce82"
