@@ -51,7 +51,7 @@ fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
 }
 
 const RADIUS: f64 = 70.0;
-fn generate_jagged_shape() -> CircularPolygon {    
+fn generate_jagged_shape() -> CircularPolygon {
     let new_shape = generate_circle(RADIUS);
     const MAX_MUT: f64 = RADIUS / 4.0;
     randomize_shape(new_shape, MAX_MUT)
