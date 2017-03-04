@@ -6,7 +6,7 @@ use opengl_graphics::GlGraphics;
 use piston_window::{Context, polygon, Size, Transformed, types, UpdateArgs};
 
 use super::super::color;
-use super::{Drawable, Updateable, Vector};
+use super::{Collidable, Drawable, Positioned, Updateable, Vector};
 
 
 pub struct Player {
@@ -116,13 +116,12 @@ impl Updateable for Player {
     }
 }
 
-
+const SHIP_HEIGHT: f64 = 16.0;
+const SHIP_WIDTH: f64 = 20.0;
+const SHIP: &'static types::Triangle =
+    &[[0.0, -1.0 * SHIP_HEIGHT / 2.0], [SHIP_WIDTH, 0.0], [0.0, SHIP_HEIGHT / 2.0]];
 impl Drawable for Player {
     fn draw(&self, context: Context, graphics: &mut GlGraphics) {
-        const SHIP_HEIGHT: f64 = 16.0;
-        const SHIP_WIDTH: f64 = 20.0;
-        const SHIP: &'static types::Triangle =
-            &[[0.0, -1.0 * SHIP_HEIGHT / 2.0], [SHIP_WIDTH, 0.0], [0.0, SHIP_HEIGHT / 2.0]];
         const BOOSTER_HEIGHT: f64 = 8.0;
         const BOOSTER_WIDTH: f64 = 10.0;
         const BOOSTER: &'static types::Triangle = &[[0.0, -1.0 * BOOSTER_HEIGHT / 2.0],
@@ -171,5 +170,17 @@ impl Drawable for Player {
                     // upper left corner rather than the center.
                     .trans(-1.0 * SHIP_HEIGHT / 2.0, 0.0),
                 graphics);
+    }
+}
+
+impl Positioned for Player {
+    fn pos(&self) -> Vector {
+        self.pos
+    }
+}
+
+impl Collidable for Player {
+    fn radius(&self) -> f64 {
+        SHIP_WIDTH / 2.0
     }
 }
