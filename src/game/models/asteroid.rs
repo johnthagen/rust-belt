@@ -1,6 +1,6 @@
 //! Defines the asteroid component.
 use std::f64;
-
+use std::cmp;
 
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, Size, polygon, Transformed, UpdateArgs};
@@ -19,6 +19,7 @@ pub struct Asteroid {
     spin: f64,
     shape: CircularPolygon,
     window_size: Size,
+    on_screen: bool,
 }
 
 fn generate_circle(radius: f64) -> CircularPolygon {
@@ -58,20 +59,27 @@ fn generate_jagged_shape() -> CircularPolygon {
 }
 
 impl Asteroid {
-    pub fn new(window_size: Size) -> Asteroid {
+    pub fn new(window_size: Size, player_pos: Vector) -> Asteroid {
+        let radius = cmp::max(window_size.width, window_size.height) as f64 + RADIUS;
+        let angle = f64::consts::PI * 2.0 * rand::random::<f64>();
+        let new_pos = Vector {
+            x: window_size.width as f64 / 2.0 + radius * angle.cos(),
+            y: window_size.height as f64 / 2.0 + radius * angle.sin(),
+        };
         Asteroid {
-            pos: Vector {
-                x: 400.0,
-                y: 400.0,
-            },
+            pos: new_pos,
             vel: Vector {
-                x: rand::random::<f64>() - 0.5,
-                y: rand::random::<f64>() - 0.5,
+                x: new_pos.angle_to_vector(player_pos).cos(),
+                y: new_pos.angle_to_vector(player_pos).sin(),
             },
             rot: 0.0,
             spin: rand::random::<f64>() * f64::consts::PI / 180.0,
             shape: generate_jagged_shape(),
-            window_size: window_size,
+            window_size: Size {
+                width: window_size.width * 2,
+                height: window_size.height * 2,
+            },
+            on_screen: false,
         }
     }
 }
@@ -84,6 +92,15 @@ impl Updateable for Asteroid {
         self.pos.x = x % self.window_size.width as f64;
         self.pos.y = y % self.window_size.height as f64;
         self.rot += self.spin;
+        if self.on_screen == false {
+            if self.pos.x > 0.0 && self.pos.x < self.window_size.width as f64 / 2.0 &&
+               self.pos.y > 0.0 &&
+               self.pos.y < self.window_size.height as f64 / 2.0 {
+                self.window_size.width /= 2;
+                self.window_size.height /= 2;
+                self.on_screen = true;
+            }
+        }
     }
 }
 

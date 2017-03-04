@@ -39,7 +39,10 @@ const THRUST_INCREMENT: f64 = 5.0;
 impl Player {
     pub fn new(window_size: Size) -> Player {
         Player {
-            pos: Vector { x: 10.0, y: 10.0 },
+            pos: Vector {
+                x: window_size.width as f64 / 2.0,
+                y: window_size.height as f64 / 2.0,
+            },
             vel: Vector { x: 0.0, y: 0.0 },
             rot: 0.0,
             actions: Actions::default(),

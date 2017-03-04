@@ -5,10 +5,11 @@ pub mod bullet;
 pub mod asteroid;
 
 use std::ops::{Add, AddAssign, Sub, SubAssign};
-
+use std::f64;
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs};
 
+const PI: f64 = f64::consts::PI;
 /// Models an (x, y) coordinate value (such as position or velocity).
 #[derive(Copy, Clone)]
 pub struct Vector {
@@ -24,6 +25,23 @@ impl Add for Vector {
             x: self.x + other.x,
             y: self.y + other.y,
         }
+    }
+}
+
+impl Vector {
+    fn angle_to_vector(self, other: Vector) -> f64 {
+        let diff_x = other.x - self.x;
+        let diff_y = other.y - self.y;
+        let mut angle_to_point = (diff_y / diff_x).atan();
+        if diff_y < 0.0 {
+            angle_to_point += PI;
+            if diff_x > 0.0 {
+                angle_to_point += PI;
+            }
+        } else if diff_x < 0.0 {
+            angle_to_point += PI;
+        }
+        angle_to_point
     }
 }
 

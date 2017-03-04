@@ -12,6 +12,7 @@ pub struct Game {
     player: player::Player,
     bullets: Vec<bullet::Bullet>,
     asteroids: Vec<asteroid::Asteroid>,
+    num_asteroids: f64,
 }
 
 impl Game {
@@ -20,11 +21,11 @@ impl Game {
             player: player::Player::new(window_size),
             bullets: Vec::new(),
             asteroids: Vec::new(),
+            num_asteroids: 1.0,
         }
     }
 
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics) {
-        self.asteroids.push(asteroid::Asteroid::new(self.player.window_size));
         while let Some(event) = window.next() {
             match event {
                 Input::Render(args) => {
@@ -58,6 +59,7 @@ impl Game {
                     }
 
                     // Shorten lifetimes due to issues trying to pass `self` into a closure.
+                    let mut num_asteroids_destroyed = 0;
                     {
                         let bullets = &mut self.bullets;
                         let asteroids = &mut self.asteroids;
@@ -68,6 +70,7 @@ impl Game {
                             if let Some(index) = asteroids.iter()
                                 .position(|asteroid| asteroid.collides_with(bullet)) {
                                 asteroids.remove(index);
+                                num_asteroids_destroyed += 1;
                                 return false;
                             }
                             true
@@ -76,6 +79,13 @@ impl Game {
                         // If player hits an asteroid, return to the main menu.
                         if asteroids.iter().any(|asteroid| asteroid.collides_with(player)) {
                             break;
+                        }
+                    }
+                    self.num_asteroids += 0.3 * num_asteroids_destroyed as f64;
+                    if self.asteroids.len() == 0 {
+                        for _ in 0..self.num_asteroids.floor() as u32 {
+                            self.asteroids.push(asteroid::Asteroid::new(self.player.window_size,
+                                                                        self.player.pos));
                         }
                     }
                 }
