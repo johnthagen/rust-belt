@@ -13,7 +13,7 @@ matrix:
     - os: linux
       rust: nightly
     - os: linux
-      rust: nightly-2017-02-03
+      rust: nightly-2017-03-01
 
   allow_failures:
     - rust: nightly
@@ -24,8 +24,8 @@ cache: cargo
 # nightly versions, so select a nightly/clippy combination known to work.
 env:
   global:
-    - CLIPPY_VERSION=0.0.113
-    - NIGHTLY_VERSION=nightly-2017-02-03
+    - CLIPPY_VERSION=0.0.117
+    - NIGHTLY_VERSION=nightly-2017-03-01
 
 install:
   # Steps copied from the rust-sdl2 project.
