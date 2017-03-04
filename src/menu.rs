@@ -96,9 +96,9 @@ pub fn run(mut window: &mut PistonWindow,
 
         let mut menu_selection = MenuSelection::Play;
         let mut volume = music::MAX_VOLUME;
+        music::set_volume(volume);
 
         let menu_align = (window_size.width / 2 - 120) as f64;
-
         while let Some(event) = window.next() {
             match event {
                 Input::Render(args) => {

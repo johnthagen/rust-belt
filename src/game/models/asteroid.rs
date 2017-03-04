@@ -7,7 +7,7 @@ use piston_window::{Context, Size, polygon, Transformed, UpdateArgs};
 use rand;
 
 use super::super::color;
-use super::{Drawable, Updateable, Vector};
+use super::{Collidable, Drawable, Positioned, Updateable, Vector};
 
 const NUM_SEGMENTS: usize = 20;
 type CircularPolygon = [[f64; 2]; NUM_SEGMENTS];
@@ -50,8 +50,8 @@ fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
     shape
 }
 
+const RADIUS: f64 = 70.0;
 fn generate_jagged_shape() -> CircularPolygon {
-    const RADIUS: f64 = 70.0;
     let new_shape = generate_circle(RADIUS);
     const MAX_MUT: f64 = RADIUS / 4.0;
     randomize_shape(new_shape, MAX_MUT)
@@ -95,5 +95,17 @@ impl Drawable for Asteroid {
                     .trans(self.pos.x, self.pos.y)
                     .rot_rad(self.rot),
                 graphics)
+    }
+}
+
+impl Positioned for Asteroid {
+    fn pos(&self) -> Vector {
+        self.pos
+    }
+}
+
+impl Collidable for Asteroid {
+    fn radius(&self) -> f64 {
+        RADIUS
     }
 }

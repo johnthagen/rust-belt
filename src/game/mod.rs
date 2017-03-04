@@ -5,7 +5,7 @@ use piston_window::{Button, clear, Input, Key, PistonWindow, Size};
 pub mod color;
 mod models;
 
-use self::models::{Drawable, player, Updateable, bullet, asteroid};
+use self::models::{Collidable, Drawable, player, Updateable, bullet, asteroid};
 
 /// Stores Game state.
 pub struct Game {
@@ -55,6 +55,28 @@ impl Game {
                     self.bullets.retain(|bullet| bullet.ttl() > 0.0);
                     for asteroid in &mut self.asteroids {
                         asteroid.update(args);
+                    }
+
+                    // Shorten lifetimes due to issues trying to pass `self` into a closure.
+                    {
+                        let bullets = &mut self.bullets;
+                        let asteroids = &mut self.asteroids;
+                        let player = &mut self.player;
+
+                        bullets.retain(|bullet| {
+                            // Remove the first asteroid that collides with a bullet, if any.
+                            if let Some(index) = asteroids.iter()
+                                .position(|asteroid| asteroid.collides_with(bullet)) {
+                                asteroids.remove(index);
+                                return false;
+                            }
+                            true
+                        });
+
+                        // If player hits an asteroid, return to the main menu.
+                        if asteroids.iter().any(|asteroid| asteroid.collides_with(player)) {
+                            break;
+                        }
                     }
                 }
 

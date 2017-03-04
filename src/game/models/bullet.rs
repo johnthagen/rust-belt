@@ -6,7 +6,7 @@ use opengl_graphics::GlGraphics;
 use piston_window::{Context, Size, ellipse, Transformed, types, UpdateArgs};
 
 use super::super::color;
-use super::{Drawable, Updateable, Vector};
+use super::{Collidable, Drawable, Positioned, Updateable, Vector};
 
 pub struct Bullet {
     pos: Vector,
@@ -44,14 +44,26 @@ impl Updateable for Bullet {
     }
 }
 
+const BULLET_DIAMETER: f64 = 3.0;
 impl Drawable for Bullet {
     fn draw(&self, context: Context, graphics: &mut GlGraphics) {
-        const BULLET_DIAMETER: f64 = 3.0;
         const BULLET: types::Rectangle = [0.0, 0.0, BULLET_DIAMETER, BULLET_DIAMETER];
 
         ellipse(color::WHITE,
                 BULLET,
                 context.transform.trans(self.pos.x, self.pos.y),
                 graphics)
+    }
+}
+
+impl Positioned for Bullet {
+    fn pos(&self) -> Vector {
+        self.pos
+    }
+}
+
+impl Collidable for Bullet {
+    fn radius(&self) -> f64 {
+        BULLET_DIAMETER / 2.0
     }
 }
