@@ -1,4 +1,4 @@
-# Rust Belt
+#![Rust Belt](./images/rust-belt-logo.jpg)
 
 | Build Status |                                                                                |
 |--------------|--------------------------------------------------------------------------------|
@@ -9,8 +9,6 @@
 classic [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game. It is 
 implemented  using the [Rust](https://www.rust-lang.org/) game engine, 
 [Piston](http://www.piston.rs/).
-
-#![Rust Belt](./images/rust-belt-logo.jpg)
 
 # Requirements
 
