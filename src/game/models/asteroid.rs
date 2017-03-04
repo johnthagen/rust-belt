@@ -93,9 +93,9 @@ impl Updateable for Asteroid {
         self.pos.y = y % self.window_size.height as f64;
         self.rot += self.spin;
         if self.on_screen == false {
-            if self.pos.x > 0.0 && self.pos.x < self.window_size.width as f64 / 2.0 &&
-               self.pos.y > 0.0 &&
-               self.pos.y < self.window_size.height as f64 / 2.0 {
+            if self.pos.x > RADIUS && self.pos.x + RADIUS < self.window_size.width as f64 / 2.0 &&
+               self.pos.y > RADIUS &&
+               self.pos.y + RADIUS < self.window_size.height as f64 / 2.0 {
                 self.window_size.width /= 2;
                 self.window_size.height /= 2;
                 self.on_screen = true;
@@ -111,7 +111,42 @@ impl Drawable for Asteroid {
                 context.transform
                     .trans(self.pos.x, self.pos.y)
                     .rot_rad(self.rot),
-                graphics)
+                graphics);
+
+        if self.pos.x + RADIUS > self.window_size.width as f64 {
+            polygon(color::WHITE,
+                    &self.shape,
+                    context.transform
+                        .trans(self.pos.x - self.window_size.width as f64, self.pos.y)
+                        .rot_rad(self.rot),
+                    graphics)
+
+        } else if self.pos.x < RADIUS {
+            polygon(color::WHITE,
+                    &self.shape,
+                    context.transform
+                        .trans(self.pos.x + self.window_size.width as f64, self.pos.y)
+                        .rot_rad(self.rot),
+                    graphics)
+        }
+        if self.pos.y + RADIUS > self.window_size.height as f64 {
+            polygon(color::WHITE,
+                    &self.shape,
+                    context.transform
+                        .trans(self.pos.x, self.pos.y - self.window_size.height as f64)
+                        .rot_rad(self.rot),
+                    graphics)
+
+        } else if self.pos.y < RADIUS {
+            polygon(color::WHITE,
+                    &self.shape,
+                    context.transform
+                        .trans(self.pos.x, self.pos.y + self.window_size.height as f64)
+                        .rot_rad(self.rot),
+                    graphics)
+
+        }
+
     }
 }
 
