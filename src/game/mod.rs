@@ -1,6 +1,7 @@
 //! Defines the game component.
 use opengl_graphics::GlGraphics;
-use piston_window::{Button, clear, Input, Key, PistonWindow, Size};
+use opengl_graphics::glyph_cache::GlyphCache;
+use piston_window::{Button, clear, Input, Key, PistonWindow, Size, text, Transformed};
 
 pub mod color;
 mod models;
@@ -12,6 +13,8 @@ pub struct Game {
     player: player::Player,
     bullets: Vec<bullet::Bullet>,
     asteroids: Vec<asteroid::Asteroid>,
+    score: i64,
+    glyph_cache: GlyphCache<'static>,
 }
 
 impl Game {
@@ -20,6 +23,8 @@ impl Game {
             player: player::Player::new(window_size),
             bullets: Vec::new(),
             asteroids: Vec::new(),
+            score: 0,
+            glyph_cache: GlyphCache::new("./assets/FiraSans-Regular.ttf").unwrap(),
         }
     }
 
@@ -37,6 +42,14 @@ impl Game {
                         for asteroid in &self.asteroids {
                             asteroid.draw(context, graphics);
                         }
+
+                        text(color::YELLOW,
+                             22,
+                             format!("Score: {}", self.score).as_str(),
+                             &mut self.glyph_cache,
+                             context.transform
+                                 .trans(20.0, 20.0),
+                             graphics);
                     });
                 }
 
@@ -62,12 +75,14 @@ impl Game {
                         let bullets = &mut self.bullets;
                         let asteroids = &mut self.asteroids;
                         let player = &mut self.player;
+                        let score = &mut self.score;
 
                         bullets.retain(|bullet| {
                             // Remove the first asteroid that collides with a bullet, if any.
                             if let Some(index) = asteroids.iter()
                                 .position(|asteroid| asteroid.collides_with(bullet)) {
                                 asteroids.remove(index);
+                                *score += 10;
                                 return false;
                             }
                             true
