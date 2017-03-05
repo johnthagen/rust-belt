@@ -15,7 +15,7 @@ pub struct Player {
     pub rot: f64,
     pub actions: Actions,
     weapon_cooldown: f64,
-    pub window_size: Size,
+    window_size: Size,
 }
 
 /// Currently active user actions.
