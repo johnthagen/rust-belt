@@ -4,7 +4,7 @@ pub mod player;
 pub mod bullet;
 pub mod asteroid;
 
-use std::ops::{Add, AddAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign};
 
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs};
@@ -47,6 +47,23 @@ impl Sub for Vector {
 impl SubAssign for Vector {
     fn sub_assign(&mut self, other: Self) {
         *self = *self - other;
+    }
+}
+
+impl Rem for Vector {
+    type Output = Self;
+
+    fn rem(self, other: Self) -> Self {
+        Vector {
+            x: self.x % other.x,
+            y: self.y % other.y,
+        }
+    }
+}
+
+impl RemAssign for Vector {
+    fn rem_assign(&mut self, other: Self) {
+        *self = *self % other;
     }
 }
 

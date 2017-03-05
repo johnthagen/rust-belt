@@ -79,10 +79,12 @@ impl Asteroid {
 impl Updateable for Asteroid {
     #[allow(unused_variables)]
     fn update(&mut self, args: UpdateArgs) {
-        let x = self.pos.x + self.vel.x + self.window_size.width as f64;
-        let y = self.pos.y + self.vel.y + self.window_size.height as f64;
-        self.pos.x = x % self.window_size.width as f64;
-        self.pos.y = y % self.window_size.height as f64;
+        let window_size_vector = Vector {
+            x: self.window_size.width as f64,
+            y: self.window_size.height as f64,
+        };
+        self.pos += self.vel + window_size_vector;
+        self.pos %= window_size_vector;
         self.rot += self.spin;
     }
 }
