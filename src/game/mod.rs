@@ -44,11 +44,11 @@ impl Game {
                         }
 
                         text(color::YELLOW,
-                             22,
+                             26,
                              format!("Score: {}", self.score).as_str(),
                              &mut self.glyph_cache,
                              context.transform
-                                 .trans(20.0, 20.0),
+                                 .trans(10.0, 20.0),
                              graphics);
                     });
                 }
