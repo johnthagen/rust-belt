@@ -24,6 +24,7 @@ fn main() {
                                                        [GAME_WINDOW_SIZE.width,
                                                         GAME_WINDOW_SIZE.height])
         .opengl(opengl)
+        .samples(4)
         .exit_on_esc(true)
         .build()
         .unwrap_or_else(|error| panic!("Failed to build PistonWindow: {}", error));
