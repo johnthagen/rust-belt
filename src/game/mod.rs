@@ -1,6 +1,7 @@
 //! Defines the game component.
 use opengl_graphics::GlGraphics;
-use piston_window::{Button, clear, Input, Key, PistonWindow, Size};
+use opengl_graphics::glyph_cache::GlyphCache;
+use piston_window::{Button, clear, Input, Key, PistonWindow, Size, text, Transformed};
 
 pub mod color;
 mod models;
@@ -13,6 +14,9 @@ pub struct Game {
     bullets: Vec<bullet::Bullet>,
     asteroids: Vec<asteroid::Asteroid>,
     num_asteroids: f64,
+    score: i64,
+    glyph_cache: GlyphCache<'static>,
+    window_size: Size,
 }
 
 impl Game {
@@ -22,6 +26,9 @@ impl Game {
             bullets: Vec::new(),
             asteroids: Vec::new(),
             num_asteroids: 1.0,
+            score: 0,
+            glyph_cache: GlyphCache::new("./assets/FiraSans-Regular.ttf").unwrap(),
+            window_size: window_size,
         }
     }
 
@@ -38,6 +45,14 @@ impl Game {
                         for asteroid in &self.asteroids {
                             asteroid.draw(context, graphics);
                         }
+
+                        text(color::YELLOW,
+                             26,
+                             format!("Score: {}", self.score).as_str(),
+                             &mut self.glyph_cache,
+                             context.transform
+                                 .trans(10.0, 20.0),
+                             graphics);
                     });
                 }
 
@@ -47,7 +62,7 @@ impl Game {
                         self.bullets.push(bullet::Bullet::new(self.player.pos,
                                                               self.player.vel,
                                                               self.player.rot,
-                                                              self.player.window_size));
+                                                              self.window_size));
                         self.player.reset_cooldown();
                     }
                     for bullet in &mut self.bullets {
@@ -64,6 +79,7 @@ impl Game {
                         let bullets = &mut self.bullets;
                         let asteroids = &mut self.asteroids;
                         let player = &mut self.player;
+                        let score = &mut self.score;
 
                         bullets.retain(|bullet| {
                             // Remove the first asteroid that collides with a bullet, if any.
@@ -71,6 +87,7 @@ impl Game {
                                 .position(|asteroid| asteroid.collides_with(bullet)) {
                                 asteroids.remove(index);
                                 num_asteroids_destroyed += 1;
+                                *score += 10;
                                 return false;
                             }
                             true
