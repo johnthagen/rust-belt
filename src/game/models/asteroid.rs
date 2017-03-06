@@ -59,9 +59,14 @@ fn generate_jagged_shape() -> CircularPolygon {
 }
 
 impl Asteroid {
-    pub fn new(window_size: Size, player_pos: Vector) -> Asteroid {
+    pub fn new(window_size: Size) -> Asteroid {
         let radius = cmp::max(window_size.width, window_size.height) as f64 + RADIUS;
         let angle = f64::consts::PI * 2.0 * rand::random::<f64>();
+        let target = Vector::new_rand(RADIUS,
+                                      window_size.width as f64,
+                                      RADIUS,
+                                      window_size.height as f64);
+        let vel_multipler = 0.5 + rand::random::<f64>() * 0.7;
         let new_pos = Vector {
             x: window_size.width as f64 / 2.0 + radius * angle.cos(),
             y: window_size.height as f64 / 2.0 + radius * angle.sin(),
@@ -69,11 +74,11 @@ impl Asteroid {
         Asteroid {
             pos: new_pos,
             vel: Vector {
-                x: new_pos.angle_to_vector(player_pos).cos(),
-                y: new_pos.angle_to_vector(player_pos).sin(),
+                x: new_pos.angle_to_vector(target).cos() * vel_multipler,
+                y: new_pos.angle_to_vector(target).sin() * vel_multipler,
             },
             rot: 0.0,
-            spin: rand::random::<f64>() * f64::consts::PI / 180.0,
+            spin: (rand::random::<f64>() - 0.5) * f64::consts::PI / 180.0,
             shape: generate_jagged_shape(),
             window_size: Size {
                 width: window_size.width * 2,
