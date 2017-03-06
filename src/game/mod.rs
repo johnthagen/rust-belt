@@ -13,10 +13,11 @@ pub struct Game {
     player: player::Player,
     bullets: Vec<bullet::Bullet>,
     asteroids: Vec<asteroid::Asteroid>,
-    num_asteroids: f64,
     score: i64,
     glyph_cache: GlyphCache<'static>,
     window_size: Size,
+    asteroid_timer: f64,
+    asteroid_timer_max: f64,
 }
 
 impl Game {
@@ -25,10 +26,11 @@ impl Game {
             player: player::Player::new(window_size),
             bullets: Vec::new(),
             asteroids: Vec::new(),
-            num_asteroids: 1.0,
             score: 0,
             glyph_cache: GlyphCache::new("./assets/FiraSans-Regular.ttf").unwrap(),
             window_size: window_size,
+            asteroid_timer: 1.0,
+            asteroid_timer_max: 10.0,
         }
     }
 
@@ -74,7 +76,6 @@ impl Game {
                     }
 
                     // Shorten lifetimes due to issues trying to pass `self` into a closure.
-                    let mut num_asteroids_destroyed = 0;
                     {
                         let bullets = &mut self.bullets;
                         let asteroids = &mut self.asteroids;
@@ -86,7 +87,6 @@ impl Game {
                             if let Some(index) = asteroids.iter()
                                 .position(|asteroid| asteroid.collides_with(bullet)) {
                                 asteroids.remove(index);
-                                num_asteroids_destroyed += 1;
                                 *score += 10;
                                 return false;
                             }
@@ -98,12 +98,14 @@ impl Game {
                             break;
                         }
                     }
-                    self.num_asteroids += 0.3 * num_asteroids_destroyed as f64;
-                    if self.asteroids.len() == 0 {
-                        for _ in 0..self.num_asteroids.floor() as u32 {
-                            self.asteroids.push(asteroid::Asteroid::new(self.player.window_size,
-                                                                        self.player.pos));
+                    self.asteroid_timer -= args.dt;
+                    if self.asteroid_timer < 0.0 {
+                        self.asteroids.push(asteroid::Asteroid::new(self.player.window_size,
+                                                                    self.player.pos));
+                        if self.asteroid_timer_max > 1.0 {
+                            self.asteroid_timer_max -= 0.2;
                         }
+                        self.asteroid_timer = self.asteroid_timer_max;
                     }
                 }
 
