@@ -83,8 +83,7 @@ impl Game {
                     }
                     self.asteroid_timer -= args.dt;
                     if self.asteroid_timer < 0.0 {
-                        self.asteroids.push(asteroid::Asteroid::new(self.player.window_size,
-                                                                    self.player.pos));
+                        self.asteroids.push(asteroid::Asteroid::new(self.player.window_size));
                         if self.asteroid_timer_max > 1.0 {
                             self.asteroid_timer_max -= 0.2;
                         }
