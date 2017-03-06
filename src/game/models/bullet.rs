@@ -36,12 +36,8 @@ impl Bullet {
 
 impl Updateable for Bullet {
     fn update(&mut self, args: UpdateArgs) {
-        let window_size_vector = Vector {
-            x: self.window_size.width as f64,
-            y: self.window_size.height as f64,
-        };
-        self.pos += self.vel + window_size_vector;
-        self.pos %= window_size_vector;
+        self.pos += self.vel + self.window_size.into();
+        self.pos %= self.window_size.into();
         self.ttl -= args.dt;
     }
 }

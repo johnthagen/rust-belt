@@ -7,7 +7,7 @@ pub mod asteroid;
 use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign};
 
 use opengl_graphics::GlGraphics;
-use piston_window::{Context, UpdateArgs};
+use piston_window::{Context, UpdateArgs, Size};
 
 /// Models an (x, y) coordinate value (such as position or velocity).
 #[derive(Copy, Clone)]
@@ -64,6 +64,17 @@ impl Rem for Vector {
 impl RemAssign for Vector {
     fn rem_assign(&mut self, other: Self) {
         *self = *self % other;
+    }
+}
+
+/// Define how a two dimensional `Size` can be converted to a two dimensional `Vector`.
+/// Width is defined as the x unit and height is defined as the y unit.
+impl From<Size> for Vector {
+    fn from(size: Size) -> Self {
+        Vector {
+            x: size.width as f64,
+            y: size.height as f64,
+        }
     }
 }
 
