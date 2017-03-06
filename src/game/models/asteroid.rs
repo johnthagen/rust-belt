@@ -97,14 +97,13 @@ impl Updateable for Asteroid {
         self.pos.x = x % self.window_size.width as f64;
         self.pos.y = y % self.window_size.height as f64;
         self.rot += self.spin;
-        if self.on_screen == false {
-            if self.pos.x > RADIUS && self.pos.x + RADIUS < self.window_size.width as f64 / 2.0 &&
-               self.pos.y > RADIUS &&
-               self.pos.y + RADIUS < self.window_size.height as f64 / 2.0 {
-                self.window_size.width /= 2;
-                self.window_size.height /= 2;
-                self.on_screen = true;
-            }
+        if self.on_screen == false && self.pos.x > RADIUS &&
+           self.pos.x + RADIUS < self.window_size.width as f64 / 2.0 &&
+           self.pos.y > RADIUS &&
+           self.pos.y + RADIUS < self.window_size.height as f64 / 2.0 {
+            self.window_size.width /= 2;
+            self.window_size.height /= 2;
+            self.on_screen = true;
         }
     }
 }
