@@ -14,7 +14,6 @@ pub struct Game {
     bullets: Vec<bullet::Bullet>,
     asteroids: Vec<asteroid::Asteroid>,
     score: i64,
-    glyph_cache: GlyphCache<'static>,
     window_size: Size,
     asteroid_timer: f64,
     asteroid_timer_max: f64,
@@ -27,14 +26,16 @@ impl Game {
             bullets: Vec::new(),
             asteroids: Vec::new(),
             score: 0,
-            glyph_cache: GlyphCache::new("./assets/FiraSans-Regular.ttf").unwrap(),
             window_size: window_size,
             asteroid_timer: 0.1,
             asteroid_timer_max: 6.0,
         }
     }
 
-    pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics) {
+    pub fn run(&mut self,
+               window: &mut PistonWindow,
+               opengl: &mut GlGraphics,
+               glyph_cache: &mut GlyphCache) {
         while let Some(event) = window.next() {
             match event {
                 Input::Render(args) => {
@@ -51,7 +52,7 @@ impl Game {
                         text(color::YELLOW,
                              26,
                              format!("Score: {}", self.score).as_str(),
-                             &mut self.glyph_cache,
+                             glyph_cache,
                              context.transform
                                  .trans(10.0, 20.0),
                              graphics);
