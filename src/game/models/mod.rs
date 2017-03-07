@@ -38,7 +38,7 @@ impl Vector {
         }
     }
     fn angle_to_vector(self, other: Vector) -> f64 {
-        let diff = self - other;
+        let diff = other - self;
         let mut angle_to_point = (diff.y / diff.x).atan();
         if diff.y < 0.0 {
             angle_to_point += PI;

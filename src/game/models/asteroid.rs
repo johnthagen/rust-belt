@@ -74,8 +74,8 @@ impl Asteroid {
         Asteroid {
             pos: new_pos,
             vel: Vector {
-                x: -1.0 * new_pos.angle_to_vector(target).cos() * vel_multiplier,
-                y: -1.0 * new_pos.angle_to_vector(target).sin() * vel_multiplier,
+                x: new_pos.angle_to_vector(target).cos() * vel_multiplier,
+                y: new_pos.angle_to_vector(target).sin() * vel_multiplier,
             },
             rot: 0.0,
             spin: (rand::random::<f64>() - 0.5) * f64::consts::PI / 180.0,
