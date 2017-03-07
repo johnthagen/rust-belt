@@ -4,13 +4,12 @@ pub mod player;
 pub mod bullet;
 pub mod asteroid;
 
-use std::ops::{Add, AddAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign};
 use std::f64;
 use opengl_graphics::GlGraphics;
-use piston_window::{Context, UpdateArgs};
-use rand;
-
+use piston_window::{Context, UpdateArgs, Size};
 use std::f64::consts::PI;
+use rand;
 
 pub const PI_TIMES_2: f64 = 2.0 * PI;
 /// Models an (x, y) coordinate value (such as position or velocity).
@@ -73,6 +72,34 @@ impl Sub for Vector {
 impl SubAssign for Vector {
     fn sub_assign(&mut self, other: Self) {
         *self = *self - other;
+    }
+}
+
+impl Rem for Vector {
+    type Output = Self;
+
+    fn rem(self, other: Self) -> Self {
+        Vector {
+            x: self.x % other.x,
+            y: self.y % other.y,
+        }
+    }
+}
+
+impl RemAssign for Vector {
+    fn rem_assign(&mut self, other: Self) {
+        *self = *self % other;
+    }
+}
+
+/// Define how a two dimensional `Size` can be converted to a two dimensional `Vector`.
+/// Width is defined as the x unit and height is defined as the y unit.
+impl From<Size> for Vector {
+    fn from(size: Size) -> Self {
+        Vector {
+            x: size.width as f64,
+            y: size.height as f64,
+        }
     }
 }
 
