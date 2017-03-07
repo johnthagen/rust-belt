@@ -6,7 +6,7 @@ use piston_window::{Button, clear, Input, Key, PistonWindow, Size, text, Transfo
 pub mod color;
 mod models;
 
-use self::models::{Collidable, Drawable, player, Updateable, bullet, asteroid};
+use self::models::{asteroid, bullet, Collidable, Drawable, player, Updateable};
 
 /// Stores Game state.
 pub struct Game {

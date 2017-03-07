@@ -3,13 +3,13 @@ extern crate opengl_graphics;
 extern crate piston_window;
 extern crate rand;
 
+use piston_window::{OpenGL, PistonWindow, Size, WindowSettings};
+use opengl_graphics::GlGraphics;
+
 mod game;
 mod menu;
 mod settings;
 mod story;
-
-use piston_window::{OpenGL, PistonWindow, WindowSettings, Size};
-use opengl_graphics::GlGraphics;
 
 fn main() {
     const GAME_TITLE: &'static str = "Rust Belt";

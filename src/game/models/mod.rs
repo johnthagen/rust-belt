@@ -4,15 +4,16 @@ pub mod player;
 pub mod bullet;
 pub mod asteroid;
 
-use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign};
 use std::f64;
 use std::f64::consts::PI;
+use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign};
 
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs, Size};
 use rand;
 
 pub const PI_TIMES_2: f64 = 2.0 * PI;
+
 /// Models an (x, y) coordinate value (such as position or velocity).
 #[derive(Copy, Clone)]
 pub struct Vector {

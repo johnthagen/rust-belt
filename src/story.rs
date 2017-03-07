@@ -2,7 +2,7 @@
 
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, types, Transformed};
+use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, Transformed, types};
 
 use game::color::{self, ColoredText};
 
