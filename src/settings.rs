@@ -7,7 +7,6 @@ use piston_window::{Button, clear, Input, Key, PistonWindow, text, Transformed};
 
 use game::color;
 
-
 pub fn run(window: &mut PistonWindow,
            opengl: &mut GlGraphics,
            glyph_cache: &mut GlyphCache,

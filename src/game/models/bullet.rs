@@ -1,9 +1,8 @@
 //! Defines the bullet component.
 use std::f64;
 
-
 use opengl_graphics::GlGraphics;
-use piston_window::{Context, Size, ellipse, Transformed, types, UpdateArgs};
+use piston_window::{Context, ellipse, Size, Transformed, types, UpdateArgs};
 
 use super::super::color;
 use super::{Collidable, Drawable, Positioned, Updateable, Vector};

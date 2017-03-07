@@ -1,13 +1,12 @@
 //! Defines the asteroid component.
-use std::f64;
-use std::cmp;
+use std::{cmp, f64};
 
 use opengl_graphics::GlGraphics;
-use piston_window::{Context, Size, polygon, Transformed, UpdateArgs};
+use piston_window::{Context, polygon, Size, Transformed, UpdateArgs};
 use rand;
 
 use super::super::color;
-use super::{Collidable, Drawable, Positioned, Updateable, Vector, PI_TIMES_2};
+use super::{Collidable, Drawable, PI_TIMES_2, Positioned, Updateable, Vector};
 
 const NUM_SEGMENTS: usize = 20;
 type CircularPolygon = [[f64; 2]; NUM_SEGMENTS];

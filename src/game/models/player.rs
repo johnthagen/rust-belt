@@ -1,13 +1,11 @@
 //! Defines the player component.
 use std::f64;
 
-
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, polygon, Size, Transformed, types, UpdateArgs};
 
 use super::super::color;
 use super::{Collidable, Drawable, Positioned, Updateable, Vector};
-
 
 pub struct Player {
     pub pos: Vector,
