@@ -99,8 +99,6 @@ impl Updateable for Asteroid {
         if !self.on_screen && self.pos.x > RADIUS &&
            self.pos.x + RADIUS < self.window_size.width as f64 &&
            self.pos.y > RADIUS && self.pos.y + RADIUS < self.window_size.height as f64 {
-            //self.window_size.width /= 2;
-            //self.window_size.height /= 2;
             self.on_screen = true;
         }
     }

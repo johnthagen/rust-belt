@@ -6,9 +6,10 @@ pub mod asteroid;
 
 use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign};
 use std::f64;
+use std::f64::consts::PI;
+
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs, Size};
-use std::f64::consts::PI;
 use rand;
 
 pub const PI_TIMES_2: f64 = 2.0 * PI;
