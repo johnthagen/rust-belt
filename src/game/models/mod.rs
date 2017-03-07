@@ -5,10 +5,14 @@ pub mod bullet;
 pub mod asteroid;
 
 use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign};
+use std::f64;
+use std::f64::consts::PI;
 
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs, Size};
+use rand;
 
+pub const PI_TIMES_2: f64 = 2.0 * PI;
 /// Models an (x, y) coordinate value (such as position or velocity).
 #[derive(Copy, Clone)]
 pub struct Vector {
@@ -24,6 +28,28 @@ impl Add for Vector {
             x: self.x + other.x,
             y: self.y + other.y,
         }
+    }
+}
+
+impl Vector {
+    fn new_rand(x_min: f64, x_max: f64, y_min: f64, y_max: f64) -> Vector {
+        Vector {
+            x: rand::random::<f64>() * (x_max - x_min) + x_min,
+            y: rand::random::<f64>() * (y_max - y_min) + y_min,
+        }
+    }
+    fn angle_to_vector(self, other: Vector) -> f64 {
+        let diff = other - self;
+        let mut angle_to_point = (diff.y / diff.x).atan();
+        if diff.y < 0.0 {
+            angle_to_point += PI;
+            if diff.x > 0.0 {
+                angle_to_point += PI;
+            }
+        } else if diff.x < 0.0 {
+            angle_to_point += PI;
+        }
+        angle_to_point
     }
 }
 

@@ -1,13 +1,13 @@
 //! Defines the asteroid component.
 use std::f64;
-
+use std::cmp;
 
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, Size, polygon, Transformed, UpdateArgs};
 use rand;
 
 use super::super::color;
-use super::{Collidable, Drawable, Positioned, Updateable, Vector};
+use super::{Collidable, Drawable, Positioned, Updateable, Vector, PI_TIMES_2};
 
 const NUM_SEGMENTS: usize = 20;
 type CircularPolygon = [[f64; 2]; NUM_SEGMENTS];
@@ -19,6 +19,7 @@ pub struct Asteroid {
     spin: f64,
     shape: CircularPolygon,
     window_size: Size,
+    on_screen: bool,
 }
 
 fn generate_circle(radius: f64) -> CircularPolygon {
@@ -59,19 +60,28 @@ fn generate_jagged_shape() -> CircularPolygon {
 
 impl Asteroid {
     pub fn new(window_size: Size) -> Asteroid {
+        let radius = cmp::max(window_size.width, window_size.height) as f64 + RADIUS;
+        let angle = PI_TIMES_2 * rand::random::<f64>();
+        let target = Vector::new_rand(RADIUS + 1.0,
+                                      window_size.width as f64,
+                                      RADIUS + 1.0,
+                                      window_size.height as f64);
+        let vel_multiplier = 0.5 + rand::random::<f64>() * 0.7;
+        let new_pos = Vector {
+            x: window_size.width as f64 / 2.0 + radius * angle.cos(),
+            y: window_size.height as f64 / 2.0 + radius * angle.sin(),
+        };
         Asteroid {
-            pos: Vector {
-                x: 400.0,
-                y: 400.0,
-            },
+            pos: new_pos,
             vel: Vector {
-                x: rand::random::<f64>() - 0.5,
-                y: rand::random::<f64>() - 0.5,
+                x: new_pos.angle_to_vector(target).cos() * vel_multiplier,
+                y: new_pos.angle_to_vector(target).sin() * vel_multiplier,
             },
             rot: 0.0,
-            spin: rand::random::<f64>() * f64::consts::PI / 180.0,
+            spin: (rand::random::<f64>() - 0.5) * f64::consts::PI / 180.0,
             shape: generate_jagged_shape(),
             window_size: window_size,
+            on_screen: false,
         }
     }
 }
@@ -79,9 +89,18 @@ impl Asteroid {
 impl Updateable for Asteroid {
     #[allow(unused_variables)]
     fn update(&mut self, args: UpdateArgs) {
-        self.pos += self.vel + self.window_size.into();
-        self.pos %= self.window_size.into();
+        if self.on_screen {
+            self.pos += self.vel + self.window_size.into();
+            self.pos %= self.window_size.into();
+        } else {
+            self.pos += self.vel;
+        }
         self.rot += self.spin;
+        if !self.on_screen && self.pos.x > RADIUS &&
+           self.pos.x + RADIUS < self.window_size.width as f64 &&
+           self.pos.y > RADIUS && self.pos.y + RADIUS < self.window_size.height as f64 {
+            self.on_screen = true;
+        }
     }
 }
 
@@ -92,7 +111,42 @@ impl Drawable for Asteroid {
                 context.transform
                     .trans(self.pos.x, self.pos.y)
                     .rot_rad(self.rot),
-                graphics)
+                graphics);
+        if self.on_screen {
+            if self.pos.x + RADIUS > self.window_size.width as f64 {
+                polygon(color::WHITE,
+                        &self.shape,
+                        context.transform
+                            .trans(self.pos.x - self.window_size.width as f64, self.pos.y)
+                            .rot_rad(self.rot),
+                        graphics)
+
+            } else if self.pos.x < RADIUS {
+                polygon(color::WHITE,
+                        &self.shape,
+                        context.transform
+                            .trans(self.pos.x + self.window_size.width as f64, self.pos.y)
+                            .rot_rad(self.rot),
+                        graphics)
+            }
+            if self.pos.y + RADIUS > self.window_size.height as f64 {
+                polygon(color::WHITE,
+                        &self.shape,
+                        context.transform
+                            .trans(self.pos.x, self.pos.y - self.window_size.height as f64)
+                            .rot_rad(self.rot),
+                        graphics)
+
+            } else if self.pos.y < RADIUS {
+                polygon(color::WHITE,
+                        &self.shape,
+                        context.transform
+                            .trans(self.pos.x, self.pos.y + self.window_size.height as f64)
+                            .rot_rad(self.rot),
+                        graphics)
+
+            }
+        }
     }
 }
 

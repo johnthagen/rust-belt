@@ -16,6 +16,8 @@ pub struct Game {
     score: i64,
     glyph_cache: GlyphCache<'static>,
     window_size: Size,
+    asteroid_timer: f64,
+    asteroid_timer_max: f64,
 }
 
 impl Game {
@@ -27,11 +29,12 @@ impl Game {
             score: 0,
             glyph_cache: GlyphCache::new("./assets/FiraSans-Regular.ttf").unwrap(),
             window_size: window_size,
+            asteroid_timer: 0.1,
+            asteroid_timer_max: 6.0,
         }
     }
 
     pub fn run(&mut self, window: &mut PistonWindow, opengl: &mut GlGraphics) {
-        self.asteroids.push(asteroid::Asteroid::new(self.window_size));
         while let Some(event) = window.next() {
             match event {
                 Input::Render(args) => {
@@ -94,6 +97,14 @@ impl Game {
                         if asteroids.iter().any(|asteroid| asteroid.collides_with(player)) {
                             break;
                         }
+                    }
+                    self.asteroid_timer -= args.dt;
+                    if self.asteroid_timer < 0.0 {
+                        self.asteroids.push(asteroid::Asteroid::new(self.window_size));
+                        if self.asteroid_timer_max > 1.0 {
+                            self.asteroid_timer_max -= 0.1;
+                        }
+                        self.asteroid_timer = self.asteroid_timer_max;
                     }
                 }
 
