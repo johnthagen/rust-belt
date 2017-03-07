@@ -10,7 +10,9 @@ use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs};
 use rand;
 
-const PI: f64 = f64::consts::PI;
+use std::f64::consts::PI;
+
+pub const PI_TIMES_2: f64 = 2.0 * PI;
 /// Models an (x, y) coordinate value (such as position or velocity).
 #[derive(Copy, Clone)]
 pub struct Vector {
@@ -37,15 +39,14 @@ impl Vector {
         }
     }
     fn angle_to_vector(self, other: Vector) -> f64 {
-        let diff_x = other.x - self.x;
-        let diff_y = other.y - self.y;
-        let mut angle_to_point = (diff_y / diff_x).atan();
-        if diff_y < 0.0 {
+        let diff = self - other;
+        let mut angle_to_point = (diff.y / diff.x).atan();
+        if diff.y < 0.0 {
             angle_to_point += PI;
-            if diff_x > 0.0 {
+            if diff.x > 0.0 {
                 angle_to_point += PI;
             }
-        } else if diff_x < 0.0 {
+        } else if diff.x < 0.0 {
             angle_to_point += PI;
         }
         angle_to_point

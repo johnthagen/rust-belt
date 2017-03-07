@@ -29,8 +29,8 @@ impl Game {
             score: 0,
             glyph_cache: GlyphCache::new("./assets/FiraSans-Regular.ttf").unwrap(),
             window_size: window_size,
-            asteroid_timer: 1.0,
-            asteroid_timer_max: 10.0,
+            asteroid_timer: 0.1,
+            asteroid_timer_max: 6.0,
         }
     }
 
@@ -102,7 +102,7 @@ impl Game {
                     if self.asteroid_timer < 0.0 {
                         self.asteroids.push(asteroid::Asteroid::new(self.window_size));
                         if self.asteroid_timer_max > 1.0 {
-                            self.asteroid_timer_max -= 0.2;
+                            self.asteroid_timer_max -= 0.1;
                         }
                         self.asteroid_timer = self.asteroid_timer_max;
                     }
