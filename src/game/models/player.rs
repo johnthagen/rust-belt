@@ -92,10 +92,8 @@ impl Player {
 
 impl Updateable for Player {
     fn update(&mut self, args: UpdateArgs) {
-        let x = self.pos.x + self.vel.x + self.window_size.width as f64;
-        let y = self.pos.y + self.vel.y + self.window_size.height as f64;
-        self.pos.x = x % self.window_size.width as f64;
-        self.pos.y = y % self.window_size.height as f64;
+        self.pos += self.vel + self.window_size.into();
+        self.pos %= self.window_size.into();
 
         if self.actions.rotate_cw {
             self.rotate_cw(args.dt)
