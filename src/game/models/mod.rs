@@ -12,7 +12,7 @@ use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs, Size};
 use rand;
 
-pub const PI_TIMES_2: f64 = 2.0 * PI;
+pub const PI_MULT_2: f64 = 2.0 * PI;
 
 /// Models an (x, y) coordinate value (such as position or velocity).
 #[derive(Copy, Clone)]
