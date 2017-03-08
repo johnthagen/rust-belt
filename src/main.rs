@@ -20,14 +20,14 @@ fn main() {
 
     let opengl = OpenGL::V3_2;
 
-    let mut window: PistonWindow = WindowSettings::new(GAME_TITLE,
-                                                       [GAME_WINDOW_SIZE.width,
-                                                        GAME_WINDOW_SIZE.height])
-        .opengl(opengl)
-        .samples(4)
-        .exit_on_esc(true)
-        .build()
-        .unwrap_or_else(|error| panic!("Failed to build PistonWindow: {}", error));
+    let mut window: PistonWindow =
+        WindowSettings::new(GAME_TITLE,
+                            [GAME_WINDOW_SIZE.width, GAME_WINDOW_SIZE.height])
+                .opengl(opengl)
+                .samples(4)
+                .exit_on_esc(true)
+                .build()
+                .unwrap_or_else(|error| panic!("Failed to build PistonWindow: {}", error));
 
     let mut gl = GlGraphics::new(opengl);
 

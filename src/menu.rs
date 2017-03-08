@@ -66,8 +66,7 @@ fn render(context: Context,
          72,
          game_title,
          glyph_cache,
-         context.transform
-             .trans(menu_align, STARTING_LINE_OFFSET),
+         context.transform.trans(menu_align, STARTING_LINE_OFFSET),
          graphics);
 
     for (index, line) in menu_lines.iter().enumerate() {
@@ -76,9 +75,9 @@ fn render(context: Context,
              32,
              line.text,
              glyph_cache,
-             context.transform
-                 .trans(menu_align,
-                        STARTING_LINE_OFFSET + ((index as f64 + 1.0) * NEW_LINE_OFFSET)),
+             context.transform.trans(menu_align,
+                                     STARTING_LINE_OFFSET +
+                                     ((index as f64 + 1.0) * NEW_LINE_OFFSET)),
              graphics);
     }
 }

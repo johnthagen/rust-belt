@@ -107,9 +107,7 @@ impl Drawable for Asteroid {
     fn draw(&self, context: Context, graphics: &mut GlGraphics) {
         polygon(color::WHITE,
                 &self.shape,
-                context.transform
-                    .trans(self.pos.x, self.pos.y)
-                    .rot_rad(self.rot),
+                context.transform.trans(self.pos.x, self.pos.y).rot_rad(self.rot),
                 graphics);
         if self.on_screen {
             if self.pos.x + RADIUS > self.window_size.width as f64 {
