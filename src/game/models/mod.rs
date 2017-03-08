@@ -1,9 +1,5 @@
 //! Traits and types common to models.
 
-pub mod player;
-pub mod bullet;
-pub mod asteroid;
-
 use std::f64;
 use std::f64::consts::PI;
 use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign};
@@ -11,6 +7,10 @@ use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign};
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs, Size};
 use rand;
+
+pub mod player;
+pub mod bullet;
+pub mod asteroid;
 
 pub const PI_TIMES_2: f64 = 2.0 * PI;
 
