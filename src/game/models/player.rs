@@ -5,7 +5,7 @@ use opengl_graphics::GlGraphics;
 use piston_window::{Context, polygon, Size, Transformed, types, UpdateArgs};
 
 use super::super::color;
-use super::{Collidable, Drawable, Positioned, Updateable, Vector};
+use super::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable, Vector};
 
 pub struct Player {
     pub pos: Vector,
@@ -50,8 +50,7 @@ impl Player {
     }
 
     fn rotate(&mut self, rot: f64) {
-        const TAU: f64 = 2.0 * f64::consts::PI;
-        self.rot = (self.rot + rot) % TAU;
+        self.rot = (self.rot + rot) % PI_MULT_2;
     }
 
     fn rotate_cw(&mut self, delta: f64) {
