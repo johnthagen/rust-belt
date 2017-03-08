@@ -25,15 +25,13 @@ pub fn run(window: &mut PistonWindow,
                          32,
                          "Volume",
                          glyph_cache,
-                         context.transform
-                             .trans(left_alignment, STARTING_LINE_OFFSET),
+                         context.transform.trans(left_alignment, STARTING_LINE_OFFSET),
                          graphics);
                     text(color::WHITE,
                          32,
                          &format!("{}%", ((*volume) * 100.0) as i32),
                          glyph_cache,
-                         context.transform
-                             .trans(value_left_alignment, STARTING_LINE_OFFSET),
+                         context.transform.trans(value_left_alignment, STARTING_LINE_OFFSET),
                          graphics);
                 });
             }

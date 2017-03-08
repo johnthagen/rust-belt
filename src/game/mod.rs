@@ -53,8 +53,7 @@ impl Game {
                              26,
                              format!("Score: {}", self.score).as_str(),
                              glyph_cache,
-                             context.transform
-                                 .trans(10.0, 20.0),
+                             context.transform.trans(10.0, 20.0),
                              graphics);
                     });
                 }
