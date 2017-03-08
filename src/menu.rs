@@ -133,7 +133,9 @@ pub fn run(mut window: &mut PistonWindow,
                             match menu_selection {
                                 MenuSelection::Play => {
                                     music::play(&Music::Action, music::Repeat::Forever);
-                                    game::Game::new(window_size).run(&mut window, &mut opengl);
+                                    game::Game::new(window_size).run(&mut window,
+                                                                     &mut opengl,
+                                                                     &mut glyph_cache);
                                     music::play(&Music::Menu, music::Repeat::Forever);
                                 }
                                 MenuSelection::Story => {
