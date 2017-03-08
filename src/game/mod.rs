@@ -3,10 +3,10 @@ use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
 use piston_window::{Button, clear, Input, Key, PistonWindow, Size, text, Transformed};
 
+use self::models::{asteroid, bullet, Collidable, Drawable, player, Updateable};
+
 pub mod color;
 mod models;
-
-use self::models::{asteroid, bullet, Collidable, Drawable, player, Updateable};
 
 /// Stores Game state.
 pub struct Game {
