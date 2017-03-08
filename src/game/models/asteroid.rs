@@ -6,7 +6,7 @@ use piston_window::{Context, polygon, Size, Transformed, UpdateArgs};
 use rand;
 
 use super::super::color;
-use super::{Collidable, Drawable, PI_TIMES_2, Positioned, Updateable, Vector};
+use super::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable, Vector};
 
 const NUM_SEGMENTS: usize = 20;
 type CircularPolygon = [[f64; 2]; NUM_SEGMENTS];
@@ -22,7 +22,7 @@ pub struct Asteroid {
 }
 
 fn generate_circle(radius: f64) -> CircularPolygon {
-    const ANGULAR_SEGMENT: f64 = f64::consts::PI * 2.0 / NUM_SEGMENTS as f64;
+    const ANGULAR_SEGMENT: f64 = PI_MULT_2 / NUM_SEGMENTS as f64;
     let mut circle = [[0.0; 2]; NUM_SEGMENTS];
     for (index, mut vertex) in circle.iter_mut().enumerate() {
         let index_float = index as f64;
@@ -60,7 +60,7 @@ fn generate_jagged_shape() -> CircularPolygon {
 impl Asteroid {
     pub fn new(window_size: Size) -> Asteroid {
         let radius = cmp::max(window_size.width, window_size.height) as f64 + RADIUS;
-        let angle = PI_TIMES_2 * rand::random::<f64>();
+        let angle = PI_MULT_2 * rand::random::<f64>();
         let target = Vector::new_rand(RADIUS + 1.0,
                                       window_size.width as f64,
                                       RADIUS + 1.0,
