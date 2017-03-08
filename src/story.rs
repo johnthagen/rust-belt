@@ -104,9 +104,8 @@ fn render(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCa
              22,
              line.text,
              glyph_cache,
-             context.transform
-                 .trans(LEFT_INDENT,
-                        STARTING_LINE_OFFSET + (index as f64 * NEW_LINE_OFFSET)),
+             context.transform.trans(LEFT_INDENT,
+                                     STARTING_LINE_OFFSET + (index as f64 * NEW_LINE_OFFSET)),
              graphics);
     }
 }
