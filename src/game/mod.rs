@@ -28,7 +28,7 @@ impl Game {
             score: 0,
             window_size: window_size,
             asteroid_timer: 0.1,
-            asteroid_timer_max: 6.0,
+            asteroid_timer_max: 4.0,
         }
     }
 
@@ -101,8 +101,8 @@ impl Game {
                     self.asteroid_timer -= args.dt;
                     if self.asteroid_timer < 0.0 {
                         self.asteroids.push(asteroid::Asteroid::new(self.window_size));
-                        if self.asteroid_timer_max > 1.0 {
-                            self.asteroid_timer_max -= 0.1;
+                        if self.asteroid_timer_max > 0.5 {
+                            self.asteroid_timer_max -= 0.075;
                         }
                         self.asteroid_timer = self.asteroid_timer_max;
                     }
