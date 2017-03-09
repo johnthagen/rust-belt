@@ -66,10 +66,10 @@ impl Asteroid {
         let asteroid_radius = RADIUS_MIN + rand::random::<f64>() * (RADIUS_MAX - RADIUS_MIN);
         let spawn_radius = cmp::max(window_size.width, window_size.height) as f64 + RADIUS_MAX;
         let angle = PI_MULT_2 * rand::random::<f64>();
-        let target = Vector::new_rand(RADIUS_MAX + 1.0,
-                                      window_size.width as f64,
-                                      RADIUS_MAX + 1.0,
-                                      window_size.height as f64);
+        let target = Vector::new_rand(RADIUS_MAX,
+                                      window_size.width as f64 - RADIUS_MAX,
+                                      RADIUS_MAX,
+                                      window_size.height as f64 - RADIUS_MAX);
         let vel_multiplier = 0.5 + rand::random::<f64>() * 0.7;
         let new_pos = Vector {
             x: window_size.width as f64 / 2.0 + spawn_radius * angle.cos(),
