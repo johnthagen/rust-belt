@@ -9,6 +9,10 @@ use super::super::color;
 use super::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable, Vector};
 
 const NUM_SEGMENTS: usize = 20;
+const RADIUS_MIN: f64 = 40.0;
+const RADIUS_MAX: f64 = 70.0;
+const MAX_MUT_FACTOR: f64 = 4.0;
+
 type CircularPolygon = [[f64; 2]; NUM_SEGMENTS];
 
 pub struct Asteroid {
@@ -16,6 +20,7 @@ pub struct Asteroid {
     vel: Vector,
     rot: f64,
     spin: f64,
+    radius: f64,
     shape: CircularPolygon,
     window_size: Size,
     on_screen: bool,
@@ -50,25 +55,25 @@ fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
     shape
 }
 
-const RADIUS: f64 = 70.0;
-fn generate_jagged_shape() -> CircularPolygon {
-    let new_shape = generate_circle(RADIUS);
-    const MAX_MUT: f64 = RADIUS / 4.0;
-    randomize_shape(new_shape, MAX_MUT)
+fn generate_jagged_shape(radius: f64) -> CircularPolygon {
+    let new_shape = generate_circle(radius);
+    let max_mut = radius / MAX_MUT_FACTOR;
+    randomize_shape(new_shape, max_mut)
 }
 
 impl Asteroid {
     pub fn new(window_size: Size) -> Asteroid {
-        let radius = cmp::max(window_size.width, window_size.height) as f64 + RADIUS;
+        let asteroid_radius = RADIUS_MIN + rand::random::<f64>() * (RADIUS_MAX - RADIUS_MIN);
+        let spawn_radius = cmp::max(window_size.width, window_size.height) as f64 + RADIUS_MAX;
         let angle = PI_MULT_2 * rand::random::<f64>();
-        let target = Vector::new_rand(RADIUS + 1.0,
+        let target = Vector::new_rand(RADIUS_MAX + 1.0,
                                       window_size.width as f64,
-                                      RADIUS + 1.0,
+                                      RADIUS_MAX + 1.0,
                                       window_size.height as f64);
         let vel_multiplier = 0.5 + rand::random::<f64>() * 0.7;
         let new_pos = Vector {
-            x: window_size.width as f64 / 2.0 + radius * angle.cos(),
-            y: window_size.height as f64 / 2.0 + radius * angle.sin(),
+            x: window_size.width as f64 / 2.0 + spawn_radius * angle.cos(),
+            y: window_size.height as f64 / 2.0 + spawn_radius * angle.sin(),
         };
         Asteroid {
             pos: new_pos,
@@ -78,7 +83,8 @@ impl Asteroid {
             },
             rot: 0.0,
             spin: (rand::random::<f64>() - 0.5) * f64::consts::PI / 180.0,
-            shape: generate_jagged_shape(),
+            radius: asteroid_radius,
+            shape: generate_jagged_shape(asteroid_radius),
             window_size: window_size,
             on_screen: false,
         }
@@ -95,9 +101,10 @@ impl Updateable for Asteroid {
             self.pos += self.vel;
         }
         self.rot += self.spin;
-        if !self.on_screen && self.pos.x > RADIUS &&
-           self.pos.x + RADIUS < self.window_size.width as f64 &&
-           self.pos.y > RADIUS && self.pos.y + RADIUS < self.window_size.height as f64 {
+        if !self.on_screen && self.pos.x > self.radius &&
+           self.pos.x + self.radius < self.window_size.width as f64 &&
+           self.pos.y > self.radius &&
+           self.pos.y + self.radius < self.window_size.height as f64 {
             self.on_screen = true;
         }
     }
@@ -110,7 +117,7 @@ impl Drawable for Asteroid {
                 context.transform.trans(self.pos.x, self.pos.y).rot_rad(self.rot),
                 graphics);
         if self.on_screen {
-            if self.pos.x + RADIUS > self.window_size.width as f64 {
+            if self.pos.x + self.radius > self.window_size.width as f64 {
                 polygon(color::WHITE,
                         &self.shape,
                         context.transform
@@ -118,7 +125,7 @@ impl Drawable for Asteroid {
                             .rot_rad(self.rot),
                         graphics)
 
-            } else if self.pos.x < RADIUS {
+            } else if self.pos.x < self.radius {
                 polygon(color::WHITE,
                         &self.shape,
                         context.transform
@@ -126,7 +133,7 @@ impl Drawable for Asteroid {
                             .rot_rad(self.rot),
                         graphics)
             }
-            if self.pos.y + RADIUS > self.window_size.height as f64 {
+            if self.pos.y + self.radius > self.window_size.height as f64 {
                 polygon(color::WHITE,
                         &self.shape,
                         context.transform
@@ -134,7 +141,7 @@ impl Drawable for Asteroid {
                             .rot_rad(self.rot),
                         graphics)
 
-            } else if self.pos.y < RADIUS {
+            } else if self.pos.y < self.radius {
                 polygon(color::WHITE,
                         &self.shape,
                         context.transform
@@ -155,6 +162,6 @@ impl Positioned for Asteroid {
 
 impl Collidable for Asteroid {
     fn radius(&self) -> f64 {
-        RADIUS
+        self.radius
     }
 }
