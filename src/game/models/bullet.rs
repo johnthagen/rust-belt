@@ -23,7 +23,7 @@ impl Bullet {
                 x: SPEED_MULTIPLIER * direction.cos() + velocity.x,
                 y: SPEED_MULTIPLIER * direction.sin() + velocity.y,
             },
-            ttl: 2.0,
+            ttl: 1.0,
             window_size: window_size,
         }
     }

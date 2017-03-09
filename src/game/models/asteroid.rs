@@ -9,7 +9,7 @@ use super::super::color;
 use super::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable, Vector};
 
 const NUM_SEGMENTS: usize = 20;
-const RADIUS_MIN: f64 = 40.0;
+const RADIUS_MIN: f64 = 15.0;
 const RADIUS_MAX: f64 = 70.0;
 const MAX_MUT_FACTOR: f64 = 4.0;
 
