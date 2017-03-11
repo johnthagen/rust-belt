@@ -6,7 +6,7 @@ use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, Tran
 
 use game::color::{self, ColoredText};
 
-fn render(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache) {
+fn draw(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache) {
     const NARRATOR_COLOR: types::Color = color::WHITE;
     const KARA_COLOR: types::Color = color::MAGENTA;
     const JACK_COLOR: types::Color = color::CYAN;
@@ -126,7 +126,7 @@ pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, glyph_cache: &mut
         match event {
             Input::Render(args) => {
                 opengl.draw(args.viewport(),
-                            |context, graphics| render(context, graphics, glyph_cache));
+                            |context, graphics| draw(context, graphics, glyph_cache));
             }
 
             Input::Press(Button::Keyboard(key)) => {

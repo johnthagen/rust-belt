@@ -24,12 +24,12 @@ enum MenuSelection {
     Exit,
 }
 
-fn render(context: Context,
-          graphics: &mut GlGraphics,
-          glyph_cache: &mut GlyphCache,
-          menu_align: f64,
-          menu_selection: MenuSelection,
-          game_title: &'static str) {
+fn draw(context: Context,
+        graphics: &mut GlGraphics,
+        glyph_cache: &mut GlyphCache,
+        menu_align: f64,
+        menu_selection: MenuSelection,
+        game_title: &'static str) {
     const STARTING_LINE_OFFSET: f64 = 280.0;
 
     // TODO: Can this be done better with 'if let' ?
@@ -102,12 +102,12 @@ pub fn run(mut window: &mut PistonWindow,
             match event {
                 Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
-                        render(context,
-                               graphics,
-                               &mut glyph_cache,
-                               menu_align,
-                               menu_selection,
-                               game_title)
+                        draw(context,
+                             graphics,
+                             &mut glyph_cache,
+                             menu_align,
+                             menu_selection,
+                             game_title)
                     });
                 }
 
