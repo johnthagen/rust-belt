@@ -19,7 +19,7 @@ pub struct Game {
     asteroid_timer: f64,
     asteroid_timer_max: f64,
 
-    // A flag indicating if the player has lost.
+    /// A flag indicating if the player has lost.
     game_over: bool,
 }
 
