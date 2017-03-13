@@ -1,4 +1,5 @@
 //! Defines the asteroid component.
+
 use std::{cmp, f64};
 
 use opengl_graphics::GlGraphics;
@@ -62,7 +63,7 @@ fn generate_jagged_shape(radius: f64) -> CircularPolygon {
 }
 
 impl Asteroid {
-    pub fn new(window_size: Size) -> Asteroid {
+    pub fn new(window_size: Size) -> Self {
         let asteroid_radius = RADIUS_MIN + rand::random::<f64>() * (RADIUS_MAX - RADIUS_MIN);
         let spawn_radius = cmp::max(window_size.width, window_size.height) as f64 + RADIUS_MAX;
         let angle = PI_MULT_2 * rand::random::<f64>();

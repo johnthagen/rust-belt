@@ -21,19 +21,8 @@ pub struct Vector {
     y: f64,
 }
 
-impl Add for Vector {
-    type Output = Self;
-
-    fn add(self, other: Self) -> Self {
-        Vector {
-            x: self.x + other.x,
-            y: self.y + other.y,
-        }
-    }
-}
-
 impl Vector {
-    fn new_rand(x_min: f64, x_max: f64, y_min: f64, y_max: f64) -> Vector {
+    fn new_rand(x_min: f64, x_max: f64, y_min: f64, y_max: f64) -> Self {
         Vector {
             x: rand::random::<f64>() * (x_max - x_min) + x_min,
             y: rand::random::<f64>() * (y_max - y_min) + y_min,
@@ -51,6 +40,17 @@ impl Vector {
             angle_to_point += PI;
         }
         angle_to_point
+    }
+}
+
+impl Add for Vector {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        Vector {
+            x: self.x + other.x,
+            y: self.y + other.y,
+        }
     }
 }
 
@@ -107,7 +107,7 @@ impl From<Size> for Vector {
 
 /// Trait implemented by types that can be drawn to a window.
 pub trait Drawable {
-    /// Draws the entity to the screen.
+    /// Draws oneself to the screen.
     fn draw(&self, context: Context, graphics: &mut GlGraphics);
 }
 
@@ -117,6 +117,7 @@ pub trait Updateable {
     fn update(&mut self, args: UpdateArgs);
 }
 
+/// Defines how a type can expose its position.
 pub trait Positioned {
     fn x(&self) -> f64 {
         self.pos().x
@@ -129,9 +130,11 @@ pub trait Positioned {
     fn pos(&self) -> Vector;
 }
 
+/// Defines how types can expose how they can check for collisions with each other.
 pub trait Collidable: Positioned {
     fn radius(&self) -> f64;
 
+    /// Check another `Collidable` type to see if it's radius overlaps with this instance's.
     fn collides_with<C: Collidable>(&self, other: &C) -> bool {
         // The Distance Formula.
         let distance = ((self.x() - other.x()).powi(2) + (self.y() - other.y()).powi(2)).sqrt();

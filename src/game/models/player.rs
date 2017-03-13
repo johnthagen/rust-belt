@@ -1,4 +1,10 @@
 //! Defines the player component.
+//!
+//! The `Player` is the only model that reacts to user input
+//! to control its movement and actions. It captures the current
+//! state of the player, but does not handle any of the interaction
+//! with other models itself.
+
 use std::f64;
 
 use opengl_graphics::GlGraphics;
@@ -35,7 +41,7 @@ const ROTATION_INCREMENT: f64 = 5.0;
 const THRUST_INCREMENT: f64 = 5.0;
 
 impl Player {
-    pub fn new(window_size: Size) -> Player {
+    pub fn new(window_size: Size) -> Self {
         Player {
             pos: Vector {
                 x: window_size.width as f64 / 2.0,
@@ -81,7 +87,7 @@ impl Player {
         self.accelerate(delta, Direction::Backward);
     }
 
-    pub fn reset_cooldown(&mut self) {
+    pub fn reset_weapon_cooldown(&mut self) {
         self.weapon_cooldown = 0.25;
     }
 
@@ -125,6 +131,9 @@ impl Drawable for Player {
         const BOOSTER: &'static types::Triangle = &[[0.0, -1.0 * BOOSTER_HEIGHT / 2.0],
                                                     [BOOSTER_WIDTH, 0.0],
                                                     [0.0, BOOSTER_HEIGHT / 2.0]];
+
+        // Draw the boosters first, so that they look like they are coming
+        // from underneath the ship.
         if self.actions.fire_boosters {
             polygon(color::DIM_RED,
                     BOOSTER,

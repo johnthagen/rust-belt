@@ -1,4 +1,5 @@
 //! Main menu.
+//! Provides an interface for the user to start the game, change settings, or exit.
 
 use music;
 use opengl_graphics::GlGraphics;
@@ -10,20 +11,37 @@ use game::color::{self, ColoredText};
 use settings;
 use story;
 
+/// The different soundtrack pieces in the game.
 #[derive(Copy, Clone, Hash, PartialEq, Eq)]
 enum Music {
+    /// Menu soundtrack.
     Menu,
+
+    /// Action soundtrack while playing the actual game.
     Action,
 }
 
+const MUSIC_FILE_MENU: &'static str = "./assets/The Last Ranger.mp3";
+const MUSIC_FILE_ACTION: &'static str = "./assets/Into the Field.mp3";
+
+/// The currently selected menu item the user is highlighting.
 #[derive(Copy, Clone)]
 enum MenuSelection {
+    /// Start playing the game.
     Play,
+
+    /// Display the introduction story dialogue.
     Story,
+
+    /// Display the settings screen.
     Settings,
+
+    /// Exit the game.
     Exit,
 }
 
+/// Draws the title and menu options to screen.
+/// The current menu selection is highlighted based upon user input.
 fn draw(context: Context,
         graphics: &mut GlGraphics,
         glyph_cache: &mut GlyphCache,
@@ -32,7 +50,7 @@ fn draw(context: Context,
         game_title: &'static str) {
     const STARTING_LINE_OFFSET: f64 = 280.0;
 
-    // TODO: Can this be done better with 'if let' ?
+    // Color all menu items the same unless it is currently selected.
     let mut play_color = color::WHITE;
     let mut story_color = color::WHITE;
     let mut settings_color = color::WHITE;
@@ -82,15 +100,18 @@ fn draw(context: Context,
     }
 }
 
+/// Loops the menu screen, taking user input to change the current menu selection.
 pub fn run(mut window: &mut PistonWindow,
            mut opengl: &mut GlGraphics,
            game_title: &'static str,
            window_size: Size) {
     music::start::<Music, _>(|| {
-        music::bind_file(Music::Menu, "./assets/The Last Ranger.mp3");
-        music::bind_file(Music::Action, "./assets/Into the Field.mp3");
+        music::bind_file(Music::Menu, MUSIC_FILE_MENU);
+        music::bind_file(Music::Action, MUSIC_FILE_ACTION);
         music::play(&Music::Menu, music::Repeat::Forever);
 
+        // The glyphe cache is mutable because it loads each character on demand (lazily),
+        // and thus must be able to be changed over time as new characters are requested.
         let mut glyph_cache = GlyphCache::new("./assets/FiraSans-Regular.ttf").unwrap();
 
         let mut menu_selection = MenuSelection::Play;

@@ -1,4 +1,10 @@
 //! Defines the bullet component.
+//!
+//! `Bullet`s are created with a specific position and velocity
+//! which they use to move across the screen. They are not
+//! responsible for removing themselves or handling collisions with
+//! other models.
+
 use std::f64;
 
 use opengl_graphics::GlGraphics;
@@ -15,7 +21,7 @@ pub struct Bullet {
 }
 
 impl Bullet {
-    pub fn new(position: Vector, velocity: Vector, direction: f64, window_size: Size) -> Bullet {
+    pub fn new(position: Vector, velocity: Vector, direction: f64, window_size: Size) -> Self {
         const SPEED_MULTIPLIER: f64 = 4.0;
         Bullet {
             pos: position,
