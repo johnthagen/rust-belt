@@ -39,19 +39,17 @@ fn generate_circle(radius: f64) -> CircularPolygon {
 }
 
 fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
-    let mut average_x = 0.0;
-    let mut average_y = 0.0;
+    let mut average : Vector = Default::default();
     for mut vertex in &mut shape {
-        vertex[0] += rand::random::<f64>() * max;
-        vertex[1] += rand::random::<f64>() * max;
-        average_x += vertex[0];
-        average_y += vertex[1];
+        let rand_vect = Vector::new_rand(0.0,0.0,max,max);
+        vertex[0] += rand_vect.x;
+        vertex[1] += rand_vect.y;
+        average += vertex.clone().into();
     }
-    average_x /= NUM_SEGMENTS as f64;
-    average_y /= NUM_SEGMENTS as f64;
+    average /= NUM_SEGMENTS as f64;
     for mut vertex in &mut shape {
-        vertex[0] -= average_x;
-        vertex[1] -= average_y;
+        vertex[0] -= average.x;
+        vertex[1] -= average.y;
     }
     shape
 }
@@ -67,9 +65,8 @@ impl Asteroid {
         let asteroid_radius = RADIUS_MIN + rand::random::<f64>() * (RADIUS_MAX - RADIUS_MIN);
         let spawn_radius = cmp::max(window_size.width, window_size.height) as f64 + RADIUS_MAX;
         let angle = PI_MULT_2 * rand::random::<f64>();
-        let target = Vector::new_rand(RADIUS_MAX,
+        let target = Vector::new_rand(RADIUS_MAX, RADIUS_MAX,
                                       window_size.width as f64 - RADIUS_MAX,
-                                      RADIUS_MAX,
                                       window_size.height as f64 - RADIUS_MAX);
         let vel_multiplier = 0.5 + rand::random::<f64>() * 0.7;
         let new_pos = Vector {
