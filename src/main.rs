@@ -16,8 +16,8 @@ mod story;
 
 /// Creates a new window and runs the game starts the main menu.
 fn main() {
-    const GAME_TITLE: &'static str = "Rust Belt";
-    const GAME_WINDOW_SIZE: Size = Size {
+    let game_title = "Rust Belt";
+    let game_window_size = Size {
         width: 1024,
         height: 768,
     };
