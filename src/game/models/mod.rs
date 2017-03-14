@@ -98,18 +98,13 @@ impl Div<Vector> for Vector {
     type Output = Self;
 
     fn div(self, other: Self) -> Self {
-        let mut new_x = self.x;
-        let mut new_y = self.y;
         if other.x == 0.0 || other.y == 0.0 {
-            new_x = 0.0;
-            new_y = 0.0;
+            Vector { x: 0.0, y: 0.0 }
         } else {
-            new_x /= other.x;
-            new_y /= other.y;
-        }
-        Vector {
-            x: new_x,
-            y: new_y,
+            Vector {
+                x: self.x / other.x,
+                y: self.y / other.y,
+            }
         }
     }
 }

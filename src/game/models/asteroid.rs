@@ -75,7 +75,7 @@ fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
         vertex[0] += rand_vect.x;
         vertex[1] += rand_vect.y;
         // Add resulting vertex to average
-        average += vertex.clone().into();
+        average += (*vertex).into();
     }
     // Divide average by number of segments to convert it from a sum to an average
     // Not a real center-of-mass calculation, but good enough for this purpose
