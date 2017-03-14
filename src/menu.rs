@@ -88,7 +88,7 @@ fn draw(context: Context,
          graphics);
 
     for (index, line) in menu_lines.iter().enumerate() {
-        new_line_offset = 40.0;
+        let new_line_offset = 40.0;
         text(line.color,
              32,
              line.text,
