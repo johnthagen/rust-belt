@@ -41,7 +41,6 @@ impl Vector {
         }
         angle_to_point
     }
-
 }
 
 impl Add for Vector {
@@ -95,16 +94,16 @@ impl RemAssign for Vector {
     }
 }
 
-impl Div<Vector> for Vector{
+impl Div<Vector> for Vector {
     type Output = Self;
 
     fn div(self, other: Self) -> Self {
         let mut new_x = self.x;
-        let mut new_y = self.y; 
+        let mut new_y = self.y;
         if other.x == 0.0 || other.y == 0.0 {
             new_x = 0.0;
             new_y = 0.0;
-        }else{
+        } else {
             new_x /= other.x;
             new_y /= other.y;
         }
@@ -118,12 +117,16 @@ impl Div<Vector> for Vector{
 impl Div<f64> for Vector {
     type Output = Self;
 
-    fn div(self, other: f64) -> Self{
-        self / Vector{x: other, y: other}
+    fn div(self, other: f64) -> Self {
+        self /
+        Vector {
+            x: other,
+            y: other,
+        }
     }
 }
 
-impl DivAssign<Vector>  for Vector {
+impl DivAssign<Vector> for Vector {
     fn div_assign(&mut self, other: Self) {
         *self = *self / other;
     }
@@ -146,9 +149,9 @@ impl From<Size> for Vector {
     }
 }
 
-impl From<[f64 ;2]> for Vector{
-    fn from(list: [f64;2]) -> Self{
-        Vector{
+impl From<[f64; 2]> for Vector {
+    fn from(list: [f64; 2]) -> Self {
+        Vector {
             x: list[0],
             y: list[1],
         }

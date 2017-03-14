@@ -2,14 +2,14 @@
 //!
 //! Asteroids are shapes that randomly float around the screen.
 //! They have several properties:
-//! * pos: the asteroid's position
-//! * vel: the asteroid's velocity
-//! * rot: the asteroid's current rotation
-//! * spin: the asteroid's angular velocity
-//! * radius: the average radius of the asteroid, used for collision detection
-//! * shape: an array representing the the drawn shape of the asteroid
-//! * window_size: the size of the opengl window, used to wrap position
-//! * on_screen: a flag storing whether the asteroid is fully on-screen
+//! * `pos`: the asteroid's position
+//! * `vel`: the asteroid's velocity
+//! * `rot`: the asteroid's current rotation
+//! * `spin`: the asteroid's angular velocity
+//! * `radius`: the average radius of the asteroid, used for collision detection
+//! * `shape`: an array representing the the drawn shape of the asteroid
+//! * `window_size`: the size of the opengl window, used to wrap position
+//! * `on_screen`: a flag storing whether the asteroid is fully on-screen
 //!
 use std::{cmp, f64};
 
@@ -27,7 +27,7 @@ const RADIUS_MIN: f64 = 15.0;
 const RADIUS_MAX: f64 = 70.0;
 /// Asteroids shapes are made by mutating a circle, this is a magic number to tune that.
 const MAX_MUT_FACTOR: f64 = 4.0;
-/// CircularPolygon is a piece of syntactic sugar to avoid having to use that list type
+/// `CircularPolygon` is a piece of syntactic sugar to avoid having to use that list type
 type CircularPolygon = [[f64; 2]; NUM_SEGMENTS];
 
 pub struct Asteroid {
@@ -42,7 +42,7 @@ pub struct Asteroid {
 }
 
 /// This function ingests a radius as a float and generates a parametric circle of
-/// the given radius. It does this by calculating the angular increment needed to 
+/// the given radius. It does this by calculating the angular increment needed to
 /// achieve the given number of segments, and then uses trig functions to create
 /// a unit circle which it then scales
 fn generate_circle(radius: f64) -> CircularPolygon {
@@ -56,7 +56,7 @@ fn generate_circle(radius: f64) -> CircularPolygon {
     circle
 }
 
-/// This function takes in a shape (CircularPolygon) and mutates its vertices.
+/// This function takes in a shape (`CircularPolygon`) and mutates its vertices.
 /// There are few steps in this process:
 /// * add a (scaled) random amount to each dimension of each vertex
 /// * calculate the average location of the vertices. As a circle their average
@@ -66,11 +66,11 @@ fn generate_circle(radius: f64) -> CircularPolygon {
 ///   doing a real center-of-mass calculation, but this looks pretty good.
 fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
     // Initialize average
-    let mut average : Vector = Default::default();
+    let mut average: Vector = Default::default();
     // Iterate over vertices
     for mut vertex in &mut shape {
         // Create new random values to add to vertex
-        let rand_vect = Vector::new_rand(0.0,0.0,max,max);
+        let rand_vect = Vector::new_rand(0.0, 0.0, max, max);
         // Add to vertex
         vertex[0] += rand_vect.x;
         vertex[1] += rand_vect.y;
@@ -89,7 +89,7 @@ fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
     shape
 }
 
-/// Given a radius, this function returns a CircularPolygon
+/// Given a radius, this function returns a `CircularPolygon`
 /// containing a jagged 'randomized' circle. This is then
 /// used as the drawn shape of the asteroid
 fn generate_jagged_shape(radius: f64) -> CircularPolygon {
@@ -112,11 +112,12 @@ impl Asteroid {
         // Here we are generating a random angle, which we will use along with the above radius
         // to calculate the starting point for the new asteroid
         let angle = PI_MULT_2 * rand::random::<f64>();
-        // The asteroid also has an initial velocity. Right here, we are selecting a random point 
+        // The asteroid also has an initial velocity. Right here, we are selecting a random point
         // on the screen for the asteroid to float towards. The "RADIUS_MAX" sized gaps at the edges
         // of the range are there to ensure that every asteroid will, for at least one frame, come
         // fully on-screen, so that the on-screen flag is properly flipped
-        let target = Vector::new_rand(RADIUS_MAX, RADIUS_MAX,
+        let target = Vector::new_rand(RADIUS_MAX,
+                                      RADIUS_MAX,
                                       window_size.width as f64 - RADIUS_MAX,
                                       window_size.height as f64 - RADIUS_MAX);
         // Now that the asteroid's direction is decided, we decide its speed
@@ -184,7 +185,7 @@ impl Drawable for Asteroid {
                 context.transform.trans(self.pos.x, self.pos.y).rot_rad(self.rot),
                 graphics);
         // Asteroids are large enough that we need to render them on the opposite side of
-        // the canvas whenever they start to go off-screen. However, we do not want to do this while 
+        // the canvas whenever they start to go off-screen. However, we do not want to do this while
         // The asteroid is still entering the screen. Hence the check for self.on_screen.
         if self.on_screen {
             if self.pos.x + self.radius > self.window_size.width as f64 {
