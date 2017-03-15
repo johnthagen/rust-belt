@@ -28,12 +28,12 @@ pub struct Asteroid {
 }
 
 fn generate_circle(radius: f64) -> CircularPolygon {
-    const ANGULAR_SEGMENT: f64 = PI_MULT_2 / NUM_SEGMENTS as f64;
+    let angular_segment = PI_MULT_2 / NUM_SEGMENTS as f64;
     let mut circle = [[0.0; 2]; NUM_SEGMENTS];
     for (index, mut vertex) in circle.iter_mut().enumerate() {
         let index_float = index as f64;
-        vertex[0] = radius * (index_float * ANGULAR_SEGMENT).cos();
-        vertex[1] = radius * (index_float * ANGULAR_SEGMENT).sin();
+        vertex[0] = radius * (index_float * angular_segment).cos();
+        vertex[1] = radius * (index_float * angular_segment).sin();
     }
     circle
 }

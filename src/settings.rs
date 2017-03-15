@@ -12,7 +12,7 @@ fn draw(context: Context,
         glyph_cache: &mut GlyphCache,
         volume: f64,
         left_alignment: f64) {
-    const STARTING_LINE_OFFSET: f64 = 280.0;
+    let starting_line_offset = 280.0;
     let value_left_alignment = left_alignment + 300.0;
 
     clear(color::BLACK, graphics);
@@ -20,13 +20,13 @@ fn draw(context: Context,
          32,
          "Volume",
          glyph_cache,
-         context.transform.trans(left_alignment, STARTING_LINE_OFFSET),
+         context.transform.trans(left_alignment, starting_line_offset),
          graphics);
     text(color::WHITE,
          32,
          &format!("{}%", (volume * 100.0) as i32),
          glyph_cache,
-         context.transform.trans(value_left_alignment, STARTING_LINE_OFFSET),
+         context.transform.trans(value_left_alignment, starting_line_offset),
          graphics);
 }
 
@@ -47,11 +47,11 @@ pub fn run(window: &mut PistonWindow,
 
             // TODO: Known precision problem related to stepping f64 instead of integers.
             Input::Press(Button::Keyboard(key)) => {
-                const VOLUME_STEP: f64 = 0.1;
+                let volume_step: f64 = 0.1;
 
                 match key {
-                    Key::D => *volume += VOLUME_STEP,
-                    Key::A => *volume -= VOLUME_STEP,
+                    Key::D => *volume += volume_step,
+                    Key::A => *volume -= volume_step,
                     Key::Space => break,
                     _ => {}
                 }
