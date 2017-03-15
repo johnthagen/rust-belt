@@ -78,7 +78,7 @@ fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
         average += (*vertex).into();
     }
     // Now we divide the 'average' by the number of segments to convert it from a sum of coordinates
-    // into an average of each coordinate. This isn't a real center-of-mass calculation, 
+    // into an average of each coordinate. This isn't a real center-of-mass calculation,
     // but it's good enough for this purpose (because we aren't mutating *that* far from a circle)
     average /= NUM_SEGMENTS as f64;
     for mut vertex in &mut shape {
@@ -156,7 +156,7 @@ impl Updateable for Asteroid {
         // works like every other model. If not, then we don't
         // apply the modulus operation, allowing our asteroid to fly
         // in the same straight line indefinitely. Since we are ensuring
-        // that each asteroid gets on-screen at some point, we don't 
+        // that each asteroid gets on-screen at some point, we don't
         // have to worry about 'losing' one forever off-screen.
         if self.on_screen {
 
@@ -193,13 +193,13 @@ impl Drawable for Asteroid {
                 context.transform.trans(self.pos.x, self.pos.y).rot_rad(self.rot),
                 graphics);
 
-        // Asteroids are large enough that we need to render them on the opposite 
-        // side of the canvas whenever they start to go off-screen. However, we 
-        // do not want to do this while the asteroid is still entering the screen. 
+        // Asteroids are large enough that we need to render them on the opposite
+        // side of the canvas whenever they start to go off-screen. However, we
+        // do not want to do this while the asteroid is still entering the screen.
         // Hence the check for self.on_screen. This code correctly handles wrapped
         // drawing of asteroid drawing along the edges of the frame, but fails in
         // the (literal) corner case, as it will never produce a wrapped asteroid
-        // drawing in a corner when an asteroid approaches the opposing corner. 
+        // drawing in a corner when an asteroid approaches the opposing corner.
         if self.on_screen {
             if self.pos.x + self.radius > self.window_size.width as f64 {
                 polygon(color::WHITE,
