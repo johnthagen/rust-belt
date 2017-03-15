@@ -107,16 +107,16 @@ fn draw(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCach
     clear(color::BLACK, graphics);
 
     for (index, line) in LINES.iter().enumerate() {
-        const LEFT_INDENT: f64 = 50.0;
-        const STARTING_LINE_OFFSET: f64 = 30.0;
-        const NEW_LINE_OFFSET: f64 = 30.0;
+        let left_indent = 50.0;
+        let starting_line_offset = 30.0;
+        let new_line_offset = 30.0;
 
         text(line.color,
              22,
              line.text,
              glyph_cache,
-             context.transform.trans(LEFT_INDENT,
-                                     STARTING_LINE_OFFSET + (index as f64 * NEW_LINE_OFFSET)),
+             context.transform.trans(left_indent,
+                                     starting_line_offset + (index as f64 * new_line_offset)),
              graphics);
     }
 }

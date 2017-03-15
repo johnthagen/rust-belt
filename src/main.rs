@@ -16,8 +16,8 @@ mod story;
 
 /// Creates a new window and runs the game starts the main menu.
 fn main() {
-    const GAME_TITLE: &'static str = "Rust Belt";
-    const GAME_WINDOW_SIZE: Size = Size {
+    let game_title = "Rust Belt";
+    let game_window_size = Size {
         width: 1024,
         height: 768,
     };
@@ -25,8 +25,8 @@ fn main() {
     let opengl = OpenGL::V3_2;
 
     let mut window: PistonWindow =
-        WindowSettings::new(GAME_TITLE,
-                            [GAME_WINDOW_SIZE.width, GAME_WINDOW_SIZE.height])
+        WindowSettings::new(game_title,
+                            [game_window_size.width, game_window_size.height])
                 .opengl(opengl)
                 .samples(4)
                 .exit_on_esc(true)
@@ -35,5 +35,5 @@ fn main() {
 
     let mut gl = GlGraphics::new(opengl);
 
-    menu::run(&mut window, &mut gl, GAME_TITLE, GAME_WINDOW_SIZE);
+    menu::run(&mut window, &mut gl, game_title, game_window_size);
 }

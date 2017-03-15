@@ -22,12 +22,12 @@ pub struct Bullet {
 
 impl Bullet {
     pub fn new(position: Vector, velocity: Vector, direction: f64, window_size: Size) -> Self {
-        const SPEED_MULTIPLIER: f64 = 4.0;
+        let speed_multiplier = 4.0;
         Bullet {
             pos: position,
             vel: Vector {
-                x: SPEED_MULTIPLIER * direction.cos() + velocity.x,
-                y: SPEED_MULTIPLIER * direction.sin() + velocity.y,
+                x: speed_multiplier * direction.cos() + velocity.x,
+                y: speed_multiplier * direction.sin() + velocity.y,
             },
             ttl: 1.0,
             window_size: window_size,

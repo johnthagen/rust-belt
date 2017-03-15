@@ -48,7 +48,7 @@ fn draw(context: Context,
         menu_align: f64,
         menu_selection: MenuSelection,
         game_title: &'static str) {
-    const STARTING_LINE_OFFSET: f64 = 280.0;
+    let starting_line_offset = 280.0;
 
     // Color all menu items the same unless it is currently selected.
     let mut play_color = color::WHITE;
@@ -84,18 +84,18 @@ fn draw(context: Context,
          72,
          game_title,
          glyph_cache,
-         context.transform.trans(menu_align, STARTING_LINE_OFFSET),
+         context.transform.trans(menu_align, starting_line_offset),
          graphics);
 
     for (index, line) in menu_lines.iter().enumerate() {
-        const NEW_LINE_OFFSET: f64 = 40.0;
+        let new_line_offset = 40.0;
         text(line.color,
              32,
              line.text,
              glyph_cache,
              context.transform.trans(menu_align,
-                                     STARTING_LINE_OFFSET +
-                                     ((index as f64 + 1.0) * NEW_LINE_OFFSET)),
+                                     starting_line_offset +
+                                     ((index as f64 + 1.0) * new_line_offset)),
              graphics);
     }
 }
