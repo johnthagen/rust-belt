@@ -66,7 +66,7 @@ fn generate_circle(radius: f64) -> CircularPolygon {
 ///   ensures that the shape is roughly centered around 0. We aren't actually
 ///   doing a real center-of-mass calculation, but this looks pretty good.
 fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
-    let mut average: Vector = Default::default();
+    let mut average = Vector::default();
     for mut vertex in &mut shape {
 
         // Here we create a pair of random values and add them to a vertex.
