@@ -2,7 +2,7 @@
 
 use std::f64;
 use std::f64::consts::PI;
-use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign, Div, DivAssign};
 
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs, Size};
@@ -15,14 +15,14 @@ pub mod asteroid;
 pub const PI_MULT_2: f64 = 2.0 * PI;
 
 /// Models an (x, y) coordinate value (such as position or velocity).
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct Vector {
     x: f64,
     y: f64,
 }
 
 impl Vector {
-    fn new_rand(x_min: f64, x_max: f64, y_min: f64, y_max: f64) -> Self {
+    fn new_rand(x_min: f64, y_min: f64, x_max: f64, y_max: f64) -> Self {
         Vector {
             x: rand::random::<f64>() * (x_max - x_min) + x_min,
             y: rand::random::<f64>() * (y_max - y_min) + y_min,
@@ -94,6 +94,45 @@ impl RemAssign for Vector {
     }
 }
 
+impl Div<Vector> for Vector {
+    type Output = Self;
+
+    fn div(self, other: Self) -> Self {
+        if other.x == 0.0 || other.y == 0.0 {
+            Vector { x: 0.0, y: 0.0 }
+        } else {
+            Vector {
+                x: self.x / other.x,
+                y: self.y / other.y,
+            }
+        }
+    }
+}
+
+impl Div<f64> for Vector {
+    type Output = Self;
+
+    fn div(self, other: f64) -> Self {
+        self /
+        Vector {
+            x: other,
+            y: other,
+        }
+    }
+}
+
+impl DivAssign<Vector> for Vector {
+    fn div_assign(&mut self, other: Self) {
+        *self = *self / other;
+    }
+}
+
+impl DivAssign<f64> for Vector {
+    fn div_assign(&mut self, other: f64) {
+        *self = *self / other;
+    }
+}
+
 /// Define how a two dimensional `Size` can be converted to a two dimensional `Vector`.
 /// Width is defined as the x unit and height is defined as the y unit.
 impl From<Size> for Vector {
@@ -101,6 +140,15 @@ impl From<Size> for Vector {
         Vector {
             x: size.width as f64,
             y: size.height as f64,
+        }
+    }
+}
+
+impl From<[f64; 2]> for Vector {
+    fn from(list: [f64; 2]) -> Self {
+        Vector {
+            x: list[0],
+            y: list[1],
         }
     }
 }
