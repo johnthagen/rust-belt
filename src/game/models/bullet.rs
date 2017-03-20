@@ -13,6 +13,7 @@ use piston_window::{Context, ellipse, Size, Transformed, types, UpdateArgs};
 use super::super::color;
 use super::{Collidable, Drawable, Positioned, Updateable};
 use super::vector::Vector;
+
 pub struct Bullet {
     pos: Vector,
     vel: Vector,
