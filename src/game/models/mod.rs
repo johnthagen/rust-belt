@@ -6,12 +6,12 @@ use std::f64::consts::PI;
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs};
 
-pub mod player;
-pub mod bullet;
 pub mod asteroid;
-pub mod vector;
+pub mod bullet;
+pub mod player;
+mod vector;
 
-pub const PI_MULT_2: f64 = 2.0 * PI;
+const PI_MULT_2: f64 = 2.0 * PI;
 
 /// Trait implemented by types that can be drawn to a window.
 pub trait Drawable {
