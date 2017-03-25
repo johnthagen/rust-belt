@@ -123,4 +123,5 @@ Music composed by [@johnthagen](https://github.com/johnthagen).  All rights rese
 [travis-build-status-svg]: https://travis-ci.org/johnthagen/rust-belt.svg?branch=master
 
 [appveyor-build-status]: https://ci.appveyor.com/project/johnthagen/rust-belt
-[appveyor-build-status-svg]: https://ci.appveyor.com/api/projects/status/nbkgf5i3p4998a2j?svg=true
+[appveyor-build-status-svg]: 
+    https://ci.appveyor.com/api/projects/status/nbkgf5i3p4998a2j/branch/master?svg=true
