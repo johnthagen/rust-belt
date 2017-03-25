@@ -5,8 +5,6 @@
 //! responsible for removing themselves or handling collisions with
 //! other models.
 
-use std::f64;
-
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, ellipse, Size, Transformed, types, UpdateArgs};
 
