@@ -8,9 +8,9 @@
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, ellipse, Size, Transformed, types, UpdateArgs};
 
-use super::super::color;
-use super::{Collidable, Drawable, Positioned, Updateable};
-use super::vector::Vector;
+use game::color;
+use game::models::{Collidable, Drawable, Positioned, Updateable};
+use game::models::vector::Vector;
 
 pub struct Bullet {
     pos: Vector,

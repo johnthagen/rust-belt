@@ -5,9 +5,9 @@ use opengl_graphics::GlGraphics;
 use piston_window::{Context, polygon, Size, Transformed, UpdateArgs};
 use rand;
 
-use super::super::color;
-use super::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
-use super::vector::Vector;
+use game::color;
+use game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
+use game::models::vector::Vector;
 
 /// The number of segments in an asteroid's shape is currently set at compile-time.
 const NUM_SEGMENTS: usize = 20;
