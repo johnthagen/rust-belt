@@ -5,9 +5,9 @@ use opengl_graphics::GlGraphics;
 use piston_window::{Context, polygon, Size, Transformed, UpdateArgs};
 use rand;
 
-use super::super::color;
-use super::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
-use super::vector::Vector;
+use game::color;
+use game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
+use game::models::vector::Vector;
 
 /// The number of segments in an asteroid's shape is currently set at compile-time.
 const NUM_SEGMENTS: usize = 20;
@@ -191,7 +191,10 @@ impl Drawable for Asteroid {
         // the polygon function
         polygon(color::WHITE,
                 &self.shape,
-                context.transform.trans(self.pos.x, self.pos.y).rot_rad(self.rot),
+                context
+                    .transform
+                    .trans(self.pos.x, self.pos.y)
+                    .rot_rad(self.rot),
                 graphics);
 
         // Asteroids are large enough that we need to render them on the opposite
@@ -205,7 +208,8 @@ impl Drawable for Asteroid {
             if self.pos.x + self.radius > self.window_size.width as f64 {
                 polygon(color::WHITE,
                         &self.shape,
-                        context.transform
+                        context
+                            .transform
                             .trans(self.pos.x - self.window_size.width as f64, self.pos.y)
                             .rot_rad(self.rot),
                         graphics)
@@ -213,7 +217,8 @@ impl Drawable for Asteroid {
             } else if self.pos.x < self.radius {
                 polygon(color::WHITE,
                         &self.shape,
-                        context.transform
+                        context
+                            .transform
                             .trans(self.pos.x + self.window_size.width as f64, self.pos.y)
                             .rot_rad(self.rot),
                         graphics)
@@ -221,7 +226,8 @@ impl Drawable for Asteroid {
             if self.pos.y + self.radius > self.window_size.height as f64 {
                 polygon(color::WHITE,
                         &self.shape,
-                        context.transform
+                        context
+                            .transform
                             .trans(self.pos.x, self.pos.y - self.window_size.height as f64)
                             .rot_rad(self.rot),
                         graphics)
@@ -229,7 +235,8 @@ impl Drawable for Asteroid {
             } else if self.pos.y < self.radius {
                 polygon(color::WHITE,
                         &self.shape,
-                        context.transform
+                        context
+                            .transform
                             .trans(self.pos.x, self.pos.y + self.window_size.height as f64)
                             .rot_rad(self.rot),
                         graphics)

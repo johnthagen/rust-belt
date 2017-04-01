@@ -10,9 +10,9 @@ use std::f64;
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, polygon, Size, Transformed, types, UpdateArgs};
 
-use super::super::color;
-use super::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
-use super::vector::Vector;
+use game::color;
+use game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
+use game::models::vector::Vector;
 
 pub struct Player {
     pub pos: Vector,
@@ -138,7 +138,8 @@ impl Drawable for Player {
         if self.actions.fire_boosters {
             polygon(color::DIM_RED,
                     BOOSTER,
-                    context.transform
+                    context
+                        .transform
                         .trans(self.pos.x, self.pos.y)
                         .rot_rad(self.rot + f64::consts::PI)
                         .trans(BOOSTER_HEIGHT, 0.0),
@@ -147,7 +148,8 @@ impl Drawable for Player {
         if self.actions.fire_rev_boosters {
             polygon(color::DIM_RED,
                     BOOSTER,
-                    context.transform
+                    context
+                        .transform
                         .trans(self.pos.x, self.pos.y)
                         .rot_rad(self.rot)
                         .trans(SHIP_HEIGHT - BOOSTER_HEIGHT, 0.0),
@@ -156,7 +158,8 @@ impl Drawable for Player {
         if self.actions.rotate_cw {
             polygon(color::DIM_RED,
                     BOOSTER,
-                    context.transform
+                    context
+                        .transform
                         .trans(self.pos.x, self.pos.y)
                         .rot_rad(self.rot - f64::consts::FRAC_PI_3),
                     graphics);
@@ -164,7 +167,8 @@ impl Drawable for Player {
         if self.actions.rotate_ccw {
             polygon(color::DIM_RED,
                     BOOSTER,
-                    context.transform
+                    context
+                        .transform
                         .trans(self.pos.x, self.pos.y)
                         .rot_rad(self.rot + f64::consts::FRAC_PI_3),
                     graphics);

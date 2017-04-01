@@ -115,8 +115,10 @@ fn draw(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCach
              22,
              line.text,
              glyph_cache,
-             context.transform.trans(left_indent,
-                                     starting_line_offset + (index as f64 * new_line_offset)),
+             context
+                 .transform
+                 .trans(left_indent,
+                        starting_line_offset + (index as f64 * new_line_offset)),
              graphics);
     }
 }

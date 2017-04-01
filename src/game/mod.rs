@@ -118,10 +118,11 @@ impl Updateable for Game {
     fn update(&mut self, args: UpdateArgs) {
         self.player.update(args);
         if self.player.should_shoot() {
-            self.bullets.push(bullet::Bullet::new(self.player.pos,
-                                                  self.player.vel,
-                                                  self.player.rot,
-                                                  self.window_size));
+            self.bullets
+                .push(bullet::Bullet::new(self.player.pos,
+                                          self.player.vel,
+                                          self.player.rot,
+                                          self.window_size));
             self.player.reset_weapon_cooldown();
         }
 
@@ -144,9 +145,9 @@ impl Updateable for Game {
 
             bullets.retain(|bullet| {
                 // Remove the first asteroid that collides with a bullet, if any.
-                if let Some(index) = asteroids.iter().position(|asteroid| {
-                                                                   asteroid.collides_with(bullet)
-                                                               }) {
+                if let Some(index) = asteroids
+                       .iter()
+                       .position(|asteroid| asteroid.collides_with(bullet)) {
                     asteroids.remove(index);
                     *score += 10;
                     return false;
@@ -155,7 +156,9 @@ impl Updateable for Game {
             });
 
             // If player hits an asteroid, return to the main menu.
-            if asteroids.iter().any(|asteroid| asteroid.collides_with(player)) {
+            if asteroids
+                   .iter()
+                   .any(|asteroid| asteroid.collides_with(player)) {
                 self.game_over = true;
             }
         }
@@ -163,7 +166,8 @@ impl Updateable for Game {
         // Countdown a timer which controls when the next asteroid is spawned.
         self.asteroid_timer -= args.dt;
         if self.asteroid_timer < 0.0 {
-            self.asteroids.push(asteroid::Asteroid::new(self.window_size));
+            self.asteroids
+                .push(asteroid::Asteroid::new(self.window_size));
 
             // After spawning an asteroid, reduce the timer to spawn the next
             // so that asteroids gradually being spawning faster and faster, up to a
