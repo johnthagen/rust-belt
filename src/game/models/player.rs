@@ -138,7 +138,8 @@ impl Drawable for Player {
         if self.actions.fire_boosters {
             polygon(color::DIM_RED,
                     BOOSTER,
-                    context.transform
+                    context
+                        .transform
                         .trans(self.pos.x, self.pos.y)
                         .rot_rad(self.rot + f64::consts::PI)
                         .trans(BOOSTER_HEIGHT, 0.0),
@@ -147,7 +148,8 @@ impl Drawable for Player {
         if self.actions.fire_rev_boosters {
             polygon(color::DIM_RED,
                     BOOSTER,
-                    context.transform
+                    context
+                        .transform
                         .trans(self.pos.x, self.pos.y)
                         .rot_rad(self.rot)
                         .trans(SHIP_HEIGHT - BOOSTER_HEIGHT, 0.0),
@@ -156,7 +158,8 @@ impl Drawable for Player {
         if self.actions.rotate_cw {
             polygon(color::DIM_RED,
                     BOOSTER,
-                    context.transform
+                    context
+                        .transform
                         .trans(self.pos.x, self.pos.y)
                         .rot_rad(self.rot - f64::consts::FRAC_PI_3),
                     graphics);
@@ -164,7 +167,8 @@ impl Drawable for Player {
         if self.actions.rotate_ccw {
             polygon(color::DIM_RED,
                     BOOSTER,
-                    context.transform
+                    context
+                        .transform
                         .trans(self.pos.x, self.pos.y)
                         .rot_rad(self.rot + f64::consts::FRAC_PI_3),
                     graphics);

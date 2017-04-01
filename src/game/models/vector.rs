@@ -103,11 +103,7 @@ impl Div<f64> for Vector {
     type Output = Self;
 
     fn div(self, other: f64) -> Self {
-        self /
-        Vector {
-            x: other,
-            y: other,
-        }
+        self / Vector { x: other, y: other }
     }
 }
 

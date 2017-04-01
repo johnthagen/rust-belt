@@ -93,9 +93,10 @@ fn draw(context: Context,
              32,
              line.text,
              glyph_cache,
-             context.transform.trans(menu_align,
-                                     starting_line_offset +
-                                     ((index as f64 + 1.0) * new_line_offset)),
+             context
+                 .transform
+                 .trans(menu_align,
+                        starting_line_offset + ((index as f64 + 1.0) * new_line_offset)),
              graphics);
     }
 }
