@@ -123,8 +123,9 @@ impl Updateable for Player {
 
 const SHIP_HEIGHT: f64 = 16.0;
 const SHIP_WIDTH: f64 = 20.0;
-const SHIP: &'static types::Triangle =
-    &[[0.0, -1.0 * SHIP_HEIGHT / 2.0], [SHIP_WIDTH, 0.0], [0.0, SHIP_HEIGHT / 2.0]];
+const SHIP: &'static types::Triangle = &[[0.0, -1.0 * SHIP_HEIGHT / 2.0],
+                                         [SHIP_WIDTH, 0.0],
+                                         [0.0, SHIP_HEIGHT / 2.0]];
 impl Drawable for Player {
     fn draw(&self, context: Context, graphics: &mut GlGraphics) {
         const BOOSTER_HEIGHT: f64 = 8.0;
