@@ -123,16 +123,16 @@ impl Updateable for Player {
 
 const SHIP_HEIGHT: f64 = 16.0;
 const SHIP_WIDTH: f64 = 20.0;
-const SHIP: &'static types::Triangle = &[[0.0, -1.0 * SHIP_HEIGHT / 2.0],
-                                         [SHIP_WIDTH, 0.0],
-                                         [0.0, SHIP_HEIGHT / 2.0]];
+const SHIP: &types::Triangle = &[[0.0, -1.0 * SHIP_HEIGHT / 2.0],
+                                 [SHIP_WIDTH, 0.0],
+                                 [0.0, SHIP_HEIGHT / 2.0]];
 impl Drawable for Player {
     fn draw(&self, context: Context, graphics: &mut GlGraphics) {
         const BOOSTER_HEIGHT: f64 = 8.0;
         const BOOSTER_WIDTH: f64 = 10.0;
-        const BOOSTER: &'static types::Triangle = &[[0.0, -1.0 * BOOSTER_HEIGHT / 2.0],
-                                                    [BOOSTER_WIDTH, 0.0],
-                                                    [0.0, BOOSTER_HEIGHT / 2.0]];
+        const BOOSTER: &types::Triangle = &[[0.0, -1.0 * BOOSTER_HEIGHT / 2.0],
+                                            [BOOSTER_WIDTH, 0.0],
+                                            [0.0, BOOSTER_HEIGHT / 2.0]];
 
         // Draw the boosters first, so that they look like they are coming
         // from underneath the ship.
