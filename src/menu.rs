@@ -21,8 +21,8 @@ enum Music {
     Action,
 }
 
-const MUSIC_FILE_MENU: &'static str = "./assets/The Last Ranger.mp3";
-const MUSIC_FILE_ACTION: &'static str = "./assets/Into the Field.mp3";
+const MUSIC_FILE_MENU: &str = "./assets/The Last Ranger.mp3";
+const MUSIC_FILE_ACTION: &str = "./assets/Into the Field.mp3";
 
 /// The currently selected menu item the user is highlighting.
 #[derive(Copy, Clone)]
