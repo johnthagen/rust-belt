@@ -16,6 +16,7 @@ matrix:
       rust: nightly-2017-04-09
 
   allow_failures:
+    - rust: beta
     - rust: nightly
 
 cache: cargo
