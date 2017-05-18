@@ -2,7 +2,10 @@
 
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, Transformed, types};
+use piston::event_loop::Events;
+use piston::input::{Button, Input, Key};
+use graphics::{clear, Context, text, Transformed, types};
+use glutin_window::GlutinWindow;
 
 use game::color::{self, ColoredText};
 
@@ -124,8 +127,11 @@ fn draw(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCach
 }
 
 /// Loop displaying the story until the user exits.
-pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, glyph_cache: &mut GlyphCache) {
-    while let Some(event) = window.next() {
+pub fn run(events: &mut Events,
+           window: &mut GlutinWindow,
+           opengl: &mut GlGraphics,
+           glyph_cache: &mut GlyphCache) {
+    while let Some(event) = events.next(window) {
         match event {
             Input::Render(args) => {
                 opengl.draw(args.viewport(),

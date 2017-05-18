@@ -2,7 +2,9 @@
 use std::{cmp, f64};
 
 use opengl_graphics::GlGraphics;
-use piston_window::{Context, polygon, Size, Transformed, UpdateArgs};
+use piston::input::UpdateArgs;
+use piston::window::Size;
+use graphics::{Context, polygon, Transformed};
 use rand;
 
 use game::color;
