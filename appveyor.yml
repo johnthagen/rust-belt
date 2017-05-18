@@ -7,9 +7,11 @@ environment:
         CHANNEL: stable
       - TARGET: x86_64-pc-windows-msvc
         CHANNEL: beta
-    allow_failures:
-        - TARGET: x86_64-pc-windows-msvc
-          CHANNEL: beta
+
+matrix:
+  allow_failures:
+      - TARGET: x86_64-pc-windows-msvc
+        CHANNEL: beta
 
 # Based on https://github.com/japaric/rust-everywhere/blob/master/appveyor.yml
 install:
