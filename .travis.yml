@@ -17,6 +17,7 @@ matrix:
       env: CI_BUILD_NAME="Clippy and Rustfmt"
 
   allow_failures:
+    - rust: beta
     - rust: nightly
 
 cache: cargo
