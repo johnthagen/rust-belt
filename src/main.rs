@@ -40,5 +40,9 @@ fn main() {
     let mut gl = GlGraphics::new(opengl);
 
     let mut events = Events::new(EventSettings::default());
-    menu::run(&mut events, &mut window, &mut gl, game_title, game_window_size);
+    menu::run(&mut events,
+              &mut window,
+              &mut gl,
+              game_title,
+              game_window_size);
 }
