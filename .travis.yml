@@ -14,8 +14,10 @@ matrix:
       rust: nightly
     - os: linux
       rust: nightly-2017-04-09
+      env: CI_BUILD_NAME="Clippy and Rustfmt"
 
   allow_failures:
+    - rust: beta
     - rust: nightly
 
 cache: cargo
