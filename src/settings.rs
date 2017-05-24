@@ -1,12 +1,12 @@
 //! Modify game settings.
 
+use glutin_window::GlutinWindow;
+use graphics::{Context, clear, text, Transformed};
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
 use piston::event_loop::Events;
 use piston::input::{Button, Input, Key};
-use graphics::{Context, clear, text, Transformed};
-use glutin_window::GlutinWindow;
 
 use game::color;
 

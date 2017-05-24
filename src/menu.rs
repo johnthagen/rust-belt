@@ -1,14 +1,14 @@
 //! Main menu.
 //! Provides an interface for the user to start the game, change settings, or exit.
 
+use glutin_window::GlutinWindow;
+use graphics::{clear, Context, text, Transformed};
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
 use piston::event_loop::Events;
 use piston::input::{Button, Input, Key};
 use piston::window::Size;
-use graphics::{clear, Context, text, Transformed};
-use glutin_window::GlutinWindow;
 
 use game;
 use game::color::{self, ColoredText};

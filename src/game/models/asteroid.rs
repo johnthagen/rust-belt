@@ -1,10 +1,10 @@
 //! This module defines the asteroid component.
 use std::{cmp, f64};
 
+use graphics::{Context, polygon, Transformed};
 use opengl_graphics::GlGraphics;
 use piston::input::UpdateArgs;
 use piston::window::Size;
-use graphics::{Context, polygon, Transformed};
 use rand;
 
 use game::color;

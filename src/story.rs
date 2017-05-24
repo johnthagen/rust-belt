@@ -1,11 +1,11 @@
 //! Displays the story dialogue.
 
+use glutin_window::GlutinWindow;
+use graphics::{clear, Context, text, Transformed, types};
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
 use piston::event_loop::Events;
 use piston::input::{Button, Input, Key};
-use graphics::{clear, Context, text, Transformed, types};
-use glutin_window::GlutinWindow;
 
 use game::color::{self, ColoredText};
 

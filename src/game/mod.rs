@@ -6,13 +6,13 @@
 //! `Game` takes user input from the keyboard in order to control the `Player`
 //! and handles collision detection and the TTL for `Bullet`s.
 
+use glutin_window::GlutinWindow;
+use graphics::{clear, Context, text, Transformed};
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
 use piston::event_loop::Events;
 use piston::input::{Button, Input, Key, UpdateArgs};
 use piston::window::Size;
-use graphics::{clear, Context, text, Transformed};
-use glutin_window::GlutinWindow;
 
 use self::models::{asteroid, bullet, Collidable, Drawable, player, Updateable};
 

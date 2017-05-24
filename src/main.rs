@@ -1,17 +1,17 @@
 //! Rust belt is a 2D video game inspired by Asteroids.
 //! It runs atop the Piston game engine for graphics and SDL2 for sound.
 
+extern crate glutin_window;
+extern crate graphics;
 extern crate music;
 extern crate opengl_graphics;
 extern crate piston;
-extern crate graphics;
-extern crate glutin_window;
 extern crate rand;
 
-use piston::event_loop::{EventSettings, Events};
-use piston::window::{Size, WindowSettings};
 use glutin_window::GlutinWindow;
 use opengl_graphics::{GlGraphics, OpenGL};
+use piston::event_loop::{EventSettings, Events};
+use piston::window::{Size, WindowSettings};
 
 mod game;
 mod menu;
