@@ -3,8 +3,9 @@
 use std::f64;
 use std::f64::consts::PI;
 
+use graphics::Context;
 use opengl_graphics::GlGraphics;
-use piston_window::{Context, UpdateArgs};
+use piston::input::UpdateArgs;
 
 pub mod asteroid;
 pub mod bullet;

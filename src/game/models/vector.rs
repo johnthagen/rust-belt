@@ -1,7 +1,7 @@
 use std::f64::consts::PI;
 use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign, Div, DivAssign};
 
-use piston_window::Size;
+use piston::window::Size;
 use rand;
 
 /// Models an (x, y) coordinate value (such as position or velocity).

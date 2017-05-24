@@ -6,10 +6,13 @@
 //! `Game` takes user input from the keyboard in order to control the `Player`
 //! and handles collision detection and the TTL for `Bullet`s.
 
+use glutin_window::GlutinWindow;
+use graphics::{clear, Context, text, Transformed};
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, clear, Context, Input, Key, PistonWindow, Size, text, Transformed,
-                    UpdateArgs};
+use piston::event_loop::Events;
+use piston::input::{Button, Input, Key, UpdateArgs};
+use piston::window::Size;
 
 use self::models::{asteroid, bullet, Collidable, Drawable, player, Updateable};
 
@@ -48,10 +51,11 @@ impl Game {
     }
 
     pub fn run(&mut self,
-               window: &mut PistonWindow,
+               events: &mut Events,
+               window: &mut GlutinWindow,
                opengl: &mut GlGraphics,
                glyph_cache: &mut GlyphCache) {
-        while let Some(event) = window.next() {
+        while let Some(event) = events.next(window) {
             match event {
                 Input::Render(args) => {
                     opengl.draw(args.viewport(),

@@ -1,9 +1,12 @@
 //! Modify game settings.
 
+use glutin_window::GlutinWindow;
+use graphics::{Context, clear, text, Transformed};
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, Context, clear, Input, Key, PistonWindow, text, Transformed};
+use piston::event_loop::Events;
+use piston::input::{Button, Input, Key};
 
 use game::color;
 
@@ -35,13 +38,13 @@ fn draw(context: Context,
 }
 
 /// Loop providing game setting options to change to the user until they exit the screen.
-pub fn run(window: &mut PistonWindow,
+pub fn run(events: &mut Events,
+           window: &mut GlutinWindow,
            opengl: &mut GlGraphics,
            glyph_cache: &mut GlyphCache,
            volume: &mut f64,
            left_alignment: f64) {
-    while let Some(event) = window.next() {
-
+    while let Some(event) = events.next(window) {
         match event {
             Input::Render(args) => {
                 opengl.draw(args.viewport(), |context, graphics| {

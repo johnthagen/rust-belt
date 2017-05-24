@@ -5,8 +5,10 @@
 //! responsible for removing themselves or handling collisions with
 //! other models.
 
+use graphics::{Context, ellipse, Transformed, types};
 use opengl_graphics::GlGraphics;
-use piston_window::{Context, ellipse, Size, Transformed, types, UpdateArgs};
+use piston::input::UpdateArgs;
+use piston::window::Size;
 
 use game::color;
 use game::models::{Collidable, Drawable, Positioned, Updateable};

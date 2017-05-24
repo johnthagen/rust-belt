@@ -7,8 +7,10 @@
 
 use std::f64;
 
+use graphics::{Context, polygon, Transformed, types};
 use opengl_graphics::GlGraphics;
-use piston_window::{Context, polygon, Size, Transformed, types, UpdateArgs};
+use piston::input::UpdateArgs;
+use piston::window::Size;
 
 use game::color;
 use game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
