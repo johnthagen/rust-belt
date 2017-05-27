@@ -47,7 +47,7 @@ fn draw(context: Context,
         glyph_cache: &mut GlyphCache,
         menu_align: f64,
         menu_selection: MenuSelection,
-        game_title: &'static str) {
+        game_title: &str) {
     let starting_line_offset = 280.0;
 
     // Color all menu items the same unless it is currently selected.
@@ -104,7 +104,7 @@ fn draw(context: Context,
 /// Loops the menu screen, taking user input to change the current menu selection.
 pub fn run(mut window: &mut PistonWindow,
            mut opengl: &mut GlGraphics,
-           game_title: &'static str,
+           game_title: &str,
            window_size: Size) {
     music::start::<Music, _>(|| {
         music::bind_file(Music::Menu, MUSIC_FILE_MENU);
