@@ -5,6 +5,8 @@
 | Travis       | [![Travis Build Status][travis-build-status-svg]][travis-build-status]         |
 | AppVeyor     | [![AppVeyor Build Status][appveyor-build-status-svg]][appveyor-build-status]   |
 
+[![GitHub Releases][github-release-svg]][github-release]
+
 `rust-belt` is a 2D video game featuring an original soundtrack :musical_score: inspired by the 
 classic [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game. It is 
 implemented  using the [Rust](https://www.rust-lang.org/) game engine, 
@@ -125,3 +127,6 @@ Music composed by [@johnthagen](https://github.com/johnthagen).  All rights rese
 [appveyor-build-status]: https://ci.appveyor.com/project/johnthagen/rust-belt
 [appveyor-build-status-svg]: 
     https://ci.appveyor.com/api/projects/status/nbkgf5i3p4998a2j/branch/master?svg=true
+
+[github-release]: https://github.com/johnthagen/rust-belt/releases
+[github-release-svg]: https://img.shields.io/github/release/johnthagen/rust-belt.svg
