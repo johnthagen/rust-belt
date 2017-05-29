@@ -58,15 +58,15 @@ pub fn run(window: &mut PistonWindow,
                     Key::D => {
                         music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0));
                         *volume += volume_step
-                    },
+                    }
                     Key::A => {
                         music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0));
                         *volume -= volume_step
-                    },
+                    }
                     Key::Space => {
                         music::play_sound(&Sound::MenuBack, music::Repeat::Times(0));
                         break;
-                    },
+                    }
                     _ => {}
                 }
 

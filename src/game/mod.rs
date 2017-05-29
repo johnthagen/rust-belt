@@ -74,7 +74,7 @@ impl Game {
                         Key::X => {
                             music::play_sound(&Sound::MenuBack, music::Repeat::Times(0));
                             break;
-                        },
+                        }
                         _ => {}
                     }
                 }
