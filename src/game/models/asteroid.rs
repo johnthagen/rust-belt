@@ -9,18 +9,12 @@ use game::color;
 use game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
 use game::models::vector::Vector;
 
-/// The number of segments in an asteroid's shape is currently set at compile-time.
-const NUM_SEGMENTS: usize = 20;
-
 /// Asteroids have random radii within a defined range.
 const RADIUS_MIN: f64 = 15.0;
 const RADIUS_MAX: f64 = 70.0;
 
 /// Asteroids' shapes are made by mutating a circle, this is a magic number used to tune that.
 const MAX_MUT_FACTOR: f64 = 4.0;
-
-/// `CircularPolygon` is a piece of syntactic sugar to avoid having to use that ugly list type.
-type CircularPolygon = [[f64; 2]; NUM_SEGMENTS];
 
 /// Asteroids are shapes that randomly float around the screen.
 /// They have several properties:
@@ -38,7 +32,7 @@ pub struct Asteroid {
     rot: f64,
     spin: f64,
     radius: f64,
-    shape: CircularPolygon,
+    shape: Vec<[f64; 2]>,
     window_size: Size,
     on_screen: bool,
 }
@@ -47,9 +41,9 @@ pub struct Asteroid {
 /// the given radius. It does this by calculating the angular increment needed to
 /// achieve the given number of segments, and then uses trig functions to create
 /// a unit circle which it then scales
-fn generate_circle(radius: f64) -> CircularPolygon {
-    let angular_segment = PI_MULT_2 / NUM_SEGMENTS as f64;
-    let mut circle = [[0.0; 2]; NUM_SEGMENTS];
+fn generate_circle(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
+    let angular_segment = PI_MULT_2 / num_segments as f64;
+    let mut circle = vec![[0.0; 2]; num_segments];
     for (index, mut vertex) in circle.iter_mut().enumerate() {
         let index_float = index as f64;
         vertex[0] = radius * (index_float * angular_segment).cos();
@@ -58,7 +52,7 @@ fn generate_circle(radius: f64) -> CircularPolygon {
     circle
 }
 
-/// This function takes in a shape (`CircularPolygon`) and mutates its vertices.
+/// This function takes in a shape (`Vec<[f64; 2]>`) and mutates its vertices.
 /// There are few steps in this process:
 /// * add a (scaled) random amount to each dimension of each vertex
 /// * calculate the average location of the vertices. As a circle their average
@@ -66,7 +60,7 @@ fn generate_circle(radius: f64) -> CircularPolygon {
 /// * subtract the average position of the vertices from each of them. This
 ///   ensures that the shape is roughly centered around 0. We aren't actually
 ///   doing a real center-of-mass calculation, but this looks pretty good.
-fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
+fn randomize_shape(mut shape: Vec<[f64; 2]>, max: f64) -> Vec<[f64; 2]> {
     let mut average = Vector::default();
     for mut vertex in &mut shape {
 
@@ -81,7 +75,7 @@ fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
     // Now we divide the 'average' by the number of segments to convert it from a sum of coordinates
     // into an average of each coordinate. This isn't a real center-of-mass calculation,
     // but it's good enough for this purpose (because we aren't mutating *that* far from a circle)
-    average /= NUM_SEGMENTS as f64;
+    average /= shape.len() as f64;
     for mut vertex in &mut shape {
         vertex[0] -= average.x;
         vertex[1] -= average.y;
@@ -89,11 +83,11 @@ fn randomize_shape(mut shape: CircularPolygon, max: f64) -> CircularPolygon {
     shape
 }
 
-/// Given a radius, this function returns a `CircularPolygon`
+/// Given a radius, this function returns a `Vec<[f64; 2]>`
 /// containing a jagged 'randomized' circle. This is then
 /// used as the drawn shape of the asteroid
-fn generate_jagged_shape(radius: f64) -> CircularPolygon {
-    let new_shape = generate_circle(radius);
+fn generate_jagged_shape(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
+    let new_shape = generate_circle(radius, num_segments);
 
     // Here we are setting a maximum distance to mutate a vertex.
     let max_mut = radius / MAX_MUT_FACTOR;
@@ -101,7 +95,7 @@ fn generate_jagged_shape(radius: f64) -> CircularPolygon {
 }
 
 impl Asteroid {
-    pub fn new(window_size: Size) -> Self {
+    pub fn new(window_size: Size, num_segments: usize) -> Self {
 
         // First, we generate a random radius, within the specified range, for the new asteroid.
         let asteroid_radius = RADIUS_MIN + rand::random::<f64>() * (RADIUS_MAX - RADIUS_MIN);
@@ -140,7 +134,7 @@ impl Asteroid {
             // Spin rate is random within a fixed range.
             spin: (rand::random::<f64>() - 0.5) * f64::consts::PI / 180.0,
             radius: asteroid_radius,
-            shape: generate_jagged_shape(asteroid_radius),
+            shape: generate_jagged_shape(asteroid_radius, num_segments),
             window_size: window_size,
 
             // All asteroids start off-screen.
@@ -186,7 +180,7 @@ impl Drawable for Asteroid {
     fn draw(&self, context: Context, graphics: &mut GlGraphics) {
 
         // This polygon is the "main" asteroid shape within the frame. It is
-        // drawn at the location specified in `pos`. The CircularPolygon type,
+        // drawn at the location specified in `pos`. The Vec<[f64; 2]> type,
         // being a list of lists of length 2, is an acceptable "shape" for
         // the polygon function
         polygon(color::WHITE,

@@ -167,7 +167,7 @@ impl Updateable for Game {
         self.asteroid_timer -= args.dt;
         if self.asteroid_timer < 0.0 {
             self.asteroids
-                .push(asteroid::Asteroid::new(self.window_size));
+                .push(asteroid::Asteroid::new(self.window_size, 20));
 
             // After spawning an asteroid, reduce the timer to spawn the next
             // so that asteroids gradually being spawning faster and faster, up to a
