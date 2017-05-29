@@ -16,6 +16,9 @@ const RADIUS_MAX: f64 = 70.0;
 /// Asteroids' shapes are made by mutating a circle, this is a magic number used to tune that.
 const MAX_MUT_FACTOR: f64 = 4.0;
 
+/// Asteroids' shapes are made by mutating a circle, this is a magic number used to tune that.
+const DEFAULT_NUM_VERTS: usize = 20;
+
 /// Asteroids are shapes that randomly float around the screen.
 /// They have several properties:
 /// * `pos`: the asteroid's position
@@ -95,7 +98,7 @@ fn generate_jagged_shape(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
 }
 
 impl Asteroid {
-    pub fn new(window_size: Size, num_segments: usize) -> Self {
+    pub fn new(window_size: Size) -> Self {
 
         // First, we generate a random radius, within the specified range, for the new asteroid.
         let asteroid_radius = RADIUS_MIN + rand::random::<f64>() * (RADIUS_MAX - RADIUS_MIN);
@@ -134,7 +137,7 @@ impl Asteroid {
             // Spin rate is random within a fixed range.
             spin: (rand::random::<f64>() - 0.5) * f64::consts::PI / 180.0,
             radius: asteroid_radius,
-            shape: generate_jagged_shape(asteroid_radius, num_segments),
+            shape: generate_jagged_shape(asteroid_radius, DEFAULT_NUM_VERTS),
             window_size: window_size,
 
             // All asteroids start off-screen.
@@ -185,8 +188,7 @@ impl Drawable for Asteroid {
         // the polygon function
         polygon(color::WHITE,
                 &self.shape,
-                context
-                    .transform
+                context.transform
                     .trans(self.pos.x, self.pos.y)
                     .rot_rad(self.rot),
                 graphics);
@@ -202,8 +204,7 @@ impl Drawable for Asteroid {
             if self.pos.x + self.radius > self.window_size.width as f64 {
                 polygon(color::WHITE,
                         &self.shape,
-                        context
-                            .transform
+                        context.transform
                             .trans(self.pos.x - self.window_size.width as f64, self.pos.y)
                             .rot_rad(self.rot),
                         graphics)
@@ -211,8 +212,7 @@ impl Drawable for Asteroid {
             } else if self.pos.x < self.radius {
                 polygon(color::WHITE,
                         &self.shape,
-                        context
-                            .transform
+                        context.transform
                             .trans(self.pos.x + self.window_size.width as f64, self.pos.y)
                             .rot_rad(self.rot),
                         graphics)
@@ -220,8 +220,7 @@ impl Drawable for Asteroid {
             if self.pos.y + self.radius > self.window_size.height as f64 {
                 polygon(color::WHITE,
                         &self.shape,
-                        context
-                            .transform
+                        context.transform
                             .trans(self.pos.x, self.pos.y - self.window_size.height as f64)
                             .rot_rad(self.rot),
                         graphics)
@@ -229,8 +228,7 @@ impl Drawable for Asteroid {
             } else if self.pos.y < self.radius {
                 polygon(color::WHITE,
                         &self.shape,
-                        context
-                            .transform
+                        context.transform
                             .trans(self.pos.x, self.pos.y + self.window_size.height as f64)
                             .rot_rad(self.rot),
                         graphics)
