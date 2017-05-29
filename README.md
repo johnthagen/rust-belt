@@ -120,6 +120,8 @@ Special thanks to [@aochagavia](https://github.com/aochagavia) for
 
 Music composed by [@johnthagen](https://github.com/johnthagen).  All rights reserved.
 
+Sound from [freesound.org](https://www.freesound.org/).
+
 <!-- Badges -->
 [travis-build-status]: https://travis-ci.org/johnthagen/rust-belt
 [travis-build-status-svg]: https://travis-ci.org/johnthagen/rust-belt.svg?branch=master

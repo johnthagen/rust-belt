@@ -1,10 +1,12 @@
 //! Displays the story dialogue.
 
+use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
 use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, Transformed, types};
 
 use game::color::{self, ColoredText};
+use menu::Sound;
 
 fn draw(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache) {
     const NARRATOR_COLOR: types::Color = color::WHITE;
@@ -134,6 +136,7 @@ pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, glyph_cache: &mut
 
             Input::Press(Button::Keyboard(key)) => {
                 if key == Key::Space {
+                    music::play_sound(&Sound::MenuBack, music::Repeat::Times(0));
                     break;
                 }
             }

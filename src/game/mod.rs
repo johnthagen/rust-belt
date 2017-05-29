@@ -6,12 +6,14 @@
 //! `Game` takes user input from the keyboard in order to control the `Player`
 //! and handles collision detection and the TTL for `Bullet`s.
 
+use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
 use piston_window::{Button, clear, Context, Input, Key, PistonWindow, Size, text, Transformed,
                     UpdateArgs};
 
 use self::models::{asteroid, bullet, Collidable, Drawable, player, Updateable};
+use menu::Sound;
 
 pub mod color;
 mod models;
@@ -69,7 +71,10 @@ impl Game {
                         Key::S => self.player.actions.fire_rev_boosters = true,
                         Key::W => self.player.actions.fire_boosters = true,
                         Key::Space => self.player.actions.is_shooting = true,
-                        Key::X => break,
+                        Key::X => {
+                            music::play_sound(&Sound::MenuBack, music::Repeat::Times(0));
+                            break;
+                        },
                         _ => {}
                     }
                 }
@@ -118,6 +123,7 @@ impl Updateable for Game {
     fn update(&mut self, args: UpdateArgs) {
         self.player.update(args);
         if self.player.should_shoot() {
+            music::play_sound(&Sound::WeaponShoot, music::Repeat::Times(0));
             self.bullets
                 .push(bullet::Bullet::new(self.player.pos,
                                           self.player.vel,
@@ -150,6 +156,7 @@ impl Updateable for Game {
                        .position(|asteroid| asteroid.collides_with(bullet)) {
                     asteroids.remove(index);
                     *score += 10;
+                    music::play_sound(&Sound::AsteroidExplosion, music::Repeat::Times(0));
                     return false;
                 }
                 true
