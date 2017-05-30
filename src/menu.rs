@@ -11,7 +11,7 @@ use game::color::{self, ColoredText};
 use settings;
 use story;
 
-/// The different soundtrack pieces in the game.
+/// The different music soundtrack pieces in the game.
 #[derive(Copy, Clone, Hash, PartialEq, Eq)]
 enum Music {
     /// Menu soundtrack.
@@ -21,8 +21,27 @@ enum Music {
     Action,
 }
 
-const MUSIC_FILE_MENU: &str = "./assets/The Last Ranger.mp3";
-const MUSIC_FILE_ACTION: &str = "./assets/Into the Field.mp3";
+/// Sound effects.
+#[derive(Copy, Clone, Hash, PartialEq, Eq)]
+pub enum Sound {
+    MenuSelection,
+    MenuBack,
+    MenuValidate,
+    WeaponShoot,
+    AsteroidExplosion,
+}
+
+/// Binds sound and music files to enums to be used with piston-music.
+fn bind_sound_files() {
+    music::bind_music_file(Music::Menu, "./assets/The Last Ranger.mp3");
+    music::bind_music_file(Music::Action, "./assets/Into the Field.mp3");
+
+    music::bind_sound_file(Sound::MenuSelection, "./assets/menu-select.wav");
+    music::bind_sound_file(Sound::MenuBack, "./assets/menu-back.wav");
+    music::bind_sound_file(Sound::MenuValidate, "./assets/menu-validate.wav");
+    music::bind_sound_file(Sound::WeaponShoot, "./assets/weapon.wav");
+    music::bind_sound_file(Sound::AsteroidExplosion, "./assets/small-explosion.wav");
+}
 
 /// The currently selected menu item the user is highlighting.
 #[derive(Copy, Clone)]
@@ -106,10 +125,9 @@ pub fn run(mut window: &mut PistonWindow,
            mut opengl: &mut GlGraphics,
            game_title: &str,
            window_size: Size) {
-    music::start::<Music, _>(|| {
-        music::bind_file(Music::Menu, MUSIC_FILE_MENU);
-        music::bind_file(Music::Action, MUSIC_FILE_ACTION);
-        music::play(&Music::Menu, music::Repeat::Forever);
+    music::start::<Music, Sound, _>(|| {
+        bind_sound_files();
+        music::play_music(&Music::Menu, music::Repeat::Forever);
 
         // The glyphe cache is mutable because it loads each character on demand (lazily),
         // and thus must be able to be changed over time as new characters are requested.
@@ -134,6 +152,7 @@ pub fn run(mut window: &mut PistonWindow,
                 }
 
                 Input::Press(Button::Keyboard(key)) => {
+                    music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0));
                     match key {
                         Key::W => {
                             match menu_selection {
@@ -152,12 +171,13 @@ pub fn run(mut window: &mut PistonWindow,
                             }
                         }
                         Key::Space => {
+                            music::play_sound(&Sound::MenuValidate, music::Repeat::Times(0));
                             match menu_selection {
                                 MenuSelection::Play => {
-                                    music::play(&Music::Action, music::Repeat::Forever);
+                                    music::play_music(&Music::Action, music::Repeat::Forever);
                                     game::Game::new(window_size)
                                         .run(&mut window, &mut opengl, &mut glyph_cache);
-                                    music::play(&Music::Menu, music::Repeat::Forever);
+                                    music::play_music(&Music::Menu, music::Repeat::Forever);
                                 }
                                 MenuSelection::Story => {
                                     story::run(&mut window, &mut opengl, &mut glyph_cache);
@@ -175,7 +195,6 @@ pub fn run(mut window: &mut PistonWindow,
                         _ => {}
                     }
                 }
-
                 _ => {}
             }
         }

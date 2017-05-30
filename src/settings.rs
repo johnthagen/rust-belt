@@ -6,6 +6,7 @@ use opengl_graphics::glyph_cache::GlyphCache;
 use piston_window::{Button, Context, clear, Input, Key, PistonWindow, text, Transformed};
 
 use game::color;
+use menu::Sound;
 
 fn draw(context: Context,
         graphics: &mut GlGraphics,
@@ -54,9 +55,18 @@ pub fn run(window: &mut PistonWindow,
                 let volume_step: f64 = 0.1;
 
                 match key {
-                    Key::D => *volume += volume_step,
-                    Key::A => *volume -= volume_step,
-                    Key::Space => break,
+                    Key::D => {
+                        music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0));
+                        *volume += volume_step
+                    }
+                    Key::A => {
+                        music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0));
+                        *volume -= volume_step
+                    }
+                    Key::Space => {
+                        music::play_sound(&Sound::MenuBack, music::Repeat::Times(0));
+                        break;
+                    }
                     _ => {}
                 }
 
