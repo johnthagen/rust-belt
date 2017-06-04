@@ -41,12 +41,12 @@ impl Vector {
     }
 
     pub fn rotate(self, angle: f64) -> Vector {
-        let old_angle = (self.angle_to_vector(Vector{ x: 0.0, y: 0.0 }) + PI) % (PI * 2.0);
+        let old_angle = (self.angle_to_vector(Vector { x: 0.0, y: 0.0 }) + PI) % (PI * 2.0);
         let magnitude = self.magnitude();
         let new_angle = (angle + old_angle) % (PI * 2.0);
-        Vector{
+        Vector {
             x: magnitude * new_angle.cos(),
-            y: magnitude*new_angle.sin(),
+            y: magnitude * new_angle.sin(),
         }
     }
 }

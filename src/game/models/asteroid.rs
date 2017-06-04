@@ -111,10 +111,10 @@ fn center_mass(mut shape: &mut Vec<[f64; 2]>) -> Vector {
         vertex[0] -= average.x;
         vertex[1] -= average.y;
     }
-    average  
+    average
 }
 
-fn calculate_radius(shape: & Vec<[f64;2]>) -> f64 {
+fn calculate_radius(shape: &[[f64; 2]]) -> f64 {
     let mut avg_magnitude: f64 = 0.0;
     for vertex in &mut shape.iter() {
         let vert_as_vect: Vector = (*vertex).into();
@@ -190,16 +190,17 @@ impl Asteroid {
         transformed_shape.insert(0, last_element);
         self.shape = transformed_shape;
         for i in 0..num_pieces {
-            let mut new_shape = self.shape[i * (chunk_size + 1)..i * (chunk_size + 1) + (chunk_size + 2)]
-                .to_vec();
+            let mut new_shape = 
+                self.shape[i * (chunk_size + 1)..i * (chunk_size + 1) + (chunk_size + 2)].to_vec();
             new_shape.push([0.0, 0.0]);
             let average_pos = center_mass(&mut new_shape);
             let new_radius = calculate_radius(&new_shape);
             chunks.push(Asteroid {
                             pos: self.pos + average_pos,
-                            vel: self.vel + average_pos.rotate(PI/2.0)*self.spin + average_pos*0.005,
+                            vel: self.vel + average_pos.rotate(PI / 2.0) * self.spin +
+                                average_pos*0.005,
                             rot: 0.0,
-                            spin: self.spin*0.5,
+                            spin: self.spin * 0.5,
                             radius: new_radius,
                             shape: new_shape,
                             window_size: self.window_size,

@@ -46,8 +46,6 @@ pub trait Positioned {
     }
 
     fn vel(&self) -> vector::Vector;
-
-
 }
 
 /// Defines how types can expose how they can check for collisions with each other.
