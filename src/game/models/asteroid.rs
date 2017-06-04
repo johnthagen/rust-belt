@@ -198,7 +198,7 @@ impl Asteroid {
             chunks.push(Asteroid {
                             pos: self.pos + average_pos,
                             vel: self.vel + average_pos.rotate(PI / 2.0) * self.spin +
-                               average_pos * 0.005,
+                                 average_pos * 0.005,
                             rot: 0.0,
                             spin: self.spin * 0.5,
                             radius: new_radius,
