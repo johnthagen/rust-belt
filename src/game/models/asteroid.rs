@@ -179,14 +179,9 @@ impl Asteroid {
         self.normalize_rotation();
         //let base_speed = self.vel();
         let index_nearest = self.index_nearest_point(other);
-        let nearest_rotation = (Vector::from(self.shape[index_nearest])).angle();
         let num_pieces = 3;
         let mut chunks: Vec<Asteroid> = Vec::new();
         let chunk_size = self.shape.len() / num_pieces;
-        let pos_vector = Vector {
-            x: self.radius / 1.5,
-            y: 0.0,
-        };
         let mut transformed_shape = self.shape.split_off(index_nearest);
         transformed_shape.extend(self.shape.iter().cloned());
         let last_element = transformed_shape[transformed_shape.len() - 1];
