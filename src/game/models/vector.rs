@@ -1,5 +1,5 @@
 use std::f64::consts::PI;
-use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign, Div, DivAssign};
+use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign};
 
 use piston_window::Size;
 use rand;
@@ -30,6 +30,25 @@ impl Vector {
             angle_to_point += PI;
         }
         angle_to_point
+    }
+
+    pub fn angle(self) -> f64 {
+        self.angle_to_vector(Vector{x: 0.0,y: 0.0})
+    }
+
+    pub fn magnitude(self) -> f64 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt()
+    }
+
+    pub fn distance(self, other: Vector) -> f64 {
+        (self - other).magnitude()
+    }
+
+    pub fn rotate(self, angle: f64) -> Vector {
+        let old_angle = (self.angle_to_vector(Vector{x: 0.0,y: 0.0}) + PI) % (PI*2.0);
+        let magnitude = self.magnitude();
+        let new_angle = (angle + old_angle) % (PI * 2.0);
+        Vector{x: magnitude * new_angle.cos(), y: magnitude*new_angle.sin()}
     }
 }
 
@@ -107,6 +126,39 @@ impl Div<f64> for Vector {
     }
 }
 
+impl Mul<Vector> for Vector {
+    type Output = Self;
+
+    fn mul(self, other: Self) -> Self {
+        Vector{
+            x: self.x * other.x,
+            y: self.y * other.y,
+        }
+    }
+}
+
+impl Mul<f64> for Vector {
+    type Output = Self;
+
+    fn mul(self, other: f64) -> Self {
+        Vector{
+            x: self.x * other,
+            y: self.y * other,
+        }
+    }
+}
+
+impl MulAssign<Vector> for Vector {
+    fn mul_assign(&mut self, other: Self) {
+        *self = *self * other;
+    }
+}
+
+impl MulAssign<f64> for Vector {
+    fn mul_assign(&mut self, other: f64){
+        *self = *self * other;
+    }
+}
 impl DivAssign<Vector> for Vector {
     fn div_assign(&mut self, other: Self) {
         *self = *self / other;

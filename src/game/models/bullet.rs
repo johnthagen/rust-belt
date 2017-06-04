@@ -62,6 +62,10 @@ impl Positioned for Bullet {
     fn pos(&self) -> Vector {
         self.pos
     }
+
+    fn vel(&self) -> Vector {
+        self.vel
+    }
 }
 
 impl Collidable for Bullet {

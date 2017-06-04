@@ -6,7 +6,7 @@ use piston_window::{Context, polygon, Size, Transformed, UpdateArgs};
 use rand;
 
 use game::color;
-use game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
+use game::models::{Collidable, Drawable, PI, PI_MULT_2, Positioned, Updateable};
 use game::models::vector::Vector;
 
 /// Asteroids have random radii within a defined range.
@@ -144,6 +144,86 @@ impl Asteroid {
             on_screen: false,
         }
     }
+    pub fn split<P: Positioned>(&mut self, other: &P) -> Vec<Asteroid> {
+        self.normalize_rotation();
+        let base_speed = self.vel();
+        let index_nearest = self.index_nearest_point(other);
+        let nearest_rotation = (Vector::from(self.shape[index_nearest])).angle();
+        let num_pieces = 3;
+        let mut chunks: Vec<Asteroid> = Vec::new();
+        let chunk_size = self.shape.len() / num_pieces;
+        let pos_vector = Vector {
+            x: self.radius / 1.5,
+            y: 0.0,
+        };
+        let mut transformed_shape = self.shape.split_off(index_nearest);
+        transformed_shape.extend(self.shape.iter().cloned());
+        self.shape = transformed_shape;
+        for i in 0..num_pieces {
+            let mut new_shape = self.shape[i * chunk_size..(i + 1) * chunk_size].to_vec();
+            new_shape.push([0.0, 0.0]);
+            let average_pos = self.center_mass(&mut new_shape);
+            chunks.push(Asteroid {
+                            pos: self.pos +
+                                 average_pos, //+
+                                 //pos_vector.rotate(nearest_rotation + PI +
+                                   //                i as f64 * PI / num_pieces as f64),
+                            vel: self.vel + pos_vector.rotate(nearest_rotation + PI + i as f64 * PI / num_pieces as f64) * 0.01,
+                            rot: 0.0,
+                            spin: 0.0,
+                            radius: self.radius / num_pieces as f64,
+                            shape: new_shape,
+                            window_size: self.window_size,
+                            on_screen: true,
+                        })
+        }
+        chunks
+
+    }
+
+    fn center_mass(&mut self, mut shape: &mut Vec<[f64;2]>) -> Vector {
+        let mut average = Vector::default();
+        for mut vertex in &mut shape.iter() {
+            // Here, we are adding the new vertex location into what will be our average location.
+            average += (*vertex).into();
+        }
+        // Now we divide the 'average' by the number of segments to convert it from a sum of coordinates
+        // into an average of each coordinate. This isn't a real center-of-mass calculation,
+        // but it's good enough for this purpose (because we aren't mutating *that* far from a circle)
+        average /= shape.len() as f64;
+        for mut vertex in &mut shape.iter_mut() {
+            vertex[0] -= average.x;
+            vertex[1] -= average.y;
+        }
+        average  
+    }
+    fn normalize_rotation(&mut self) {
+        let mut norm_shape = self.shape.clone();
+        for vert in &mut norm_shape {
+            let v: Vector = (*vert).into();
+            let rotated = v.rotate(self.rot);
+            vert[0] = rotated.x;
+            vert[1] = rotated.y;
+        }
+        self.shape = norm_shape.clone();
+        self.rot = 0.0;
+    }
+
+    fn index_nearest_point<P: Positioned>(&mut self, other: &P) -> usize {
+        let other_pos = other.pos();
+        let nearest_point = self.shape
+            .iter()
+            .map(|vert| {
+                     Vector {
+                         x: vert[0],
+                         y: vert[1],
+                     }
+                 })
+            .map(|vert| other_pos.distance(vert.rotate(self.rot) + self.pos))
+            .enumerate()
+            .min_by_key(|&(_, b)| b as i64);
+        nearest_point.unwrap().0
+    }
 }
 
 impl Updateable for Asteroid {
@@ -246,6 +326,10 @@ impl Drawable for Asteroid {
 impl Positioned for Asteroid {
     fn pos(&self) -> Vector {
         self.pos
+    }
+
+    fn vel(&self) -> Vector {
+        self.vel
     }
 }
 
