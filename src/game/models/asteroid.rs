@@ -195,7 +195,7 @@ impl Asteroid {
         transformed_shape.insert(0,last_element);
         self.shape = transformed_shape;
         for i in 0..num_pieces {
-            let mut new_shape = self.shape[i * chunk_size..i * chunk_size + (chunk_size + 2)].to_vec();
+            let mut new_shape = self.shape[i * (chunk_size + 1)..i * (chunk_size + 1) + (chunk_size + 2)].to_vec();
             new_shape.push([0.0, 0.0]);
             let average_pos = center_mass(&mut new_shape);
             let new_radius = calculate_radius(& new_shape);
@@ -204,9 +204,9 @@ impl Asteroid {
                                  average_pos, //+
                                  //pos_vector.rotate(nearest_rotation + PI +
                                    //                i as f64 * PI / num_pieces as f64),
-                            vel: self.vel + pos_vector.rotate(nearest_rotation + PI + i as f64 * PI / num_pieces as f64) * 0.01,
+                            vel: self.vel + average_pos.rotate(PI/2.0)*self.spin + average_pos*0.005,
                             rot: 0.0,
-                            spin: 0.0,
+                            spin: self.spin*0.5,
                             radius: new_radius,
                             shape: new_shape,
                             window_size: self.window_size,
