@@ -97,7 +97,7 @@ fn generate_jagged_shape(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
     randomize_shape(new_shape, max_mut)
 }
 
-fn center_mass(mut shape: &mut Vec<[f64;2]>) -> Vector {
+fn center_mass(mut shape: &mut Vec<[f64; 2]>) -> Vector {
     let mut average = Vector::default();
     for vertex in &mut shape.iter() {
         // Here, we are adding the new vertex location into what will be our average location.
@@ -115,9 +115,9 @@ fn center_mass(mut shape: &mut Vec<[f64;2]>) -> Vector {
 }
 
 fn calculate_radius(shape: & Vec<[f64;2]>) -> f64 {
-    let mut avg_magnitude : f64 = 0.0;
+    let mut avg_magnitude: f64 = 0.0;
     for vertex in &mut shape.iter() {
-        let vert_as_vect : Vector = (*vertex).into();
+        let vert_as_vect: Vector = (*vertex).into();
         avg_magnitude += vert_as_vect.magnitude()
     }
     avg_magnitude / shape.len() as f64
@@ -187,18 +187,16 @@ impl Asteroid {
         let last_element = transformed_shape[transformed_shape.len() - 1];
         let first_element = transformed_shape[0];
         transformed_shape.push(first_element);
-        transformed_shape.insert(0,last_element);
+        transformed_shape.insert(0, last_element);
         self.shape = transformed_shape;
         for i in 0..num_pieces {
-            let mut new_shape = self.shape[i * (chunk_size + 1)..i * (chunk_size + 1) + (chunk_size + 2)].to_vec();
+            let mut new_shape = self.shape[i * (chunk_size + 1)..i * (chunk_size + 1) + (chunk_size + 2)]
+                .to_vec();
             new_shape.push([0.0, 0.0]);
             let average_pos = center_mass(&mut new_shape);
-            let new_radius = calculate_radius(& new_shape);
+            let new_radius = calculate_radius(&new_shape);
             chunks.push(Asteroid {
-                            pos: self.pos +
-                                 average_pos, //+
-                                 //pos_vector.rotate(nearest_rotation + PI +
-                                   //                i as f64 * PI / num_pieces as f64),
+                            pos: self.pos + average_pos,
                             vel: self.vel + average_pos.rotate(PI/2.0)*self.spin + average_pos*0.005,
                             rot: 0.0,
                             spin: self.spin*0.5,
@@ -209,7 +207,6 @@ impl Asteroid {
                         })
         }
         chunks
-
     }
 
     fn normalize_rotation(&mut self) {

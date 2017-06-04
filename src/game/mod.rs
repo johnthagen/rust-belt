@@ -154,7 +154,7 @@ impl Updateable for Game {
                 if let Some(index) = asteroids
                        .iter()
                        .position(|asteroid| asteroid.collides_with(bullet)) {
-                    if asteroids[index].can_split(){
+                    if asteroids[index].can_split() {
                         let new_asteroids = asteroids[index].split(bullet);
                         asteroids.extend(new_asteroids);
                     }

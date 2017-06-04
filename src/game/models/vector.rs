@@ -41,10 +41,13 @@ impl Vector {
     }
 
     pub fn rotate(self, angle: f64) -> Vector {
-        let old_angle = (self.angle_to_vector(Vector{x: 0.0,y: 0.0}) + PI) % (PI*2.0);
+        let old_angle = (self.angle_to_vector(Vector{ x: 0.0, y: 0.0 }) + PI) % (PI * 2.0);
         let magnitude = self.magnitude();
         let new_angle = (angle + old_angle) % (PI * 2.0);
-        Vector{x: magnitude * new_angle.cos(), y: magnitude*new_angle.sin()}
+        Vector{
+            x: magnitude * new_angle.cos(),
+            y: magnitude*new_angle.sin(),
+        }
     }
 }
 
@@ -126,7 +129,7 @@ impl Mul<Vector> for Vector {
     type Output = Self;
 
     fn mul(self, other: Self) -> Self {
-        Vector{
+        Vector {
             x: self.x * other.x,
             y: self.y * other.y,
         }
@@ -137,7 +140,7 @@ impl Mul<f64> for Vector {
     type Output = Self;
 
     fn mul(self, other: f64) -> Self {
-        Vector{
+        Vector {
             x: self.x * other,
             y: self.y * other,
         }
@@ -151,7 +154,7 @@ impl MulAssign<Vector> for Vector {
 }
 
 impl MulAssign<f64> for Vector {
-    fn mul_assign(&mut self, other: f64){
+    fn mul_assign(&mut self, other: f64) {
         *self = *self * other;
     }
 }
