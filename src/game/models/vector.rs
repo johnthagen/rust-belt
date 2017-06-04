@@ -32,10 +32,6 @@ impl Vector {
         angle_to_point
     }
 
-    pub fn angle(self) -> f64 {
-        self.angle_to_vector(Vector{x: 0.0,y: 0.0})
-    }
-
     pub fn magnitude(self) -> f64 {
         (self.x.powi(2) + self.y.powi(2)).sqrt()
     }
