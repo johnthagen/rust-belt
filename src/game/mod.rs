@@ -154,9 +154,11 @@ impl Updateable for Game {
                 if let Some(index) = asteroids
                        .iter()
                        .position(|asteroid| asteroid.collides_with(bullet)) {
-                    let new_asteroids = asteroids[index].split(bullet);
+                    if asteroids[index].can_split(){
+                        let new_asteroids = asteroids[index].split(bullet);
+                        asteroids.extend(new_asteroids);
+                    }
                     asteroids.remove(index);
-                    asteroids.extend(new_asteroids);
                     *score += 10;
                     music::play_sound(&Sound::AsteroidExplosion, music::Repeat::Times(0));
                     return false;

@@ -97,6 +97,32 @@ fn generate_jagged_shape(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
     randomize_shape(new_shape, max_mut)
 }
 
+fn center_mass(mut shape: &mut Vec<[f64;2]>) -> Vector {
+    let mut average = Vector::default();
+    for vertex in &mut shape.iter() {
+        // Here, we are adding the new vertex location into what will be our average location.
+        average += (*vertex).into();
+    }
+    // Now we divide the 'average' by the number of segments to convert it from a sum of coordinates
+    // into an average of each coordinate. This isn't a real center-of-mass calculation,
+    // but it's good enough for this purpose (because we aren't mutating *that* far from a circle)
+    average /= shape.len() as f64;
+    for mut vertex in &mut shape.iter_mut() {
+        vertex[0] -= average.x;
+        vertex[1] -= average.y;
+    }
+    average  
+}
+
+fn calculate_radius(shape: & Vec<[f64;2]>) -> f64 {
+    let mut avg_magnitude : f64 = 0.0;
+    for vertex in &mut shape.iter() {
+        let vert_as_vect : Vector = (*vertex).into();
+        avg_magnitude += vert_as_vect.magnitude()
+    }
+    avg_magnitude / shape.len() as f64
+}
+
 impl Asteroid {
     pub fn new(window_size: Size) -> Self {
 
@@ -144,9 +170,14 @@ impl Asteroid {
             on_screen: false,
         }
     }
+
+    pub fn can_split(&self) -> bool {
+        self.shape.len() > 10
+    }
+
     pub fn split<P: Positioned>(&mut self, other: &P) -> Vec<Asteroid> {
         self.normalize_rotation();
-        let base_speed = self.vel();
+        //let base_speed = self.vel();
         let index_nearest = self.index_nearest_point(other);
         let nearest_rotation = (Vector::from(self.shape[index_nearest])).angle();
         let num_pieces = 3;
@@ -162,7 +193,8 @@ impl Asteroid {
         for i in 0..num_pieces {
             let mut new_shape = self.shape[i * chunk_size..(i + 1) * chunk_size].to_vec();
             new_shape.push([0.0, 0.0]);
-            let average_pos = self.center_mass(&mut new_shape);
+            let average_pos = center_mass(&mut new_shape);
+            let new_radius = calculate_radius(& new_shape);
             chunks.push(Asteroid {
                             pos: self.pos +
                                  average_pos, //+
@@ -171,7 +203,7 @@ impl Asteroid {
                             vel: self.vel + pos_vector.rotate(nearest_rotation + PI + i as f64 * PI / num_pieces as f64) * 0.01,
                             rot: 0.0,
                             spin: 0.0,
-                            radius: self.radius / num_pieces as f64,
+                            radius: new_radius,
                             shape: new_shape,
                             window_size: self.window_size,
                             on_screen: true,
@@ -181,22 +213,6 @@ impl Asteroid {
 
     }
 
-    fn center_mass(&mut self, mut shape: &mut Vec<[f64;2]>) -> Vector {
-        let mut average = Vector::default();
-        for mut vertex in &mut shape.iter() {
-            // Here, we are adding the new vertex location into what will be our average location.
-            average += (*vertex).into();
-        }
-        // Now we divide the 'average' by the number of segments to convert it from a sum of coordinates
-        // into an average of each coordinate. This isn't a real center-of-mass calculation,
-        // but it's good enough for this purpose (because we aren't mutating *that* far from a circle)
-        average /= shape.len() as f64;
-        for mut vertex in &mut shape.iter_mut() {
-            vertex[0] -= average.x;
-            vertex[1] -= average.y;
-        }
-        average  
-    }
     fn normalize_rotation(&mut self) {
         let mut norm_shape = self.shape.clone();
         for vert in &mut norm_shape {
