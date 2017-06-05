@@ -188,10 +188,17 @@ impl Asteroid {
         let first_element = transformed_shape[0];
         transformed_shape.push(first_element);
         transformed_shape.insert(0, last_element);
+        let mut indices: Vec<usize> = (0..num_pieces - 1)
+            .map(|idx| idx + 1)
+            .map(|idx| idx * chunk_size)
+            .map(|idx| idx as usize)
+            .collect();
+        indices.insert(0,0);
+        indices.push(transformed_shape.len() - 2);
         self.shape = transformed_shape;
         for i in 0..num_pieces {
             let mut new_shape =
-                self.shape[i * (chunk_size + 1)..i * (chunk_size + 1) + (chunk_size + 2)].to_vec();
+                self.shape[indices[i]..indices[i+1] + 1].to_vec();
             new_shape.push([0.0, 0.0]);
             let average_pos = center_mass(&mut new_shape);
             let new_radius = calculate_radius(&new_shape);
