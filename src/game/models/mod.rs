@@ -36,16 +36,6 @@ pub trait Positioned {
     }
 
     fn pos(&self) -> vector::Vector;
-
-    fn dx(&self) -> f64 {
-        self.vel().x
-    }
-
-    fn dy(&self) -> f64 {
-        self.vel().y
-    }
-
-    fn vel(&self) -> vector::Vector;
 }
 
 /// Defines how types can expose how they can check for collisions with each other.

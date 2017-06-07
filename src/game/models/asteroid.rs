@@ -1,12 +1,13 @@
 //! This module defines the asteroid component.
 use std::{cmp, f64};
+use std::f64::consts::PI;
 
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, polygon, Size, Transformed, UpdateArgs};
 use rand;
 
 use game::color;
-use game::models::{Collidable, Drawable, PI, PI_MULT_2, Positioned, Updateable};
+use game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
 use game::models::vector::Vector;
 
 /// Asteroids have random radii within a defined range.
@@ -347,10 +348,6 @@ impl Drawable for Asteroid {
 impl Positioned for Asteroid {
     fn pos(&self) -> Vector {
         self.pos
-    }
-
-    fn vel(&self) -> Vector {
-        self.vel
     }
 }
 
