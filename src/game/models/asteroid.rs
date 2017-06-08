@@ -178,7 +178,6 @@ impl Asteroid {
 
     pub fn split<P: Positioned>(&mut self, other: &P) -> Vec<Asteroid> {
         self.normalize_rotation();
-        //let base_speed = self.vel();
         let index_nearest = self.index_nearest_point(other);
         let num_pieces = 3;
         let mut chunks: Vec<Asteroid> = Vec::new();
