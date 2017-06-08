@@ -1,6 +1,6 @@
 [package]
 name = "rust-belt"
-version = "1.0.0"
+version = "1.1.0"
 authors = [
     "johnthagen <johnthagen@gmail.com>",
     "theandrewdavis <theandrewdavis@gmail.com>",
