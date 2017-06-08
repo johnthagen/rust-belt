@@ -1,5 +1,6 @@
 //! This module defines the asteroid component.
 use std::{cmp, f64};
+use std::f64::consts::PI;
 
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, polygon, Size, Transformed, UpdateArgs};
@@ -97,6 +98,32 @@ fn generate_jagged_shape(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
     randomize_shape(new_shape, max_mut)
 }
 
+fn center_mass(mut shape: &mut Vec<[f64; 2]>) -> Vector {
+    let mut average = Vector::default();
+    for vertex in &mut shape.iter() {
+        // Here, we are adding the new vertex location into what will be our average location.
+        average += (*vertex).into();
+    }
+    // Now we divide the 'average' by the number of segments to convert it from a sum of coordinates
+    // into an average of each coordinate. This isn't a real center-of-mass calculation,
+    // but it's good enough for this purpose (because we aren't mutating *that* far from a circle)
+    average /= shape.len() as f64;
+    for mut vertex in &mut shape.iter_mut() {
+        vertex[0] -= average.x;
+        vertex[1] -= average.y;
+    }
+    average
+}
+
+fn calculate_radius(shape: &[[f64; 2]]) -> f64 {
+    let mut avg_magnitude: f64 = 0.0;
+    for vertex in &mut shape.iter() {
+        let vert_as_vect: Vector = (*vertex).into();
+        avg_magnitude += vert_as_vect.magnitude()
+    }
+    avg_magnitude / shape.len() as f64
+}
+
 impl Asteroid {
     pub fn new(window_size: Size) -> Self {
 
@@ -143,6 +170,80 @@ impl Asteroid {
             // All asteroids start off-screen.
             on_screen: false,
         }
+    }
+
+    pub fn can_split(&self) -> bool {
+        self.shape.len() > 10
+    }
+
+    pub fn split<P: Positioned>(&mut self, other: &P) -> Vec<Asteroid> {
+        self.normalize_rotation();
+        let index_nearest = self.index_nearest_point(other);
+        let num_pieces = 3;
+        let mut chunks: Vec<Asteroid> = Vec::new();
+        let chunk_size = self.shape.len() / num_pieces;
+        let mut transformed_shape = self.shape.split_off(index_nearest);
+        transformed_shape.extend(self.shape.iter().cloned());
+        let last_element = transformed_shape[transformed_shape.len() - 1];
+        let first_element = transformed_shape[0];
+        transformed_shape.push(first_element);
+        transformed_shape.insert(0, last_element);
+        let mut first_indices: Vec<usize> = (0..num_pieces - 1)
+            .map(|idx| idx + 1)
+            .map(|idx| idx * chunk_size)
+            .map(|idx| idx as usize)
+            .collect();
+        let mut last_indices = first_indices.clone();
+        first_indices.insert(0, 0);
+        last_indices.push(transformed_shape.len() - 2);
+        let zipped_indices: Vec<(&usize, &usize)> =
+            first_indices.iter().zip(last_indices.iter()).collect();
+        for pair in zipped_indices {
+            let mut new_shape = transformed_shape[*pair.0..*pair.1 + 1].to_vec();
+            new_shape.push([0.0, 0.0]);
+            let average_pos = center_mass(&mut new_shape);
+            let new_radius = calculate_radius(&new_shape);
+            chunks.push(Asteroid {
+                            pos: self.pos + average_pos,
+                            vel: self.vel + average_pos.rotate(PI / 2.0) * self.spin +
+                                 average_pos * 0.005,
+                            rot: 0.0,
+                            spin: self.spin * 0.5,
+                            radius: new_radius,
+                            shape: new_shape,
+                            window_size: self.window_size,
+                            on_screen: true,
+                        })
+        }
+        chunks
+    }
+
+    fn normalize_rotation(&mut self) {
+        let mut norm_shape = self.shape.clone();
+        for vert in &mut norm_shape {
+            let v: Vector = (*vert).into();
+            let rotated = v.rotate(self.rot);
+            vert[0] = rotated.x;
+            vert[1] = rotated.y;
+        }
+        self.shape = norm_shape.clone();
+        self.rot = 0.0;
+    }
+
+    fn index_nearest_point<P: Positioned>(&mut self, other: &P) -> usize {
+        let other_pos = other.pos();
+        let nearest_point = self.shape
+            .iter()
+            .map(|vert| {
+                     Vector {
+                         x: vert[0],
+                         y: vert[1],
+                     }
+                 })
+            .map(|vert| other_pos.distance(vert.rotate(self.rot) + self.pos))
+            .enumerate()
+            .min_by_key(|&(_, b)| b as i64);
+        nearest_point.unwrap().0
     }
 }
 
