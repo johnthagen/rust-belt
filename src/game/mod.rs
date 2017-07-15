@@ -49,15 +49,18 @@ impl Game {
         }
     }
 
-    pub fn run(&mut self,
-               window: &mut PistonWindow,
-               opengl: &mut GlGraphics,
-               glyph_cache: &mut GlyphCache) {
+    pub fn run(
+        &mut self,
+        window: &mut PistonWindow,
+        opengl: &mut GlGraphics,
+        glyph_cache: &mut GlyphCache,
+    ) {
         while let Some(event) = window.next() {
             match event {
                 Input::Render(args) => {
-                    opengl.draw(args.viewport(),
-                                |context, graphics| self.draw(context, graphics, glyph_cache));
+                    opengl.draw(args.viewport(), |context, graphics| {
+                        self.draw(context, graphics, glyph_cache)
+                    });
                 }
 
                 Input::Update(args) => {
@@ -110,12 +113,14 @@ impl Game {
             asteroid.draw(context, graphics);
         }
 
-        text(color::YELLOW,
-             26,
-             format!("Score: {}", self.score).as_str(),
-             glyph_cache,
-             context.transform.trans(10.0, 20.0),
-             graphics);
+        text(
+            color::YELLOW,
+            26,
+            format!("Score: {}", self.score).as_str(),
+            glyph_cache,
+            context.transform.trans(10.0, 20.0),
+            graphics,
+        );
     }
 }
 
@@ -124,11 +129,12 @@ impl Updateable for Game {
         self.player.update(args);
         if self.player.should_shoot() {
             music::play_sound(&Sound::WeaponShoot, music::Repeat::Times(0));
-            self.bullets
-                .push(bullet::Bullet::new(self.player.pos,
-                                          self.player.vel,
-                                          self.player.rot,
-                                          self.window_size));
+            self.bullets.push(bullet::Bullet::new(
+                self.player.pos,
+                self.player.vel,
+                self.player.rot,
+                self.window_size,
+            ));
             self.player.reset_weapon_cooldown();
         }
 
@@ -152,8 +158,9 @@ impl Updateable for Game {
             bullets.retain(|bullet| {
                 // Remove the first asteroid that collides with a bullet, if any.
                 if let Some(index) = asteroids
-                       .iter()
-                       .position(|asteroid| asteroid.collides_with(bullet)) {
+                    .iter()
+                    .position(|asteroid| asteroid.collides_with(bullet))
+                {
                     if asteroids[index].can_split() {
                         let new_asteroids = asteroids[index].split(bullet);
                         asteroids.extend(new_asteroids);
@@ -168,8 +175,9 @@ impl Updateable for Game {
 
             // If player hits an asteroid, return to the main menu.
             if asteroids
-                   .iter()
-                   .any(|asteroid| asteroid.collides_with(player)) {
+                .iter()
+                .any(|asteroid| asteroid.collides_with(player))
+            {
                 self.game_over = true;
             }
         }

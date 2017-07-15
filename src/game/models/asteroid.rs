@@ -142,10 +142,12 @@ impl Asteroid {
         // on the screen for the asteroid to float towards. The "RADIUS_MAX" sized gaps at the edges
         // of the range are there to ensure that every asteroid will, for at least one frame, come
         // fully on-screen, so that the on-screen flag is properly flipped
-        let target = Vector::new_rand(RADIUS_MAX,
-                                      RADIUS_MAX,
-                                      window_size.width as f64 - RADIUS_MAX,
-                                      window_size.height as f64 - RADIUS_MAX);
+        let target = Vector::new_rand(
+            RADIUS_MAX,
+            RADIUS_MAX,
+            window_size.width as f64 - RADIUS_MAX,
+            window_size.height as f64 - RADIUS_MAX,
+        );
 
         // Now that the asteroid's direction is decided, we decide its speed.
         let vel_multiplier = 0.5 + rand::random::<f64>() * 0.7;
@@ -204,16 +206,15 @@ impl Asteroid {
             let average_pos = center_mass(&mut new_shape);
             let new_radius = calculate_radius(&new_shape);
             chunks.push(Asteroid {
-                            pos: self.pos + average_pos,
-                            vel: self.vel + average_pos.rotate(PI / 2.0) * self.spin +
-                                 average_pos * 0.005,
-                            rot: 0.0,
-                            spin: self.spin * 0.5,
-                            radius: new_radius,
-                            shape: new_shape,
-                            window_size: self.window_size,
-                            on_screen: true,
-                        })
+                pos: self.pos + average_pos,
+                vel: self.vel + average_pos.rotate(PI / 2.0) * self.spin + average_pos * 0.005,
+                rot: 0.0,
+                spin: self.spin * 0.5,
+                radius: new_radius,
+                shape: new_shape,
+                window_size: self.window_size,
+                on_screen: true,
+            })
         }
         chunks
     }
@@ -235,11 +236,11 @@ impl Asteroid {
         let nearest_point = self.shape
             .iter()
             .map(|vert| {
-                     Vector {
-                         x: vert[0],
-                         y: vert[1],
-                     }
-                 })
+                Vector {
+                    x: vert[0],
+                    y: vert[1],
+                }
+            })
             .map(|vert| other_pos.distance(vert.rotate(self.rot) + self.pos))
             .enumerate()
             .min_by_key(|&(_, b)| b as i64);
@@ -272,9 +273,10 @@ impl Updateable for Asteroid {
         // It checks whether the asteroid is fully on-screen. If it is,
         // it sets the on_Screen flag and this code isn't touched again.
         if !self.on_screen && self.pos.x > self.radius &&
-           self.pos.x + self.radius < self.window_size.width as f64 &&
-           self.pos.y > self.radius &&
-           self.pos.y + self.radius < self.window_size.height as f64 {
+            self.pos.x + self.radius < self.window_size.width as f64 &&
+            self.pos.y > self.radius &&
+            self.pos.y + self.radius < self.window_size.height as f64
+        {
             self.on_screen = true;
         }
     }
@@ -287,13 +289,15 @@ impl Drawable for Asteroid {
         // drawn at the location specified in `pos`. The Vec<[f64; 2]> type,
         // being a list of lists of length 2, is an acceptable "shape" for
         // the polygon function
-        polygon(color::WHITE,
-                &self.shape,
-                context
-                    .transform
-                    .trans(self.pos.x, self.pos.y)
-                    .rot_rad(self.rot),
-                graphics);
+        polygon(
+            color::WHITE,
+            &self.shape,
+            context
+                .transform
+                .trans(self.pos.x, self.pos.y)
+                .rot_rad(self.rot),
+            graphics,
+        );
 
         // Asteroids are large enough that we need to render them on the opposite
         // side of the canvas whenever they start to go off-screen. However, we
@@ -304,40 +308,48 @@ impl Drawable for Asteroid {
         // drawing in a corner when an asteroid approaches the opposing corner.
         if self.on_screen {
             if self.pos.x + self.radius > self.window_size.width as f64 {
-                polygon(color::WHITE,
-                        &self.shape,
-                        context
-                            .transform
-                            .trans(self.pos.x - self.window_size.width as f64, self.pos.y)
-                            .rot_rad(self.rot),
-                        graphics)
+                polygon(
+                    color::WHITE,
+                    &self.shape,
+                    context
+                        .transform
+                        .trans(self.pos.x - self.window_size.width as f64, self.pos.y)
+                        .rot_rad(self.rot),
+                    graphics,
+                )
 
             } else if self.pos.x < self.radius {
-                polygon(color::WHITE,
-                        &self.shape,
-                        context
-                            .transform
-                            .trans(self.pos.x + self.window_size.width as f64, self.pos.y)
-                            .rot_rad(self.rot),
-                        graphics)
+                polygon(
+                    color::WHITE,
+                    &self.shape,
+                    context
+                        .transform
+                        .trans(self.pos.x + self.window_size.width as f64, self.pos.y)
+                        .rot_rad(self.rot),
+                    graphics,
+                )
             }
             if self.pos.y + self.radius > self.window_size.height as f64 {
-                polygon(color::WHITE,
-                        &self.shape,
-                        context
-                            .transform
-                            .trans(self.pos.x, self.pos.y - self.window_size.height as f64)
-                            .rot_rad(self.rot),
-                        graphics)
+                polygon(
+                    color::WHITE,
+                    &self.shape,
+                    context
+                        .transform
+                        .trans(self.pos.x, self.pos.y - self.window_size.height as f64)
+                        .rot_rad(self.rot),
+                    graphics,
+                )
 
             } else if self.pos.y < self.radius {
-                polygon(color::WHITE,
-                        &self.shape,
-                        context
-                            .transform
-                            .trans(self.pos.x, self.pos.y + self.window_size.height as f64)
-                            .rot_rad(self.rot),
-                        graphics)
+                polygon(
+                    color::WHITE,
+                    &self.shape,
+                    context
+                        .transform
+                        .trans(self.pos.x, self.pos.y + self.window_size.height as f64)
+                        .rot_rad(self.rot),
+                    graphics,
+                )
 
             }
         }
