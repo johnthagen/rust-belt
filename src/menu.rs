@@ -62,12 +62,14 @@ enum MenuSelection {
 
 /// Draws the title and menu options to screen.
 /// The current menu selection is highlighted based upon user input.
-fn draw(context: Context,
-        graphics: &mut GlGraphics,
-        glyph_cache: &mut GlyphCache,
-        menu_align: f64,
-        menu_selection: MenuSelection,
-        game_title: &str) {
+fn draw(
+    context: Context,
+    graphics: &mut GlGraphics,
+    glyph_cache: &mut GlyphCache,
+    menu_align: f64,
+    menu_selection: MenuSelection,
+    game_title: &str,
+) {
     let starting_line_offset = 280.0;
 
     // Color all menu items the same unless it is currently selected.
@@ -82,50 +84,58 @@ fn draw(context: Context,
         MenuSelection::Exit => exit_color = color::YELLOW,
     }
 
-    let menu_lines = [ColoredText {
-                          color: play_color,
-                          text: "Play",
-                      },
-                      ColoredText {
-                          color: story_color,
-                          text: "Story",
-                      },
-                      ColoredText {
-                          color: settings_color,
-                          text: "Settings",
-                      },
-                      ColoredText {
-                          color: exit_color,
-                          text: "Exit",
-                      }];
+    let menu_lines = [
+        ColoredText {
+            color: play_color,
+            text: "Play",
+        },
+        ColoredText {
+            color: story_color,
+            text: "Story",
+        },
+        ColoredText {
+            color: settings_color,
+            text: "Settings",
+        },
+        ColoredText {
+            color: exit_color,
+            text: "Exit",
+        },
+    ];
 
     clear(color::BLACK, graphics);
-    text(color::WHITE,
-         72,
-         game_title,
-         glyph_cache,
-         context.transform.trans(menu_align, starting_line_offset),
-         graphics);
+    text(
+        color::WHITE,
+        72,
+        game_title,
+        glyph_cache,
+        context.transform.trans(menu_align, starting_line_offset),
+        graphics,
+    );
 
     for (index, line) in menu_lines.iter().enumerate() {
         let new_line_offset = 40.0;
-        text(line.color,
-             32,
-             line.text,
-             glyph_cache,
-             context
-                 .transform
-                 .trans(menu_align,
-                        starting_line_offset + ((index as f64 + 1.0) * new_line_offset)),
-             graphics);
+        text(
+            line.color,
+            32,
+            line.text,
+            glyph_cache,
+            context.transform.trans(
+                menu_align,
+                starting_line_offset + ((index as f64 + 1.0) * new_line_offset),
+            ),
+            graphics,
+        );
     }
 }
 
 /// Loops the menu screen, taking user input to change the current menu selection.
-pub fn run(mut window: &mut PistonWindow,
-           mut opengl: &mut GlGraphics,
-           game_title: &str,
-           window_size: Size) {
+pub fn run(
+    mut window: &mut PistonWindow,
+    mut opengl: &mut GlGraphics,
+    game_title: &str,
+    window_size: Size,
+) {
     music::start::<Music, Sound, _>(|| {
         bind_sound_files();
         music::play_music(&Music::Menu, music::Repeat::Forever);
@@ -144,12 +154,14 @@ pub fn run(mut window: &mut PistonWindow,
             match event {
                 Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
-                        draw(context,
-                             graphics,
-                             &mut glyph_cache,
-                             menu_align,
-                             menu_selection,
-                             game_title)
+                        draw(
+                            context,
+                            graphics,
+                            &mut glyph_cache,
+                            menu_align,
+                            menu_selection,
+                            game_title,
+                        )
                     });
                 }
 
@@ -185,11 +197,13 @@ pub fn run(mut window: &mut PistonWindow,
                                     story::run(&mut window, &mut opengl, &mut glyph_cache);
                                 }
                                 MenuSelection::Settings => {
-                                    settings::run(&mut window,
-                                                  &mut opengl,
-                                                  &mut glyph_cache,
-                                                  &mut volume,
-                                                  menu_align);
+                                    settings::run(
+                                        &mut window,
+                                        &mut opengl,
+                                        &mut glyph_cache,
+                                        &mut volume,
+                                        menu_align,
+                                    );
                                 }
                                 MenuSelection::Exit => break,
                             }
