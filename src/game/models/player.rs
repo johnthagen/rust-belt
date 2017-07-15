@@ -123,66 +123,80 @@ impl Updateable for Player {
 
 const SHIP_HEIGHT: f64 = 16.0;
 const SHIP_WIDTH: f64 = 20.0;
-const SHIP: &types::Triangle = &[[0.0, -1.0 * SHIP_HEIGHT / 2.0],
-                                 [SHIP_WIDTH, 0.0],
-                                 [0.0, SHIP_HEIGHT / 2.0]];
+const SHIP: &types::Triangle = &[
+    [0.0, -1.0 * SHIP_HEIGHT / 2.0],
+    [SHIP_WIDTH, 0.0],
+    [0.0, SHIP_HEIGHT / 2.0],
+];
 impl Drawable for Player {
     fn draw(&self, context: Context, graphics: &mut GlGraphics) {
         const BOOSTER_HEIGHT: f64 = 8.0;
         const BOOSTER_WIDTH: f64 = 10.0;
-        const BOOSTER: &types::Triangle = &[[0.0, -1.0 * BOOSTER_HEIGHT / 2.0],
-                                            [BOOSTER_WIDTH, 0.0],
-                                            [0.0, BOOSTER_HEIGHT / 2.0]];
+        const BOOSTER: &types::Triangle = &[
+            [0.0, -1.0 * BOOSTER_HEIGHT / 2.0],
+            [BOOSTER_WIDTH, 0.0],
+            [0.0, BOOSTER_HEIGHT / 2.0],
+        ];
 
         // Draw the boosters first, so that they look like they are coming
         // from underneath the ship.
         if self.actions.fire_boosters {
-            polygon(color::DIM_RED,
-                    BOOSTER,
-                    context
-                        .transform
-                        .trans(self.pos.x, self.pos.y)
-                        .rot_rad(self.rot + f64::consts::PI)
-                        .trans(BOOSTER_HEIGHT, 0.0),
-                    graphics);
+            polygon(
+                color::DIM_RED,
+                BOOSTER,
+                context
+                    .transform
+                    .trans(self.pos.x, self.pos.y)
+                    .rot_rad(self.rot + f64::consts::PI)
+                    .trans(BOOSTER_HEIGHT, 0.0),
+                graphics,
+            );
         }
         if self.actions.fire_rev_boosters {
-            polygon(color::DIM_RED,
-                    BOOSTER,
-                    context
-                        .transform
-                        .trans(self.pos.x, self.pos.y)
-                        .rot_rad(self.rot)
-                        .trans(SHIP_HEIGHT - BOOSTER_HEIGHT, 0.0),
-                    graphics);
+            polygon(
+                color::DIM_RED,
+                BOOSTER,
+                context
+                    .transform
+                    .trans(self.pos.x, self.pos.y)
+                    .rot_rad(self.rot)
+                    .trans(SHIP_HEIGHT - BOOSTER_HEIGHT, 0.0),
+                graphics,
+            );
         }
         if self.actions.rotate_cw {
-            polygon(color::DIM_RED,
-                    BOOSTER,
-                    context
-                        .transform
-                        .trans(self.pos.x, self.pos.y)
-                        .rot_rad(self.rot - f64::consts::FRAC_PI_3),
-                    graphics);
+            polygon(
+                color::DIM_RED,
+                BOOSTER,
+                context
+                    .transform
+                    .trans(self.pos.x, self.pos.y)
+                    .rot_rad(self.rot - f64::consts::FRAC_PI_3),
+                graphics,
+            );
         }
         if self.actions.rotate_ccw {
-            polygon(color::DIM_RED,
-                    BOOSTER,
-                    context
-                        .transform
-                        .trans(self.pos.x, self.pos.y)
-                        .rot_rad(self.rot + f64::consts::FRAC_PI_3),
-                    graphics);
+            polygon(
+                color::DIM_RED,
+                BOOSTER,
+                context
+                    .transform
+                    .trans(self.pos.x, self.pos.y)
+                    .rot_rad(self.rot + f64::consts::FRAC_PI_3),
+                graphics,
+            );
         }
-        polygon(color::CYAN,
-                SHIP,
-                context.transform
+        polygon(
+            color::CYAN,
+            SHIP,
+            context.transform
                     .trans(self.pos.x, self.pos.y)
                     .rot_rad(self.rot)
                     // Without this trans(), rotation occurs around the
                     // upper left corner rather than the center.
                     .trans(-1.0 * SHIP_HEIGHT / 2.0, 0.0),
-                graphics);
+            graphics,
+        );
     }
 }
 
