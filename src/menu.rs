@@ -4,7 +4,8 @@
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, Transformed, Size};
+use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, TextureSettings,
+                    Transformed, Size};
 
 use game;
 use game::color::{self, ColoredText};
@@ -141,7 +142,8 @@ pub fn run(
 
         // The glyphe cache is mutable because it loads each character on demand (lazily),
         // and thus must be able to be changed over time as new characters are requested.
-        let mut glyph_cache = GlyphCache::new("./assets/FiraSans-Regular.ttf").unwrap();
+        let mut glyph_cache =
+            GlyphCache::new("./assets/FiraSans-Regular.ttf", TextureSettings::new()).unwrap();
 
         let mut menu_selection = MenuSelection::Play;
         let mut volume = music::MAX_VOLUME;
