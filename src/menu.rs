@@ -4,8 +4,8 @@
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, TextureSettings,
-                    Transformed, Size};
+use piston_window::{clear, text, Button, Context, Input, Key, PistonWindow, Size, TextureSettings,
+                    Transformed};
 
 use game;
 use game::color::{self, ColoredText};
@@ -168,22 +168,18 @@ pub fn run(
                 Input::Press(Button::Keyboard(key)) => {
                     music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0));
                     match key {
-                        Key::W => {
-                            match menu_selection {
-                                MenuSelection::Play => {}
-                                MenuSelection::Story => menu_selection = MenuSelection::Play,
-                                MenuSelection::Settings => menu_selection = MenuSelection::Story,
-                                MenuSelection::Exit => menu_selection = MenuSelection::Settings,
-                            }
-                        }
-                        Key::S => {
-                            match menu_selection {
-                                MenuSelection::Play => menu_selection = MenuSelection::Story,
-                                MenuSelection::Story => menu_selection = MenuSelection::Settings,
-                                MenuSelection::Settings => menu_selection = MenuSelection::Exit,
-                                MenuSelection::Exit => {}
-                            }
-                        }
+                        Key::W => match menu_selection {
+                            MenuSelection::Play => {}
+                            MenuSelection::Story => menu_selection = MenuSelection::Play,
+                            MenuSelection::Settings => menu_selection = MenuSelection::Story,
+                            MenuSelection::Exit => menu_selection = MenuSelection::Settings,
+                        },
+                        Key::S => match menu_selection {
+                            MenuSelection::Play => menu_selection = MenuSelection::Story,
+                            MenuSelection::Story => menu_selection = MenuSelection::Settings,
+                            MenuSelection::Settings => menu_selection = MenuSelection::Exit,
+                            MenuSelection::Exit => {}
+                        },
                         Key::Space => {
                             music::play_sound(&Sound::MenuValidate, music::Repeat::Times(0));
                             match menu_selection {

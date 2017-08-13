@@ -1,5 +1,5 @@
 use std::f64::consts::PI;
-use std::ops::{Add, AddAssign, Rem, RemAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Rem, RemAssign, Sub, SubAssign};
 
 use piston_window::Size;
 use rand;

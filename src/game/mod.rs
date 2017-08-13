@@ -9,10 +9,10 @@
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, clear, Context, Input, Key, PistonWindow, Size, text, Transformed,
+use piston_window::{clear, text, Button, Context, Input, Key, PistonWindow, Size, Transformed,
                     UpdateArgs};
 
-use self::models::{asteroid, bullet, Collidable, Drawable, player, Updateable};
+use self::models::{asteroid, bullet, player, Collidable, Drawable, Updateable};
 use menu::Sound;
 
 pub mod color;
@@ -67,37 +67,64 @@ impl Game {
                     self.update(args);
                 }
 
-                Input::Press(Button::Keyboard(key)) => {
-                    match key {
-                        Key::D => self.player.actions.rotate_cw = true,
-                        Key::A => self.player.actions.rotate_ccw = true,
-                        Key::S => self.player.actions.fire_rev_boosters = true,
-                        Key::W => self.player.actions.fire_boosters = true,
-                        Key::Space => self.player.actions.is_shooting = true,
-                        Key::X => {
-                            music::play_sound(&Sound::MenuBack, music::Repeat::Times(0));
-                            break;
-                        }
-                        _ => {}
+                Input::Press(Button::Keyboard(key)) => match key {
+                    Key::D => self.player.actions.rotate_cw = true,
+                    Key::A => self.player.actions.rotate_ccw = true,
+                    Key::S => self.player.actions.fire_rev_boosters = true,
+                    Key::W => self.player.actions.fire_boosters = true,
+                    Key::Space => self.player.actions.is_shooting = true,
+                    Key::X => {
+                        music::play_sound(&Sound::MenuBack, music::Repeat::Times(0));
+                        break;
                     }
-                }
+                    _ => {}
+                },
 
-                Input::Release(Button::Keyboard(key)) => {
-                    match key {
-                        Key::D => self.player.actions.rotate_cw = false,
-                        Key::A => self.player.actions.rotate_ccw = false,
-                        Key::S => self.player.actions.fire_rev_boosters = false,
-                        Key::W => self.player.actions.fire_boosters = false,
-                        Key::Space => self.player.actions.is_shooting = false,
-                        _ => {}
-                    }
-                }
+                Input::Release(Button::Keyboard(key)) => match key {
+                    Key::D => self.player.actions.rotate_cw = false,
+                    Key::A => self.player.actions.rotate_ccw = false,
+                    Key::S => self.player.actions.fire_rev_boosters = false,
+                    Key::W => self.player.actions.fire_boosters = false,
+                    Key::Space => self.player.actions.is_shooting = false,
+                    _ => {}
+                },
 
                 _ => {}
             }
 
             if self.game_over {
                 break;
+            }
+        }
+
+        //Game over screen logic
+        //Clear and draw once, then listen for events
+
+        while let Some(event) = window.next() {
+            match event {
+                Input::Press(Button::Keyboard(key)) => match key {
+                    _ => {
+                        break;
+                    }
+                },
+                Input::Render(args) => {
+                    opengl.draw(args.viewport(), |context, graphics| {
+                        clear(color::BLACK, graphics);
+                        text(
+                            color::WHITE,
+                            50,
+                            format!("Score: {}", self.score).as_str(),
+                            glyph_cache,
+                            context.transform.trans(
+                                (self.window_size.width / 2) as f64,
+                                (self.window_size.height / 2) as f64,
+                            ),
+                            graphics,
+                        );
+                    });
+
+                }
+                _ => {}
             }
         }
     }
