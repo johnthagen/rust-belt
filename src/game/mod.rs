@@ -96,6 +96,37 @@ impl Game {
                 break;
             }
         }
+
+        //Game over screen logic
+        //Clear and draw once, then listen for events
+
+        while let Some(event) = window.next() {
+            match event {
+                Input::Press(Button::Keyboard(key)) => match key {
+                    _ => {
+                        break;
+                    }
+                },
+                Input::Render(args) => {
+                    opengl.draw(args.viewport(), |context, graphics| {
+                        clear(color::BLACK, graphics);
+                        text(
+                            color::WHITE,
+                            50,
+                            format!("Score: {}", self.score).as_str(),
+                            glyph_cache,
+                            context.transform.trans(
+                                (self.window_size.width / 2) as f64,
+                                (self.window_size.height / 2) as f64,
+                            ),
+                            graphics,
+                        );
+                    });
+
+                }
+                _ => {}
+            }
+        }
     }
 
     /// Draws all current live objects onto the screen as well as the current score.
