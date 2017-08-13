@@ -3,7 +3,7 @@
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, clear, Context, Input, Key, PistonWindow, text, Transformed, types};
+use piston_window::{clear, text, types, Button, Context, Input, Key, PistonWindow, Transformed};
 
 use game::color::{self, ColoredText};
 use menu::Sound;
@@ -139,12 +139,10 @@ pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, glyph_cache: &mut
                 });
             }
 
-            Input::Press(Button::Keyboard(key)) => {
-                if key == Key::Space {
-                    music::play_sound(&Sound::MenuBack, music::Repeat::Times(0));
-                    break;
-                }
-            }
+            Input::Press(Button::Keyboard(key)) => if key == Key::Space {
+                music::play_sound(&Sound::MenuBack, music::Repeat::Times(0));
+                break;
+            },
 
             _ => {}
         }
