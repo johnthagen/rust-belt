@@ -260,7 +260,7 @@ impl Updateable for Asteroid {
         // have to worry about 'losing' one forever off-screen.
         if self.on_screen {
 
-            // This verison of the logic uses modulus.
+            // This version of the logic uses modulus.
             self.pos += self.vel + self.window_size.into();
             self.pos %= self.window_size.into();
         } else {
