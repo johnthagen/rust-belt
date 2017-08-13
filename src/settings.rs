@@ -3,7 +3,7 @@
 use music;
 use opengl_graphics::GlGraphics;
 use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{Button, Context, clear, Input, Key, PistonWindow, text, Transformed};
+use piston_window::{clear, text, Button, Context, Input, Key, PistonWindow, Transformed};
 
 use game::color;
 use menu::Sound;
