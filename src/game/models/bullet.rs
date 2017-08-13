@@ -6,7 +6,7 @@
 //! other models.
 
 use opengl_graphics::GlGraphics;
-use piston_window::{Context, ellipse, Size, Transformed, types, UpdateArgs};
+use piston_window::{ellipse, types, Context, Size, Transformed, UpdateArgs};
 
 use game::color;
 use game::models::{Collidable, Drawable, Positioned, Updateable};
