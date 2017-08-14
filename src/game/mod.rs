@@ -93,17 +93,25 @@ impl Game {
             }
 
             if self.game_over {
+                self.draw_game_over(window, opengl, glyph_cache);
                 break;
             }
         }
+    }
 
-        // Game over screen logic.
+    /// Game over screen logic.
+    fn draw_game_over(
+        &self,
+        window: &mut PistonWindow,
+        opengl: &mut GlGraphics,
+        glyph_cache: &mut GlyphCache,
+    ) {
         // Clear and draw once, then listen for events.
         while let Some(event) = window.next() {
             match event {
-                Input::Press(Button::Keyboard) =>  {
-                        break;
-                },
+                Input::Press(Button::Keyboard(_)) => {
+                    break;
+                }
                 Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
                         clear(color::BLACK, graphics);
