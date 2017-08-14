@@ -97,9 +97,8 @@ impl Game {
             }
         }
 
-        //Game over screen logic
-        //Clear and draw once, then listen for events
-
+        // Game over screen logic.
+        // Clear and draw once, then listen for events
         while let Some(event) = window.next() {
             match event {
                 Input::Press(Button::Keyboard(key)) => match key {
@@ -122,7 +121,6 @@ impl Game {
                             graphics,
                         );
                     });
-
                 }
                 _ => {}
             }
