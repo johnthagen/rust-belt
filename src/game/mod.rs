@@ -98,13 +98,11 @@ impl Game {
         }
 
         // Game over screen logic.
-        // Clear and draw once, then listen for events
+        // Clear and draw once, then listen for events.
         while let Some(event) = window.next() {
             match event {
-                Input::Press(Button::Keyboard(key)) => match key {
-                    _ => {
+                Input::Press(Button::Keyboard) =>  {
                         break;
-                    }
                 },
                 Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
