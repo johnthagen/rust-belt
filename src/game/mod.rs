@@ -107,10 +107,19 @@ impl Game {
         glyph_cache: &mut GlyphCache,
     ) {
         // Clear and draw once, then listen for events.
+        // Wait for the player to have pressed and release a key before
+        // continuing in case they were holding a button down during
+        // game over.
+        let mut has_pressed = false;
         while let Some(event) = window.next() {
             match event {
                 Input::Press(Button::Keyboard(_)) => {
-                    break;
+                    has_pressed = true;
+                }
+                Input::Release(Button::Keyboard(_)) => {
+                    if has_pressed {
+                        break;
+                    }
                 }
                 Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
