@@ -93,6 +93,7 @@ impl Game {
             }
 
             if self.game_over {
+                self.draw_game_over(window, opengl, glyph_cache);
                 break;
             }
         }
@@ -123,6 +124,49 @@ impl Game {
                         );
                     });
 
+                }
+                _ => {}
+            }
+        }
+    }
+
+    /// Game over screen logic.
+    fn draw_game_over(
+        &self,
+        window: &mut PistonWindow,
+        opengl: &mut GlGraphics,
+        glyph_cache: &mut GlyphCache,
+    ) {
+        // Clear and draw once, then listen for events.
+        // Wait for the player to have pressed and release a key before
+        // continuing in case they were holding a button down during
+        // game over.
+        let mut has_pressed = false;
+        while let Some(event) = window.next() {
+            match event {
+                Input::Press(Button::Keyboard(_)) => {
+                    has_pressed = true;
+                }
+                Input::Release(Button::Keyboard(_)) => {
+                    if has_pressed {
+                        break;
+                    }
+                }
+                Input::Render(args) => {
+                    opengl.draw(args.viewport(), |context, graphics| {
+                        clear(color::BLACK, graphics);
+                        text(
+                            color::WHITE,
+                            50,
+                            format!("Score: {}", self.score).as_str(),
+                            glyph_cache,
+                            context.transform.trans(
+                                (self.window_size.width / 2 - 120) as f64,
+                                (self.window_size.height / 2 - 120) as f64,
+                            ),
+                            graphics,
+                        );
+                    });
                 }
                 _ => {}
             }
