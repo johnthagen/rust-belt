@@ -97,37 +97,6 @@ impl Game {
                 break;
             }
         }
-
-        //Game over screen logic
-        //Clear and draw once, then listen for events
-
-        while let Some(event) = window.next() {
-            match event {
-                Input::Press(Button::Keyboard(key)) => match key {
-                    _ => {
-                        break;
-                    }
-                },
-                Input::Render(args) => {
-                    opengl.draw(args.viewport(), |context, graphics| {
-                        clear(color::BLACK, graphics);
-                        text(
-                            color::WHITE,
-                            50,
-                            format!("Score: {}", self.score).as_str(),
-                            glyph_cache,
-                            context.transform.trans(
-                                (self.window_size.width / 2) as f64,
-                                (self.window_size.height / 2) as f64,
-                            ),
-                            graphics,
-                        );
-                    });
-
-                }
-                _ => {}
-            }
-        }
     }
 
     /// Game over screen logic.
@@ -142,16 +111,18 @@ impl Game {
         // continuing in case they were holding a button down during
         // game over.
         let mut has_pressed = false;
+        let mut has_released = false;
         while let Some(event) = window.next() {
             match event {
                 Input::Press(Button::Keyboard(_)) => {
-                    has_pressed = true;
-                }
-                Input::Release(Button::Keyboard(_)) => {
-                    if has_pressed {
+                    if has_released {
                         break;
                     }
+                    has_pressed = true;
                 }
+                Input::Release(Button::Keyboard(_)) => if has_pressed {
+                    has_released = true;
+                },
                 Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
                         clear(color::BLACK, graphics);
@@ -162,7 +133,7 @@ impl Game {
                             glyph_cache,
                             context.transform.trans(
                                 (self.window_size.width / 2 - 120) as f64,
-                                (self.window_size.height / 2 - 120) as f64,
+                                (self.window_size.height / 2 - 60) as f64,
                             ),
                             graphics,
                         );
