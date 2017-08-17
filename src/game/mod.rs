@@ -106,7 +106,6 @@ impl Game {
         opengl: &mut GlGraphics,
         glyph_cache: &mut GlyphCache,
     ) {
-        // Clear and draw once, then listen for events.
         // Wait for the player to have pressed and release a key before
         // continuing in case they were holding a button down during
         // game over.
