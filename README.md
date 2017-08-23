@@ -110,7 +110,6 @@ Keyboard         | Menu        | Game
 
 # Maintainers
 * [@johnthagen](https://github.com/johnthagen)
-* [@theandrewdavis](https://github.com/theandrewdavis)
 * [@mcdenhoed](https://github.com/mcdenhoed)
 
 Special thanks to [@aochagavia](https://github.com/aochagavia) for 
