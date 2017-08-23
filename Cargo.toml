@@ -10,5 +10,5 @@ authors = [
 [dependencies]
 piston_window = "0.69.1"
 piston2d-opengl_graphics = "0.46.0"
-piston-music = "0.21.0"
+piston-music = "0.23.0"
 rand = "0.3.15"

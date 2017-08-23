@@ -13,7 +13,7 @@ use piston_window::{clear, text, Button, Context, Input, Key, PistonWindow, Size
                     UpdateArgs};
 
 use self::models::{asteroid, bullet, player, Collidable, Drawable, Updateable};
-use menu::Sound;
+use menu::{Sound, Volume};
 
 pub mod color;
 mod models;
@@ -33,10 +33,11 @@ pub struct Game {
 
     /// A flag indicating if the player has lost.
     game_over: bool,
+    volume: Volume,
 }
 
 impl Game {
-    pub fn new(window_size: Size) -> Self {
+    pub fn new(window_size: Size, volume: Volume) -> Self {
         Game {
             player: player::Player::new(window_size),
             bullets: Vec::new(),
@@ -46,6 +47,7 @@ impl Game {
             asteroid_timer: 0.1,
             asteroid_timer_max: 4.0,
             game_over: false,
+            volume: volume,
         }
     }
 
@@ -54,6 +56,7 @@ impl Game {
         window: &mut PistonWindow,
         opengl: &mut GlGraphics,
         glyph_cache: &mut GlyphCache,
+        volume: Volume,
     ) {
         while let Some(event) = window.next() {
             match event {
@@ -74,7 +77,7 @@ impl Game {
                     Key::W => self.player.actions.fire_boosters = true,
                     Key::Space => self.player.actions.is_shooting = true,
                     Key::X => {
-                        music::play_sound(&Sound::MenuBack, music::Repeat::Times(0));
+                        music::play_sound(&Sound::MenuBack, music::Repeat::Times(0), volume.sound);
                         break;
                     }
                     _ => {}
@@ -124,7 +127,11 @@ impl Updateable for Game {
     fn update(&mut self, args: UpdateArgs) {
         self.player.update(args);
         if self.player.should_shoot() {
-            music::play_sound(&Sound::WeaponShoot, music::Repeat::Times(0));
+            music::play_sound(
+                &Sound::WeaponShoot,
+                music::Repeat::Times(0),
+                self.volume.sound,
+            );
             self.bullets.push(bullet::Bullet::new(
                 self.player.pos,
                 self.player.vel,
@@ -150,6 +157,7 @@ impl Updateable for Game {
             let asteroids = &mut self.asteroids;
             let player = &mut self.player;
             let score = &mut self.score;
+            let volume = self.volume;
 
             bullets.retain(|bullet| {
                 // Remove the first asteroid that collides with a bullet, if any.
@@ -163,7 +171,11 @@ impl Updateable for Game {
                     }
                     asteroids.remove(index);
                     *score += 10;
-                    music::play_sound(&Sound::AsteroidExplosion, music::Repeat::Times(0));
+                    music::play_sound(
+                        &Sound::AsteroidExplosion,
+                        music::Repeat::Times(0),
+                        volume.sound,
+                    );
                     return false;
                 }
                 true
