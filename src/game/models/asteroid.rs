@@ -48,7 +48,7 @@ pub struct Asteroid {
 fn generate_circle(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
     let angular_segment = PI_MULT_2 / num_segments as f64;
     let mut circle = vec![[0.0; 2]; num_segments];
-    for (index, mut vertex) in circle.iter_mut().enumerate() {
+    for (index, vertex) in circle.iter_mut().enumerate() {
         let index_float = index as f64;
         vertex[0] = radius * (index_float * angular_segment).cos();
         vertex[1] = radius * (index_float * angular_segment).sin();
@@ -66,8 +66,7 @@ fn generate_circle(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
 ///   doing a real center-of-mass calculation, but this looks pretty good.
 fn randomize_shape(mut shape: Vec<[f64; 2]>, max: f64) -> Vec<[f64; 2]> {
     let mut average = Vector::default();
-    for mut vertex in &mut shape {
-
+    for vertex in &mut shape {
         // Here we create a pair of random values and add them to a vertex.
         let rand_vect = Vector::new_rand(0.0, 0.0, max, max);
         vertex[0] += rand_vect.x;
@@ -80,7 +79,7 @@ fn randomize_shape(mut shape: Vec<[f64; 2]>, max: f64) -> Vec<[f64; 2]> {
     // into an average of each coordinate. This isn't a real center-of-mass calculation,
     // but it's good enough for this purpose (because we aren't mutating *that* far from a circle)
     average /= shape.len() as f64;
-    for mut vertex in &mut shape {
+    for vertex in &mut shape {
         vertex[0] -= average.x;
         vertex[1] -= average.y;
     }
@@ -98,7 +97,7 @@ fn generate_jagged_shape(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
     randomize_shape(new_shape, max_mut)
 }
 
-fn center_mass(mut shape: &mut Vec<[f64; 2]>) -> Vector {
+fn center_mass(shape: &mut Vec<[f64; 2]>) -> Vector {
     let mut average = Vector::default();
     for vertex in &mut shape.iter() {
         // Here, we are adding the new vertex location into what will be our average location.
@@ -108,7 +107,7 @@ fn center_mass(mut shape: &mut Vec<[f64; 2]>) -> Vector {
     // into an average of each coordinate. This isn't a real center-of-mass calculation,
     // but it's good enough for this purpose (because we aren't mutating *that* far from a circle)
     average /= shape.len() as f64;
-    for mut vertex in &mut shape.iter_mut() {
+    for vertex in &mut shape.iter_mut() {
         vertex[0] -= average.x;
         vertex[1] -= average.y;
     }
@@ -126,7 +125,6 @@ fn calculate_radius(shape: &[[f64; 2]]) -> f64 {
 
 impl Asteroid {
     pub fn new(window_size: Size) -> Self {
-
         // First, we generate a random radius, within the specified range, for the new asteroid.
         let asteroid_radius = RADIUS_MIN + rand::random::<f64>() * (RADIUS_MAX - RADIUS_MIN);
 
@@ -251,7 +249,6 @@ impl Asteroid {
 impl Updateable for Asteroid {
     #[allow(unused_variables)]
     fn update(&mut self, args: UpdateArgs) {
-
         // If the on-screen flag is true, then the update logic
         // works like every other model. If not, then we don't
         // apply the modulus operation, allowing our asteroid to fly
@@ -259,7 +256,6 @@ impl Updateable for Asteroid {
         // that each asteroid gets on-screen at some point, we don't
         // have to worry about 'losing' one forever off-screen.
         if self.on_screen {
-
             // This version of the logic uses modulus.
             self.pos += self.vel + self.window_size.into();
             self.pos %= self.window_size.into();
@@ -284,7 +280,6 @@ impl Updateable for Asteroid {
 
 impl Drawable for Asteroid {
     fn draw(&self, context: Context, graphics: &mut GlGraphics) {
-
         // This polygon is the "main" asteroid shape within the frame. It is
         // drawn at the location specified in `pos`. The Vec<[f64; 2]> type,
         // being a list of lists of length 2, is an acceptable "shape" for
@@ -317,7 +312,6 @@ impl Drawable for Asteroid {
                         .rot_rad(self.rot),
                     graphics,
                 )
-
             } else if self.pos.x < self.radius {
                 polygon(
                     color::WHITE,
@@ -339,7 +333,6 @@ impl Drawable for Asteroid {
                         .rot_rad(self.rot),
                     graphics,
                 )
-
             } else if self.pos.y < self.radius {
                 polygon(
                     color::WHITE,
@@ -350,7 +343,6 @@ impl Drawable for Asteroid {
                         .rot_rad(self.rot),
                     graphics,
                 )
-
             }
         }
     }

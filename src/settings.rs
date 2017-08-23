@@ -50,7 +50,6 @@ pub fn run(
     left_alignment: f64,
 ) {
     while let Some(event) = window.next() {
-
         match event {
             Input::Render(args) => {
                 opengl.draw(args.viewport(), |context, graphics| {
