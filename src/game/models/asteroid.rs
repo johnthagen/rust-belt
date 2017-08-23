@@ -48,7 +48,7 @@ pub struct Asteroid {
 fn generate_circle(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
     let angular_segment = PI_MULT_2 / num_segments as f64;
     let mut circle = vec![[0.0; 2]; num_segments];
-    for (index, mut vertex) in circle.iter_mut().enumerate() {
+    for (index, vertex) in circle.iter_mut().enumerate() {
         let index_float = index as f64;
         vertex[0] = radius * (index_float * angular_segment).cos();
         vertex[1] = radius * (index_float * angular_segment).sin();
@@ -66,7 +66,7 @@ fn generate_circle(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
 ///   doing a real center-of-mass calculation, but this looks pretty good.
 fn randomize_shape(mut shape: Vec<[f64; 2]>, max: f64) -> Vec<[f64; 2]> {
     let mut average = Vector::default();
-    for mut vertex in &mut shape {
+    for vertex in &mut shape {
         // Here we create a pair of random values and add them to a vertex.
         let rand_vect = Vector::new_rand(0.0, 0.0, max, max);
         vertex[0] += rand_vect.x;
@@ -79,7 +79,7 @@ fn randomize_shape(mut shape: Vec<[f64; 2]>, max: f64) -> Vec<[f64; 2]> {
     // into an average of each coordinate. This isn't a real center-of-mass calculation,
     // but it's good enough for this purpose (because we aren't mutating *that* far from a circle)
     average /= shape.len() as f64;
-    for mut vertex in &mut shape {
+    for vertex in &mut shape {
         vertex[0] -= average.x;
         vertex[1] -= average.y;
     }
@@ -97,7 +97,7 @@ fn generate_jagged_shape(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
     randomize_shape(new_shape, max_mut)
 }
 
-fn center_mass(mut shape: &mut Vec<[f64; 2]>) -> Vector {
+fn center_mass(shape: &mut Vec<[f64; 2]>) -> Vector {
     let mut average = Vector::default();
     for vertex in &mut shape.iter() {
         // Here, we are adding the new vertex location into what will be our average location.
@@ -107,7 +107,7 @@ fn center_mass(mut shape: &mut Vec<[f64; 2]>) -> Vector {
     // into an average of each coordinate. This isn't a real center-of-mass calculation,
     // but it's good enough for this purpose (because we aren't mutating *that* far from a circle)
     average /= shape.len() as f64;
-    for mut vertex in &mut shape.iter_mut() {
+    for vertex in &mut shape.iter_mut() {
         vertex[0] -= average.x;
         vertex[1] -= average.y;
     }
