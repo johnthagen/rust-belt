@@ -136,7 +136,7 @@ impl Game {
                             ),
                             graphics,
                         );
-                        let offset = (self.score.to_string().len()*5) as u32;
+                        let offset = (self.score.to_string().len() * 5) as u32;
                         text(
                             color::WHITE,
                             50,
