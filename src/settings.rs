@@ -6,7 +6,7 @@ use opengl_graphics::glyph_cache::GlyphCache;
 use piston_window::{clear, text, Button, Context, Input, Key, PistonWindow, Transformed};
 
 use game::color;
-use menu::Sound;
+use menu::{Sound, Volume};
 
 fn draw(
     context: Context,
@@ -46,14 +46,14 @@ pub fn run(
     window: &mut PistonWindow,
     opengl: &mut GlGraphics,
     glyph_cache: &mut GlyphCache,
-    volume: &mut f64,
+    volume: &mut Volume,
     left_alignment: f64,
 ) {
     while let Some(event) = window.next() {
         match event {
             Input::Render(args) => {
                 opengl.draw(args.viewport(), |context, graphics| {
-                    draw(context, graphics, glyph_cache, *volume, left_alignment)
+                    draw(context, graphics, glyph_cache, volume.music, left_alignment)
                 });
             }
 
@@ -64,11 +64,11 @@ pub fn run(
                 match key {
                     Key::D => {
                         music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0));
-                        *volume += volume_step
+                        volume.music += volume_step
                     }
                     Key::A => {
                         music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0));
-                        *volume -= volume_step
+                        volume.music -= volume_step
                     }
                     Key::Space => {
                         music::play_sound(&Sound::MenuBack, music::Repeat::Times(0));
@@ -77,8 +77,8 @@ pub fn run(
                     _ => {}
                 }
 
-                *volume = volume.max(music::MIN_VOLUME).min(music::MAX_VOLUME);
-                music::set_volume(*volume);
+                volume.music = volume.music.max(music::MIN_VOLUME).min(music::MAX_VOLUME);
+                music::set_volume(volume.music);
             }
 
             _ => {}

@@ -32,6 +32,21 @@ pub enum Sound {
     AsteroidExplosion,
 }
 
+/// Volume for music and sound effects.
+pub struct Volume {
+    pub music: f64,
+    pub sound: f64,
+}
+
+impl Volume {
+    pub fn new() -> Self {
+        Volume {
+            music: music::MAX_VOLUME,
+            sound: music::MAX_VOLUME,
+        }
+    }
+}
+
 /// Binds sound and music files to enums to be used with piston-music.
 fn bind_sound_files() {
     music::bind_music_file(Music::Menu, "./assets/The Last Ranger.mp3");
@@ -146,8 +161,8 @@ pub fn run(
             GlyphCache::new("./assets/FiraSans-Regular.ttf", TextureSettings::new()).unwrap();
 
         let mut menu_selection = MenuSelection::Play;
-        let mut volume = music::MAX_VOLUME;
-        music::set_volume(volume);
+        let mut volume = Volume::new();
+        music::set_volume(volume.music);
 
         let menu_align = (window_size.width / 2 - 120) as f64;
         while let Some(event) = window.next() {
