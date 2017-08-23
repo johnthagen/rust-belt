@@ -185,8 +185,11 @@ pub fn run(
                             match menu_selection {
                                 MenuSelection::Play => {
                                     music::play_music(&Music::Action, music::Repeat::Forever);
-                                    game::Game::new(window_size)
-                                        .run(&mut window, &mut opengl, &mut glyph_cache);
+                                    game::Game::new(window_size).run(
+                                        &mut window,
+                                        &mut opengl,
+                                        &mut glyph_cache,
+                                    );
                                     music::play_music(&Music::Menu, music::Repeat::Forever);
                                 }
                                 MenuSelection::Story => {

@@ -67,7 +67,6 @@ fn generate_circle(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
 fn randomize_shape(mut shape: Vec<[f64; 2]>, max: f64) -> Vec<[f64; 2]> {
     let mut average = Vector::default();
     for mut vertex in &mut shape {
-
         // Here we create a pair of random values and add them to a vertex.
         let rand_vect = Vector::new_rand(0.0, 0.0, max, max);
         vertex[0] += rand_vect.x;
@@ -126,7 +125,6 @@ fn calculate_radius(shape: &[[f64; 2]]) -> f64 {
 
 impl Asteroid {
     pub fn new(window_size: Size) -> Self {
-
         // First, we generate a random radius, within the specified range, for the new asteroid.
         let asteroid_radius = RADIUS_MIN + rand::random::<f64>() * (RADIUS_MAX - RADIUS_MIN);
 
@@ -251,7 +249,6 @@ impl Asteroid {
 impl Updateable for Asteroid {
     #[allow(unused_variables)]
     fn update(&mut self, args: UpdateArgs) {
-
         // If the on-screen flag is true, then the update logic
         // works like every other model. If not, then we don't
         // apply the modulus operation, allowing our asteroid to fly
@@ -259,7 +256,6 @@ impl Updateable for Asteroid {
         // that each asteroid gets on-screen at some point, we don't
         // have to worry about 'losing' one forever off-screen.
         if self.on_screen {
-
             // This version of the logic uses modulus.
             self.pos += self.vel + self.window_size.into();
             self.pos %= self.window_size.into();
@@ -284,7 +280,6 @@ impl Updateable for Asteroid {
 
 impl Drawable for Asteroid {
     fn draw(&self, context: Context, graphics: &mut GlGraphics) {
-
         // This polygon is the "main" asteroid shape within the frame. It is
         // drawn at the location specified in `pos`. The Vec<[f64; 2]> type,
         // being a list of lists of length 2, is an acceptable "shape" for
@@ -317,7 +312,6 @@ impl Drawable for Asteroid {
                         .rot_rad(self.rot),
                     graphics,
                 )
-
             } else if self.pos.x < self.radius {
                 polygon(
                     color::WHITE,
@@ -339,7 +333,6 @@ impl Drawable for Asteroid {
                         .rot_rad(self.rot),
                     graphics,
                 )
-
             } else if self.pos.y < self.radius {
                 polygon(
                     color::WHITE,
@@ -350,7 +343,6 @@ impl Drawable for Asteroid {
                         .rot_rad(self.rot),
                     graphics,
                 )
-
             }
         }
     }
