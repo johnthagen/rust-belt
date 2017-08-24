@@ -2,7 +2,7 @@
 name = "rust-belt"
 version = "1.1.0"
 dependencies = [
- "piston-music 0.21.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "piston-music 0.23.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston2d-opengl_graphics 0.46.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston_window 0.69.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -587,7 +587,7 @@ dependencies = [
 
 [[package]]
 name = "piston-music"
-version = "0.21.0"
+version = "0.23.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "current 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1101,7 +1101,7 @@ dependencies = [
 "checksum piston 0.32.0 (registry+https://github.com/rust-lang/crates.io-index)" = "4cfb20c4c0b1ed19bbc7f330221cfb519ca905ff5fac8e2c7c38ff94b4b9aed2"
 "checksum piston-float 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "b058c3a640efd4bcf63266512e4bb03187192c1b29edd38b16d5a014613e3199"
 "checksum piston-gfx_texture 0.26.0 (registry+https://github.com/rust-lang/crates.io-index)" = "db06eaaa8dc14cd947e62461dc72a78072b45034f43dc74d7538125430be13ff"
-"checksum piston-music 0.21.0 (registry+https://github.com/rust-lang/crates.io-index)" = "0da2f667ceb93f82862edaf403e2f76336ea9ab7999d443093f5d5b11c0dcd3a"
+"checksum piston-music 0.23.0 (registry+https://github.com/rust-lang/crates.io-index)" = "cd26774cd140576db6d7645470c7d208951192c75c6a6b5fccdcb62fc54cc659"
 "checksum piston-shaders_graphics2d 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "97bc17dac1dfff3e5cb84116062c7b46ff9d3dc0d88696a46d2f054cf64a10b6"
 "checksum piston-texture 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ca39d71646f3b878dd4b0f9758f38d09658b2efd08dbdd9abf9f17000f1b9832"
 "checksum piston-viewport 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "9c5548a838fd9dc604c96d886c03c303f043a2d85f88719cca59dc7991d86343"

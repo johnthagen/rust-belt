@@ -32,6 +32,22 @@ pub enum Sound {
     AsteroidExplosion,
 }
 
+/// Volume for music and sound effects.
+#[derive(Copy, Clone)]
+pub struct Volume {
+    pub music: f64,
+    pub sound: f64,
+}
+
+impl Volume {
+    pub fn new() -> Self {
+        Volume {
+            music: music::MAX_VOLUME,
+            sound: music::MAX_VOLUME,
+        }
+    }
+}
+
 /// Binds sound and music files to enums to be used with piston-music.
 fn bind_sound_files() {
     music::bind_music_file(Music::Menu, "./assets/The Last Ranger.mp3");
@@ -136,7 +152,7 @@ pub fn run(
     game_title: &str,
     window_size: Size,
 ) {
-    music::start::<Music, Sound, _>(|| {
+    music::start::<Music, Sound, _>(32, || {
         bind_sound_files();
         music::play_music(&Music::Menu, music::Repeat::Forever);
 
@@ -146,8 +162,9 @@ pub fn run(
             GlyphCache::new("./assets/FiraSans-Regular.ttf", TextureSettings::new()).unwrap();
 
         let mut menu_selection = MenuSelection::Play;
-        let mut volume = music::MAX_VOLUME;
-        music::set_volume(volume);
+        let mut volume = Volume::new();
+        volume.sound = 0.50;
+        music::set_volume(volume.music);
 
         let menu_align = (window_size.width / 2 - 120) as f64;
         while let Some(event) = window.next() {
@@ -166,7 +183,7 @@ pub fn run(
                 }
 
                 Input::Press(Button::Keyboard(key)) => {
-                    music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0));
+                    music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0), volume.sound);
                     match key {
                         Key::W => match menu_selection {
                             MenuSelection::Play => {}
@@ -181,19 +198,24 @@ pub fn run(
                             MenuSelection::Exit => {}
                         },
                         Key::Space => {
-                            music::play_sound(&Sound::MenuValidate, music::Repeat::Times(0));
+                            music::play_sound(
+                                &Sound::MenuValidate,
+                                music::Repeat::Times(0),
+                                volume.sound,
+                            );
                             match menu_selection {
                                 MenuSelection::Play => {
                                     music::play_music(&Music::Action, music::Repeat::Forever);
-                                    game::Game::new(window_size).run(
+                                    game::Game::new(window_size, volume).run(
                                         &mut window,
                                         &mut opengl,
                                         &mut glyph_cache,
+                                        volume,
                                     );
                                     music::play_music(&Music::Menu, music::Repeat::Forever);
                                 }
                                 MenuSelection::Story => {
-                                    story::run(&mut window, &mut opengl, &mut glyph_cache);
+                                    story::run(&mut window, &mut opengl, &mut glyph_cache, volume);
                                 }
                                 MenuSelection::Settings => {
                                     settings::run(
