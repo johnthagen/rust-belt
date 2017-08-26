@@ -20,6 +20,9 @@ enum Music {
 
     /// Action soundtrack while playing the actual game.
     Action,
+
+    /// Game over soundtrack.
+    GameOver,
 }
 
 /// Sound effects.
@@ -52,6 +55,7 @@ impl Volume {
 fn bind_sound_files() {
     music::bind_music_file(Music::Menu, "./assets/The Last Ranger.mp3");
     music::bind_music_file(Music::Action, "./assets/Into the Field.mp3");
+    music::bind_music_file(Music::GameOver, "./assets/Splintered Glass.mp3");
 
     music::bind_sound_file(Sound::MenuSelection, "./assets/menu-select.wav");
     music::bind_sound_file(Sound::MenuBack, "./assets/menu-back.wav");
@@ -206,12 +210,17 @@ pub fn run(
                             match menu_selection {
                                 MenuSelection::Play => {
                                     music::play_music(&Music::Action, music::Repeat::Forever);
-                                    game::Game::new(window_size, volume).run(
-                                        &mut window,
-                                        &mut opengl,
-                                        &mut glyph_cache,
-                                        volume,
-                                    );
+                                    let mut game = game::Game::new(window_size, volume);
+                                    game.run(&mut window, &mut opengl, &mut glyph_cache);
+
+                                    if game.game_over() {
+                                        music::play_music(&Music::GameOver, music::Repeat::Forever);
+                                        game.run_game_over(
+                                            &mut window,
+                                            &mut opengl,
+                                            &mut glyph_cache,
+                                        );
+                                    }
                                     music::play_music(&Music::Menu, music::Repeat::Forever);
                                 }
                                 MenuSelection::Story => {

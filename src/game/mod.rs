@@ -32,6 +32,7 @@ pub struct Game {
     asteroid_timer_max: f64,
 
     /// A flag indicating if the player has lost.
+    /// This should not be set if the player simply quits.
     game_over: bool,
     volume: Volume,
 }
@@ -51,12 +52,15 @@ impl Game {
         }
     }
 
+    pub fn game_over(&self) -> bool {
+        self.game_over
+    }
+
     pub fn run(
         &mut self,
         window: &mut PistonWindow,
         opengl: &mut GlGraphics,
         glyph_cache: &mut GlyphCache,
-        volume: Volume,
     ) {
         while let Some(event) = window.next() {
             match event {
@@ -77,7 +81,11 @@ impl Game {
                     Key::W => self.player.actions.fire_boosters = true,
                     Key::Space => self.player.actions.is_shooting = true,
                     Key::X => {
-                        music::play_sound(&Sound::MenuBack, music::Repeat::Times(0), volume.sound);
+                        music::play_sound(
+                            &Sound::MenuBack,
+                            music::Repeat::Times(0),
+                            self.volume.sound,
+                        );
                         break;
                     }
                     _ => {}
@@ -96,14 +104,13 @@ impl Game {
             }
 
             if self.game_over {
-                self.draw_game_over(window, opengl, glyph_cache);
                 break;
             }
         }
     }
 
     /// Game over screen logic.
-    fn draw_game_over(
+    pub fn run_game_over(
         &self,
         window: &mut PistonWindow,
         opengl: &mut GlGraphics,
