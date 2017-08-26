@@ -11,4 +11,6 @@ authors = [
 piston_window = "0.69.1"
 piston2d-opengl_graphics = "0.46.0"
 piston-music = "0.23.0"
+piston2d-sprite = "0.36.0"
+piston-ai_behavior = "0.20.0"
 rand = "0.3.15"
