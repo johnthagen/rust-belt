@@ -7,7 +7,7 @@ use opengl_graphics::{GlGraphics, Texture};
 use opengl_graphics::glyph_cache::GlyphCache;
 use piston_window::{clear, text, Button, Context, Input, Key, PistonWindow, Size, TextureSettings,
                     Transformed};
-use sprite::{Ease, EaseFunction, FadeIn, FadeOut, Scene, Sprite};
+use sprite::{Ease, EaseFunction, FadeIn, Scene, Sprite};
 
 
 use game;
@@ -164,9 +164,9 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
             (window_size.height as f64 / 2.0) - 120.0,
         );
         sprite.set_scale(0.4, 0.4);
+        sprite.set_opacity(0.0);
         let id = scene.add_child(sprite);
         let fade = Sequence(vec![
-            Action(Ease(EaseFunction::QuadraticInOut, Box::new(FadeOut(0.0)))),
             Action(Ease(EaseFunction::QuadraticInOut, Box::new(FadeIn(3.0)))),
         ]);
         scene.run(id, &fade);
