@@ -143,25 +143,32 @@ fn draw(
     }
 }
 
+/// Create an animated fade in sprite of the game logo.
+fn create_logo_scene(window_size: Size) -> Scene<Texture> {
+    let mut scene = Scene::new();
+    let tex = Rc::new(Texture::from_path("./images/rust-belt-logo.jpg").unwrap());
+    let mut sprite = Sprite::from_texture(tex.clone());
+    sprite.set_position(
+        window_size.width as f64 / 2.0,
+        (window_size.height as f64 / 2.0) - 120.0,
+    );
+    sprite.set_scale(0.4, 0.4);
+    sprite.set_opacity(0.0);
+    let id = scene.add_child(sprite);
+    let fade = Sequence(vec![
+        Action(Ease(EaseFunction::QuadraticInOut, Box::new(FadeIn(3.0)))),
+    ]);
+    scene.run(id, &fade);
+
+    scene
+}
+
 /// Loops the menu screen, taking user input to change the current menu selection.
 pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_size: Size) {
     music::start::<Music, Sound, _>(32, || {
         bind_sound_files();
 
-        let mut scene = Scene::new();
-        let tex = Rc::new(Texture::from_path("./images/rust-belt-logo.jpg").unwrap());
-        let mut sprite = Sprite::from_texture(tex.clone());
-        sprite.set_position(
-            window_size.width as f64 / 2.0,
-            (window_size.height as f64 / 2.0) - 120.0,
-        );
-        sprite.set_scale(0.4, 0.4);
-        sprite.set_opacity(0.0);
-        let id = scene.add_child(sprite);
-        let fade = Sequence(vec![
-            Action(Ease(EaseFunction::QuadraticInOut, Box::new(FadeIn(3.0)))),
-        ]);
-        scene.run(id, &fade);
+        let mut logo_scene = create_logo_scene(window_size);
 
         // The glyphe cache is mutable because it loads each character on demand (lazily),
         // and thus must be able to be changed over time as new characters are requested.
@@ -180,7 +187,7 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
                 Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
                         clear(color::BLACK, graphics);
-                        scene.draw(context.transform, graphics);
+                        logo_scene.draw(context.transform, graphics);
                         draw(
                             context,
                             graphics,
@@ -191,7 +198,7 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
                     });
                 }
                 Input::Update(_) => {
-                    scene.event(&event);
+                    logo_scene.event(&event);
                 }
                 Input::Press(Button::Keyboard(key)) => {
                     music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0), volume.sound);
