@@ -147,15 +147,7 @@ fn draw(
 pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_size: Size) {
     music::start::<Music, Sound, _>(32, || {
         bind_sound_files();
-        music::play_music(&Music::Menu, music::Repeat::Forever);
 
-        // The glyphe cache is mutable because it loads each character on demand (lazily),
-        // and thus must be able to be changed over time as new characters are requested.
-        let mut glyph_cache =
-            GlyphCache::new("./assets/FiraSans-Regular.ttf", TextureSettings::new()).unwrap();
-
-        let mut menu_selection = MenuSelection::Play;
-        let mut volume = Volume::new();
         let mut scene = Scene::new();
         let tex = Rc::new(Texture::from_path("./images/rust-belt-logo.jpg").unwrap());
         let mut sprite = Sprite::from_texture(tex.clone());
@@ -170,9 +162,18 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
             Action(Ease(EaseFunction::QuadraticInOut, Box::new(FadeIn(3.0)))),
         ]);
         scene.run(id, &fade);
+
+        // The glyphe cache is mutable because it loads each character on demand (lazily),
+        // and thus must be able to be changed over time as new characters are requested.
+        let mut glyph_cache =
+            GlyphCache::new("./assets/FiraSans-Regular.ttf", TextureSettings::new()).unwrap();
+
+        let mut volume = Volume::new();
         volume.sound = 0.50;
         music::set_volume(volume.music);
+        music::play_music(&Music::Menu, music::Repeat::Forever);
 
+        let mut menu_selection = MenuSelection::Play;
         let menu_align = (window_size.width / 2 - 120) as f64;
         while let Some(event) = window.next() {
             match event {
