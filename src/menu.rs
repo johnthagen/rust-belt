@@ -93,6 +93,7 @@ fn draw(
     glyph_cache: &mut GlyphCache,
     menu_align: f64,
     menu_selection: MenuSelection,
+    logo_scene: &Scene<Texture>
 ) {
     let starting_line_offset = 340.0;
 
@@ -126,6 +127,8 @@ fn draw(
             text: "Exit",
         },
     ];
+    
+    logo_scene.draw(context.transform, graphics);
 
     for (index, line) in menu_lines.iter().enumerate() {
         let new_line_offset = 40.0;
@@ -146,7 +149,7 @@ fn draw(
 /// Create an animated fade in sprite of the game logo.
 fn create_logo_scene(window_size: Size) -> Scene<Texture> {
     let mut scene = Scene::new();
-    let tex = Rc::new(Texture::from_path("./images/rust-belt-logo.jpg").unwrap());
+    let tex = Rc::new(Texture::from_path("./assets/rust-belt-logo-transparent.png").unwrap());
     let mut sprite = Sprite::from_texture(tex.clone());
     sprite.set_position(
         window_size.width as f64 / 2.0,
@@ -187,13 +190,13 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
                 Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
                         clear(color::BLACK, graphics);
-                        logo_scene.draw(context.transform, graphics);
                         draw(
                             context,
                             graphics,
                             &mut glyph_cache,
                             menu_align,
                             menu_selection,
+                            &logo_scene
                         );
                     });
                 }
