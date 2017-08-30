@@ -2,8 +2,10 @@
 name = "rust-belt"
 version = "1.1.0"
 dependencies = [
+ "piston-ai_behavior 0.20.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston-music 0.23.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston2d-opengl_graphics 0.46.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "piston2d-sprite 0.36.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston_window 0.69.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -570,6 +572,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "piston-ai_behavior"
+version = "0.20.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "pistoncore-input 0.18.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.3.24 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "piston-float"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -652,6 +663,18 @@ dependencies = [
  "piston2d-graphics 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "rusttype 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "shader_version 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "piston2d-sprite"
+version = "0.36.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "interpolation 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "piston-ai_behavior 0.20.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "piston2d-graphics 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "pistoncore-input 0.18.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "uuid 0.1.18 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -916,6 +939,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "uuid"
+version = "0.1.18"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "rand 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.3.24 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "vecmath"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1099,6 +1131,7 @@ dependencies = [
 "checksum phf_generator 0.7.21 (registry+https://github.com/rust-lang/crates.io-index)" = "6b07ffcc532ccc85e3afc45865469bf5d9e4ef5bfcf9622e3cfe80c2d275ec03"
 "checksum phf_shared 0.7.21 (registry+https://github.com/rust-lang/crates.io-index)" = "07e24b0ca9643bdecd0632f2b3da6b1b89bbb0030e0b992afc1113b23a7bc2f2"
 "checksum piston 0.32.0 (registry+https://github.com/rust-lang/crates.io-index)" = "4cfb20c4c0b1ed19bbc7f330221cfb519ca905ff5fac8e2c7c38ff94b4b9aed2"
+"checksum piston-ai_behavior 0.20.0 (registry+https://github.com/rust-lang/crates.io-index)" = "2c8aa4020d0f253605eff99d7d7eaaa69bcd89d29012e762263152d5b1f5186a"
 "checksum piston-float 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "b058c3a640efd4bcf63266512e4bb03187192c1b29edd38b16d5a014613e3199"
 "checksum piston-gfx_texture 0.26.0 (registry+https://github.com/rust-lang/crates.io-index)" = "db06eaaa8dc14cd947e62461dc72a78072b45034f43dc74d7538125430be13ff"
 "checksum piston-music 0.23.0 (registry+https://github.com/rust-lang/crates.io-index)" = "cd26774cd140576db6d7645470c7d208951192c75c6a6b5fccdcb62fc54cc659"
@@ -1108,6 +1141,7 @@ dependencies = [
 "checksum piston2d-gfx_graphics 0.43.0 (registry+https://github.com/rust-lang/crates.io-index)" = "e32ece2cba5245e5dac6b219008b607804afc1aff22359198af8355fbda7fd3c"
 "checksum piston2d-graphics 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)" = "2d72cce9e129be5f50f5f26b69a064481664b6eccbdf643139563ea20485419f"
 "checksum piston2d-opengl_graphics 0.46.0 (registry+https://github.com/rust-lang/crates.io-index)" = "3d9550d96f5875020d9fe05f6404d3f1683bb17390f3fb0df2f72f1c33ede5dc"
+"checksum piston2d-sprite 0.36.0 (registry+https://github.com/rust-lang/crates.io-index)" = "e37db178ccefe9952da63d043c642e065e57ffe530fe3bc05c82fd3a19256e15"
 "checksum piston_window 0.69.1 (registry+https://github.com/rust-lang/crates.io-index)" = "f05cbacaa623692fe26c55fdc3fd152b484775b8c24ba7227a01f4fcec8dcaaf"
 "checksum pistoncore-event_loop 0.32.0 (registry+https://github.com/rust-lang/crates.io-index)" = "2e29694f5274a3b503364a99349c372276fc1770b7f7764a1ce5d585fc0778e5"
 "checksum pistoncore-glutin_window 0.38.0 (registry+https://github.com/rust-lang/crates.io-index)" = "6d335cc61db2031df59053699dbbef8dd93a8256b3f1ab88fb6c666f52b02aa4"
@@ -1139,6 +1173,7 @@ dependencies = [
 "checksum tempfile 2.1.5 (registry+https://github.com/rust-lang/crates.io-index)" = "3213fd2b7ed87e39306737ccfac04b1233b57a33ca64cfbf52f2ffaa2b765e2f"
 "checksum unicode-xid 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)" = "8c1f860d7d29cf02cb2f3f359fd35991af3d30bac52c57d265a3c461074cb4dc"
 "checksum user32-sys 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "6717129de5ac253f5642fc78a51d0c7de6f9f53d617fc94e9bae7f6e71cf5504"
+"checksum uuid 0.1.18 (registry+https://github.com/rust-lang/crates.io-index)" = "78c590b5bd79ed10aad8fb75f078a59d8db445af6c743e55c4a53227fc01c13f"
 "checksum vecmath 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "bebe25d9d469c3bc85dd86564c7318a0290e31d472d9fcbca682c93e2925ff00"
 "checksum wayland-client 0.9.9 (registry+https://github.com/rust-lang/crates.io-index)" = "15aaf730e0720ac3c25259bd8af44eacd509ae03e85a3ca64b0d4f7fe9d8da03"
 "checksum wayland-kbd 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)" = "75485a10a894e48f4d21c15c8673ac84a073aef402e15060715fb3501416e58e"

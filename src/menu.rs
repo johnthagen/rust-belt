@@ -1,15 +1,20 @@
 //! Main menu.
 //! Provides an interface for the user to start the game, change settings, or exit.
 
+use ai_behavior::{Action, Sequence};
 use music;
-use opengl_graphics::GlGraphics;
+use opengl_graphics::{GlGraphics, Texture};
 use opengl_graphics::glyph_cache::GlyphCache;
 use piston_window::{clear, text, Button, Context, Input, Key, PistonWindow, Size, TextureSettings,
                     Transformed};
+use sprite::{Ease, EaseFunction, FadeIn, Scene, Sprite};
+
 
 use game;
 use game::color::{self, ColoredText};
 use settings;
+
+use std::rc::Rc;
 use story;
 
 /// The different music soundtrack pieces in the game.
@@ -88,9 +93,9 @@ fn draw(
     glyph_cache: &mut GlyphCache,
     menu_align: f64,
     menu_selection: MenuSelection,
-    game_title: &str,
+    logo_scene: &Scene<Texture>,
 ) {
-    let starting_line_offset = 280.0;
+    let starting_line_offset = 340.0;
 
     // Color all menu items the same unless it is currently selected.
     let mut play_color = color::WHITE;
@@ -123,15 +128,7 @@ fn draw(
         },
     ];
 
-    clear(color::BLACK, graphics);
-    text(
-        color::WHITE,
-        72,
-        game_title,
-        glyph_cache,
-        context.transform.trans(menu_align, starting_line_offset),
-        graphics,
-    );
+    logo_scene.draw(context.transform, graphics);
 
     for (index, line) in menu_lines.iter().enumerate() {
         let new_line_offset = 40.0;
@@ -149,43 +146,65 @@ fn draw(
     }
 }
 
+/// Create an animated fade in sprite of the game logo.
+fn create_logo_scene(window_size: Size) -> Scene<Texture> {
+    let mut scene = Scene::new();
+    let tex = Rc::new(
+        Texture::from_path("./assets/rust-belt-logo-transparent.png").unwrap(),
+    );
+    let mut sprite = Sprite::from_texture(tex.clone());
+    sprite.set_position(
+        window_size.width as f64 / 2.0,
+        (window_size.height as f64 / 2.0) - 120.0,
+    );
+    sprite.set_scale(0.4, 0.4);
+    sprite.set_opacity(0.0);
+    let id = scene.add_child(sprite);
+    let fade = Sequence(vec![
+        Action(Ease(EaseFunction::QuadraticInOut, Box::new(FadeIn(3.0)))),
+    ]);
+    scene.run(id, &fade);
+
+    scene
+}
+
 /// Loops the menu screen, taking user input to change the current menu selection.
-pub fn run(
-    mut window: &mut PistonWindow,
-    mut opengl: &mut GlGraphics,
-    game_title: &str,
-    window_size: Size,
-) {
+pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_size: Size) {
     music::start::<Music, Sound, _>(32, || {
         bind_sound_files();
-        music::play_music(&Music::Menu, music::Repeat::Forever);
+
+        let mut logo_scene = create_logo_scene(window_size);
 
         // The glyphe cache is mutable because it loads each character on demand (lazily),
         // and thus must be able to be changed over time as new characters are requested.
         let mut glyph_cache =
             GlyphCache::new("./assets/FiraSans-Regular.ttf", TextureSettings::new()).unwrap();
 
-        let mut menu_selection = MenuSelection::Play;
         let mut volume = Volume::new();
         volume.sound = 0.50;
         music::set_volume(volume.music);
+        music::play_music(&Music::Menu, music::Repeat::Forever);
 
+        let mut menu_selection = MenuSelection::Play;
         let menu_align = (window_size.width / 2 - 120) as f64;
         while let Some(event) = window.next() {
             match event {
                 Input::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
+                        clear(color::BLACK, graphics);
                         draw(
                             context,
                             graphics,
                             &mut glyph_cache,
                             menu_align,
                             menu_selection,
-                            game_title,
-                        )
+                            &logo_scene,
+                        );
                     });
                 }
-
+                Input::Update(_) => {
+                    logo_scene.event(&event);
+                }
                 Input::Press(Button::Keyboard(key)) => {
                     music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0), volume.sound);
                     match key {
