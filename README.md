@@ -12,6 +12,8 @@ classic [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade
 implemented  using the [Rust](https://www.rust-lang.org/) game engine, 
 [Piston](http://www.piston.rs/).
 
+![Rust Belt](./videos/rust-belt-game-play.gif)
+
 # Requirements
 
 ## Prerequisites
