@@ -141,8 +141,8 @@ impl Game {
                             "Game Over",
                             glyph_cache,
                             context.transform.trans(
-                                (self.window_size.width / 2 - 120) as f64,
-                                (self.window_size.height / 2 - 30) as f64,
+                                f64::from(self.window_size.width / 2 - 120),
+                                f64::from(self.window_size.height / 2 - 30),
                             ),
                             graphics,
                         );
@@ -153,8 +153,8 @@ impl Game {
                             format!("Score: {}", self.score).as_str(),
                             glyph_cache,
                             context.transform.trans(
-                                (self.window_size.width / 2 - 90 - offset) as f64,
-                                (self.window_size.height / 2 + 30) as f64,
+                                f64::from(self.window_size.width / 2 - 90 - offset),
+                                f64::from(self.window_size.height / 2 + 30),
                             ),
                             graphics,
                         );

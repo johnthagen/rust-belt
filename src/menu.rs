@@ -14,6 +14,7 @@ use game;
 use game::color::{self, ColoredText};
 use settings;
 
+use std::f64;
 use std::rc::Rc;
 use story;
 
@@ -154,8 +155,8 @@ fn create_logo_scene(window_size: Size) -> Scene<Texture> {
     );
     let mut sprite = Sprite::from_texture(tex.clone());
     sprite.set_position(
-        window_size.width as f64 / 2.0,
-        (window_size.height as f64 / 2.0) - 120.0,
+        f64::from(window_size.width) / 2.0,
+        f64::from(window_size.height) / 2.0 - 120.0,
     );
     sprite.set_scale(0.4, 0.4);
     sprite.set_opacity(0.0);
@@ -186,7 +187,7 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
         music::play_music(&Music::Menu, music::Repeat::Forever);
 
         let mut menu_selection = MenuSelection::Play;
-        let menu_align = (window_size.width / 2 - 120) as f64;
+        let menu_align = f64::from(window_size.width) / 2.0 - 120.0;
         while let Some(event) = window.next() {
             match event {
                 Input::Render(args) => {

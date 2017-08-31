@@ -13,7 +13,7 @@ matrix:
     - os: linux
       rust: nightly
     - os: linux
-      rust: nightly-2017-08-22
+      rust: nightly-2017-08-30
       env: CI_BUILD_NAME="Clippy and Rustfmt"
 
   allow_failures:
@@ -26,8 +26,8 @@ cache: cargo
 # nightly versions, so select a nightly/clippy combination known to work.
 env:
   global:
-    - CLIPPY_VERSION=0.0.153
-    - NIGHTLY_VERSION=nightly-2017-08-22
+    - CLIPPY_VERSION=0.0.155
+    - NIGHTLY_VERSION=nightly-2017-08-30
 
 install:
   # Steps copied from the rust-sdl2 project.
