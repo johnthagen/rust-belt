@@ -156,7 +156,6 @@ impl Asteroid {
             x: f64::from(window_size.width) / 2.0 + spawn_radius * angle.cos(),
             y: f64::from(window_size.height) / 2.0 + spawn_radius * angle.sin(),
         };
-        println!("{} {}", new_pos.x, new_pos.y);
         Asteroid {
             pos: new_pos,
             vel: Vector {
@@ -233,7 +232,7 @@ impl Asteroid {
                 shape: shape1,
                 window_size: self.window_size,
                 on_screen: true,
-                is_decaying: best_index < 7 || chunk1_rad < RADIUS_MIN,
+                is_decaying: best_index < 8 || chunk1_rad < RADIUS_MIN * 2.0,
         });
         chunks.push(Asteroid {
                 pos: self.pos + chunk2_pos,
@@ -244,7 +243,7 @@ impl Asteroid {
                 shape: shape2,
                 window_size: self.window_size,
                 on_screen: true,
-                is_decaying: best_index > transformed_shape.len() - 7 || chunk2_rad < RADIUS_MIN,
+                is_decaying: best_index > transformed_shape.len() - 8 || chunk2_rad < RADIUS_MIN * 2.0,
         });
         chunks
     }
