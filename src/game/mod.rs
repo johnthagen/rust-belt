@@ -210,7 +210,7 @@ impl Updateable for Game {
             bullet.update(args);
         }
         self.bullets.retain(|bullet| bullet.ttl() > 0.0);
-
+        self.asteroids.retain(|asteroid| !asteroid.droppable());
         for asteroid in &mut self.asteroids {
             asteroid.update(args);
         }

@@ -18,6 +18,24 @@ impl Vector {
             y: rand::random::<f64>() * (y_max - y_min) + y_min,
         }
     }
+    pub fn angle_of_vector(self) -> f64 {
+        let mut angle = (self.y / self.x).atan();
+        if self.y < 0.0 {
+            angle += PI;
+            if self.x > 0.0 {
+                angle += PI;
+            }
+        } else if self.x < 0.0 {
+            angle += PI;
+        }
+        angle
+    }
+
+    pub fn angle_between_vectors(self, other: Vector) -> f64 {
+        
+        self.angle_of_vector() - other.angle_of_vector()
+    }
+
     pub fn angle_to_vector(self, other: Vector) -> f64 {
         let diff = other - self;
         let mut angle_to_point = (diff.y / diff.x).atan();
@@ -30,7 +48,7 @@ impl Vector {
             angle_to_point += PI;
         }
         angle_to_point
-    }
+}
 
     pub fn magnitude(self) -> f64 {
         (self.x.powi(2) + self.y.powi(2)).sqrt()
@@ -41,9 +59,8 @@ impl Vector {
     }
 
     pub fn rotate(self, angle: f64) -> Vector {
-        let old_angle = (self.angle_to_vector(Vector { x: 0.0, y: 0.0 }) + PI) % (PI * 2.0);
+        let new_angle = (angle + self.angle_of_vector()) % (PI * 2.0);
         let magnitude = self.magnitude();
-        let new_angle = (angle + old_angle) % (PI * 2.0);
         Vector {
             x: magnitude * new_angle.cos(),
             y: magnitude * new_angle.sin(),

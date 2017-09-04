@@ -204,6 +204,10 @@ impl Positioned for Player {
     fn pos(&self) -> Vector {
         self.pos
     }
+
+    fn vel(&self) -> Vector {
+        self.vel
+    }
 }
 
 impl Collidable for Player {
