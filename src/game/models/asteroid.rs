@@ -177,7 +177,7 @@ impl Asteroid {
     }
 
     pub fn can_split(&self) -> bool {
-        self.is_decaying == false
+        true
     }
 
     pub fn split<P: Positioned>(&mut self, other: &P) -> Vec<Asteroid> {
