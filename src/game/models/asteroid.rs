@@ -191,20 +191,25 @@ impl Asteroid {
 
         let mut best_index = 0;
         let mut best_match = f64::consts::PI * 2.0;
-        for (index, vertex) in transformed_shape.iter().enumerate(){
-            //let this_angle : Vector =  Vector::from(transformed_shape[index_nearest]) - Vector::from(*vertex);
-            let this_angle : Vector =  Vector::from(*vertex) - Vector::from(transformed_shape[index_nearest]);
-            let vert_angle_diff = other.vel().angle_between_vectors(this_angle);
-            if vert_angle_diff.abs() < best_match.abs() || (PI_MULT_2 - vert_angle_diff.abs()) < best_match.abs(){
+        for (index, vertex) in transformed_shape.iter().enumerate() {
+            let this_angle: Vector = Vector::from(*vertex) - Vector::from(transformed_shape[0]);
+            let vert_angle_diff = this_angle.angle_between_vectors(other.vel());
+            if vert_angle_diff.abs() < best_match.abs() ||
+                (PI_MULT_2 - vert_angle_diff.abs()) < best_match.abs()
+            {
                 best_index = index;
                 if vert_angle_diff.abs() < f64::consts::PI / 2.0 {
-                   best_match = vert_angle_diff;
-                }else{
+                    best_match = vert_angle_diff;
+                } else {
                     best_match = PI_MULT_2 - vert_angle_diff.abs();
                 }
-
-
             }
+        }
+
+        if best_index < 6 {
+            best_index = 6;
+        } else if best_index > (transformed_shape.len() - 6) {
+            best_index = transformed_shape.len() - 6;
         }
         let second_vertex: Vector = transformed_shape[best_index].into();
 
@@ -212,11 +217,10 @@ impl Asteroid {
         let mut shape2 = transformed_shape[best_index..].to_vec();
         let diff_vector = second_vertex - first_vertex;
         for i in (0..best_index) {
-            let average_weight = (i as f64)/(best_index as f64);
+            let average_weight = (i as f64) / (best_index as f64);
             let new_vertex = second_vertex - diff_vector * average_weight;
             shape1.push([new_vertex.x, new_vertex.y]);
             shape2.insert(0, [new_vertex.x, new_vertex.y]);
-
         }
         let chunk1_pos = center_mass(&mut shape1);
         let chunk2_pos = center_mass(&mut shape2);
@@ -224,26 +228,26 @@ impl Asteroid {
         let chunk2_rad = calculate_radius(&shape2);
 
         chunks.push(Asteroid {
-                pos: self.pos + chunk1_pos,
-                vel: self.vel + chunk1_pos.rotate(PI / 2.0) * self.spin + chunk1_pos * 0.005,
-                rot: 0.0,
-                spin: self.spin * 0.5,
-                radius: chunk1_rad,
-                shape: shape1,
-                window_size: self.window_size,
-                on_screen: true,
-                is_decaying: best_index < 8 || chunk1_rad < RADIUS_MIN * 2.0,
+            pos: self.pos + chunk1_pos,
+            vel: self.vel + chunk1_pos.rotate(PI / 2.0) * self.spin + chunk1_pos * 0.005,
+            rot: 0.0,
+            spin: self.spin * 0.5,
+            radius: chunk1_rad,
+            shape: shape1,
+            window_size: self.window_size,
+            on_screen: true,
+            is_decaying: best_index < 8 || chunk1_rad < RADIUS_MIN * 2.0,
         });
         chunks.push(Asteroid {
-                pos: self.pos + chunk2_pos,
-                vel: self.vel + chunk2_pos.rotate(PI / 2.0) * self.spin + chunk2_pos * 0.005,
-                rot: 0.0,
-                spin: self.spin * 0.5,
-                radius: chunk2_rad,
-                shape: shape2,
-                window_size: self.window_size,
-                on_screen: true,
-                is_decaying: best_index > transformed_shape.len() - 8 || chunk2_rad < RADIUS_MIN * 2.0,
+            pos: self.pos + chunk2_pos,
+            vel: self.vel + chunk2_pos.rotate(PI / 2.0) * self.spin + chunk2_pos * 0.005,
+            rot: 0.0,
+            spin: self.spin * 0.5,
+            radius: chunk2_rad,
+            shape: shape2,
+            window_size: self.window_size,
+            on_screen: true,
+            is_decaying: best_index > transformed_shape.len() - 8 || chunk2_rad < RADIUS_MIN * 2.0,
         });
         chunks
     }
@@ -285,10 +289,12 @@ impl Asteroid {
         self.radius = calculate_radius(&new_shape);
 
         self.shape = new_shape.clone();
-
     }
 
-    pub fn droppable(&self) -> bool{
+    pub fn collidable(&self) -> bool {
+        self.radius > 10.0
+    }
+    pub fn droppable(&self) -> bool {
         self.radius < 2.0
     }
 }
@@ -314,7 +320,6 @@ impl Updateable for Asteroid {
 
         if self.is_decaying {
             self.decay(args.dt);
-
         }
         // This code is useful at the beginning of an asteroid's life.
         // It checks whether the asteroid is fully on-screen. If it is,

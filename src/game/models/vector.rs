@@ -32,7 +32,6 @@ impl Vector {
     }
 
     pub fn angle_between_vectors(self, other: Vector) -> f64 {
-        
         self.angle_of_vector() - other.angle_of_vector()
     }
 
@@ -48,7 +47,7 @@ impl Vector {
             angle_to_point += PI;
         }
         angle_to_point
-}
+    }
 
     pub fn magnitude(self) -> f64 {
         (self.x.powi(2) + self.y.powi(2)).sqrt()

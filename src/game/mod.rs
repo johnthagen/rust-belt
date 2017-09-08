@@ -248,6 +248,7 @@ impl Updateable for Game {
             // If player hits an asteroid, return to the main menu.
             if asteroids
                 .iter()
+                .filter(|asteroid| asteroid.collidable())
                 .any(|asteroid| asteroid.collides_with(player))
             {
                 self.game_over = true;
