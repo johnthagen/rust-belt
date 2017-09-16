@@ -59,15 +59,15 @@ impl Volume {
 
 /// Binds sound and music files to enums to be used with piston-music.
 fn bind_sound_files() {
-    music::bind_music_file(Music::Menu, "./assets/The Last Ranger.mp3");
-    music::bind_music_file(Music::Action, "./assets/Into the Field.mp3");
-    music::bind_music_file(Music::GameOver, "./assets/Splintered Glass.mp3");
+    music::bind_music_file(Music::Menu, "./assets/music/The Last Ranger.mp3");
+    music::bind_music_file(Music::Action, "./assets/music/Into the Field.mp3");
+    music::bind_music_file(Music::GameOver, "./assets/music/Splintered Glass.mp3");
 
-    music::bind_sound_file(Sound::MenuSelection, "./assets/menu-select.wav");
-    music::bind_sound_file(Sound::MenuBack, "./assets/menu-back.wav");
-    music::bind_sound_file(Sound::MenuValidate, "./assets/menu-validate.wav");
-    music::bind_sound_file(Sound::WeaponShoot, "./assets/weapon.wav");
-    music::bind_sound_file(Sound::AsteroidExplosion, "./assets/small-explosion.wav");
+    music::bind_sound_file(Sound::MenuSelection, "./assets/sfx/menu-select.wav");
+    music::bind_sound_file(Sound::MenuBack, "./assets/sfx/menu-back.wav");
+    music::bind_sound_file(Sound::MenuValidate, "./assets/sfx/menu-validate.wav");
+    music::bind_sound_file(Sound::WeaponShoot, "./assets/sfx/weapon.wav");
+    music::bind_sound_file(Sound::AsteroidExplosion, "./assets/sfx/small-explosion.wav");
 }
 
 /// The currently selected menu item the user is highlighting.
@@ -151,7 +151,7 @@ fn draw(
 fn create_logo_scene(window_size: Size) -> Scene<Texture> {
     let mut scene = Scene::new();
     let tex = Rc::new(
-        Texture::from_path("./assets/rust-belt-logo-transparent.png").unwrap(),
+        Texture::from_path("./assets/images/rust-belt-logo-transparent.png").unwrap(),
     );
     let mut sprite = Sprite::from_texture(tex.clone());
     sprite.set_position(
@@ -179,7 +179,7 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
         // The glyphe cache is mutable because it loads each character on demand (lazily),
         // and thus must be able to be changed over time as new characters are requested.
         let mut glyph_cache =
-            GlyphCache::new("./assets/FiraSans-Regular.ttf", TextureSettings::new()).unwrap();
+            GlyphCache::new("./assets/fonts/FiraSans-Regular.ttf", TextureSettings::new()).unwrap();
 
         let mut volume = Volume::new();
         volume.sound = 0.50;
