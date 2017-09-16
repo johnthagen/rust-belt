@@ -179,7 +179,10 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
         // The glyphe cache is mutable because it loads each character on demand (lazily),
         // and thus must be able to be changed over time as new characters are requested.
         let mut glyph_cache =
-            GlyphCache::new("./assets/fonts/FiraSans-Regular.ttf", TextureSettings::new()).unwrap();
+            GlyphCache::new(
+                "./assets/fonts/FiraSans-Regular.ttf",
+                TextureSettings::new(),
+            ).unwrap();
 
         let mut volume = Volume::new();
         volume.sound = 0.50;
