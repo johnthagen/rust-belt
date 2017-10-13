@@ -12,7 +12,7 @@ use opengl_graphics::glyph_cache::GlyphCache;
 use piston_window::{clear, text, Button, Context, Input, Key, PistonWindow, Size, Transformed,
                     UpdateArgs};
 
-use self::models::{asteroid, bullet, player, Collidable, Drawable, Updateable};
+use self::models::{asteroid, bullet, player, powerup, Collidable, Drawable, Updateable};
 use menu::{Sound, Volume};
 
 pub mod color;
@@ -26,11 +26,13 @@ pub struct Game {
     /// Bullets are removed when their TTL expires.
     bullets: Vec<bullet::Bullet>,
     asteroids: Vec<asteroid::Asteroid>,
+    powerups: Vec<powerup::PowerUp>,
     score: i64,
     window_size: Size,
     asteroid_timer: f64,
     asteroid_timer_max: f64,
-
+    powerup_timer: f64,
+    powerup_timer_max: f64,
     /// A flag indicating if the player has lost.
     /// This should not be set if the player simply quits.
     game_over: bool,
@@ -43,10 +45,13 @@ impl Game {
             player: player::Player::new(window_size),
             bullets: Vec::new(),
             asteroids: Vec::new(),
+            powerups: Vec::new(),
             score: 0,
             window_size: window_size,
             asteroid_timer: 0.1,
             asteroid_timer_max: 4.0,
+            powerup_timer: 10.0,
+            powerup_timer_max: 30.0,
             game_over: false,
             volume: volume,
         }
@@ -176,6 +181,10 @@ impl Game {
             asteroid.draw(context, graphics);
         }
 
+        for power in &self.powerups {
+            power.draw(context, graphics);
+        }
+
         text(
             color::YELLOW,
             26,
@@ -215,6 +224,9 @@ impl Updateable for Game {
             asteroid.update(args);
         }
 
+        for powerup in &mut self.powerups {
+            powerup.update(args);
+        }
         // Shorten lifetimes due to issues trying to pass `self` into a closure.
         {
             let bullets = &mut self.bullets;
@@ -254,8 +266,24 @@ impl Updateable for Game {
             }
         }
 
+        {
+            let powerups = &mut self.powerups;
+            let player = &mut self.player;
+
+
+            powerups.retain(|power| {
+                // Remove the first asteroid that collides with a bullet, if any.
+                if player.collides_with(power){
+                    player.set_powerup(power.powerup_type);
+                    return false
+                }
+                true
+            });
+        }
+
         // Countdown a timer which controls when the next asteroid is spawned.
         self.asteroid_timer -= args.dt;
+        self.powerup_timer -= args.dt;
         if self.asteroid_timer < 0.0 {
             self.asteroids
                 .push(asteroid::Asteroid::new(self.window_size));
@@ -267,6 +295,10 @@ impl Updateable for Game {
                 self.asteroid_timer_max -= 0.075;
             }
             self.asteroid_timer = self.asteroid_timer_max;
+        }
+        if self.powerup_timer < 0.0 {
+            self.powerups.push(powerup::PowerUp::new(self.window_size));
+            self.powerup_timer = self.powerup_timer_max;
         }
     }
 }
