@@ -12,6 +12,7 @@ use piston_window::{polygon, types, Context, Size, Transformed, UpdateArgs};
 
 use game::color;
 use game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
+use game::models::powerup::PowerUpType;
 use game::models::vector::Vector;
 
 pub struct Player {
@@ -19,7 +20,10 @@ pub struct Player {
     pub vel: Vector,
     pub rot: f64,
     pub actions: Actions,
+    powerup_timer: f64,
+    powerup_type: PowerUpType,
     weapon_cooldown: f64,
+    weapon_cooldown_reset: f64,
     window_size: Size,
 }
 
@@ -51,7 +55,10 @@ impl Player {
             vel: Vector { x: 0.0, y: 0.0 },
             rot: 0.0,
             actions: Actions::default(),
+            powerup_timer: 0.0,
+            powerup_type: PowerUpType::None,
             weapon_cooldown: 0.0,
+            weapon_cooldown_reset: 0.25,
             window_size: window_size,
         }
     }
@@ -89,7 +96,20 @@ impl Player {
     }
 
     pub fn reset_weapon_cooldown(&mut self) {
-        self.weapon_cooldown = 0.25;
+        self.weapon_cooldown = self.weapon_cooldown_reset;
+        println!("{:?}", self.weapon_cooldown_reset);
+    }
+
+    pub fn set_powerup(&mut self, powerup: PowerUpType){
+        self.powerup_type = powerup;
+        match powerup {
+            PowerUpType::FastShoot => {
+                self.weapon_cooldown_reset = 0.08;
+                self.powerup_timer = 5.0;
+                println!("Powerup: {:?}", self.weapon_cooldown_reset);
+            },
+            _ => {},
+        }
     }
 
     pub fn should_shoot(&self) -> bool {
@@ -117,6 +137,20 @@ impl Updateable for Player {
 
         if self.weapon_cooldown > 0.0 {
             self.weapon_cooldown = (self.weapon_cooldown - args.dt).max(0.0);
+        }
+
+        if self.powerup_timer > 0.0 {
+            self.powerup_timer = (self.powerup_timer - args.dt).max(0.0)
+        }
+
+        if self.powerup_timer == 0.0{
+            match self.powerup_type {
+                PowerUpType::FastShoot => {
+                    self.powerup_type = PowerUpType::None;
+                    self.weapon_cooldown_reset = 0.25;
+                },
+                _ => {},
+            }
         }
     }
 }
