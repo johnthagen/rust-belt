@@ -7,9 +7,8 @@
 //! and handles collision detection and the TTL for `Bullet`s.
 
 use music;
-use opengl_graphics::GlGraphics;
-use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{clear, text, Button, Context, Input, Key, PistonWindow, Size, Transformed,
+use opengl_graphics::{GlGraphics, GlyphCache};
+use piston_window::{clear, text, Button, Context, Event, Loop, Key, PistonWindow, Size, Transformed,
                     UpdateArgs};
 
 use self::models::{asteroid, bullet, player, Collidable, Drawable, Updateable};
@@ -63,20 +62,25 @@ impl Game {
         glyph_cache: &mut GlyphCache,
     ) {
         while let Some(event) = window.next() {
-            match event {
-                Input::Render(args) => {
-                    opengl.draw(args.viewport(), |context, graphics| {
+            if let Some(args) = event.render_args() {
+                opengl.draw(args.viewport(), |context, graphics| {
                         self.draw(context, graphics, glyph_cache)
                     });
+            }
+
+
+            match event {
+                Loop::Render(args) => {
+
                 }
 
-                Input::Update(args) => {
+                Event::Update(args) => {
                     self.update(args);
                 }
 
-                Input::Press(Button::Keyboard(key)) => match key {
+                Event::Press(Button::Keyboard(key)) => match key {
                     Key::D => self.player.actions.rotate_cw = true,
-                    Key::A => self.player.actions.rotate_ccw = true,
+                    Key::A => self.player.actions.rotate_ccw = true,
                     Key::S => self.player.actions.fire_rev_boosters = true,
                     Key::W => self.player.actions.fire_boosters = true,
                     Key::Space => self.player.actions.is_shooting = true,
@@ -91,7 +95,7 @@ impl Game {
                     _ => {}
                 },
 
-                Input::Release(Button::Keyboard(key)) => match key {
+                Event::Release(Button::Keyboard(key)) => match key {
                     Key::D => self.player.actions.rotate_cw = false,
                     Key::A => self.player.actions.rotate_ccw = false,
                     Key::S => self.player.actions.fire_rev_boosters = false,
@@ -123,16 +127,16 @@ impl Game {
         let mut has_released = false;
         while let Some(event) = window.next() {
             match event {
-                Input::Press(Button::Keyboard(_)) => {
+                Event::Press(Button::Keyboard(_)) => {
                     if has_released {
                         break;
                     }
                     has_pressed = true;
                 }
-                Input::Release(Button::Keyboard(_)) => if has_pressed {
+                Event::Release(Button::Keyboard(_)) => if has_pressed {
                     has_released = true;
                 },
-                Input::Render(args) => {
+                Event::Render(args) => {
                     opengl.draw(args.viewport(), |context, graphics| {
                         clear(color::BLACK, graphics);
                         text(

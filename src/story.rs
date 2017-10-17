@@ -1,8 +1,7 @@
 //! Displays the story dialogue.
 
 use music;
-use opengl_graphics::GlGraphics;
-use opengl_graphics::glyph_cache::GlyphCache;
+use opengl_graphics::{GlGraphics, GlyphCache};
 use piston_window::{clear, text, types, Button, Context, Input, Key, PistonWindow, Transformed};
 
 use game::color::{self, ColoredText};

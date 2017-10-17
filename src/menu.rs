@@ -3,8 +3,7 @@
 
 use ai_behavior::{Action, Sequence};
 use music;
-use opengl_graphics::{GlGraphics, Texture};
-use opengl_graphics::glyph_cache::GlyphCache;
+use opengl_graphics::{GlGraphics, GlyphCache, Texture};
 use piston_window::{clear, text, Button, Context, Input, Key, PistonWindow, Size, TextureSettings,
                     Transformed};
 use sprite::{Ease, EaseFunction, FadeIn, Scene, Sprite};
