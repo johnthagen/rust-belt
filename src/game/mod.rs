@@ -157,7 +157,7 @@ impl Game {
                 has_pressed = true;
             }
 
-            if let Some(Button::Keyboard(key)) = event.release_args() {
+            if let Some(Button::Keyboard(_)) = event.release_args() {
                 if has_pressed {
                     has_released = true;
                 }

@@ -182,6 +182,7 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
         // and thus must be able to be changed over time as new characters are requested.
         let mut glyph_cache = GlyphCache::new(
             "./assets/fonts/FiraSans-Regular.ttf",
+            (),
             TextureSettings::new(),
         ).unwrap();
 
