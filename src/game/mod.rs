@@ -8,8 +8,8 @@
 
 use music;
 use opengl_graphics::{GlGraphics, GlyphCache};
-use piston_window::{clear, text, Button, Context, Event, Input, Key, Loop, PistonWindow,
-                    PressEvent, RenderEvent, Size, Transformed, UpdateArgs, UpdateEvent};
+use piston_window::{clear, text, Button, Context, Key, PistonWindow, PressEvent, ReleaseEvent,
+                    RenderEvent, Size, Transformed, UpdateArgs, UpdateEvent};
 
 use self::models::{asteroid, bullet, player, Collidable, Drawable, Updateable};
 use menu::{Sound, Volume};
@@ -91,17 +91,13 @@ impl Game {
                 }
             }
 
-            if let Some(Button::Keyboard(key)) = event.press_args() {
+            if let Some(Button::Keyboard(key)) = event.release_args() {
                 match key {
-                    Input::Button::Keyboard(key) => match key {
-                        Key::D => self.player.actions.rotate_cw = false,
-                        Key::A => self.player.actions.rotate_ccw = false,
-                        Key::S => self.player.actions.fire_rev_boosters = false,
-                        Key::W => self.player.actions.fire_boosters = false,
-                        Key::Space => self.player.actions.is_shooting = false,
-                        _ => {}
-                    },
-
+                    Key::D => self.player.actions.rotate_cw = false,
+                    Key::A => self.player.actions.rotate_ccw = false,
+                    Key::S => self.player.actions.fire_rev_boosters = false,
+                    Key::W => self.player.actions.fire_boosters = false,
+                    Key::Space => self.player.actions.is_shooting = false,
                     _ => {}
                 }
             }
@@ -125,45 +121,46 @@ impl Game {
         let mut has_pressed = false;
         let mut has_released = false;
         while let Some(event) = window.next() {
-            match event {
-                Input::Press(Button::Keyboard(_)) => {
-                    if has_released {
-                        break;
-                    }
-                    has_pressed = true;
+            if let Some(args) = event.render_args() {
+                opengl.draw(args.viewport(), |context, graphics| {
+                    clear(color::BLACK, graphics);
+                    text(
+                        color::WHITE,
+                        50,
+                        "Game Over",
+                        glyph_cache,
+                        context.transform.trans(
+                            f64::from(self.window_size.width / 2 - 120),
+                            f64::from(self.window_size.height / 2 - 30),
+                        ),
+                        graphics,
+                    );
+                    let offset = (self.score.to_string().len() * 5) as u32;
+                    text(
+                        color::WHITE,
+                        50,
+                        format!("Score: {}", self.score).as_str(),
+                        glyph_cache,
+                        context.transform.trans(
+                            f64::from(self.window_size.width / 2 - 90 - offset),
+                            f64::from(self.window_size.height / 2 + 30),
+                        ),
+                        graphics,
+                    );
+                });
+            }
+
+            if let Some(Button::Keyboard(_)) = event.press_args() {
+                if has_released {
+                    break;
                 }
-                Input::Release(Button::Keyboard(_)) => if has_pressed {
+                has_pressed = true;
+            }
+
+            if let Some(Button::Keyboard(key)) = event.release_args() {
+                if has_pressed {
                     has_released = true;
-                },
-                Input::Render(args) => {
-                    opengl.draw(args.viewport(), |context, graphics| {
-                        clear(color::BLACK, graphics);
-                        text(
-                            color::WHITE,
-                            50,
-                            "Game Over",
-                            glyph_cache,
-                            context.transform.trans(
-                                f64::from(self.window_size.width / 2 - 120),
-                                f64::from(self.window_size.height / 2 - 30),
-                            ),
-                            graphics,
-                        );
-                        let offset = (self.score.to_string().len() * 5) as u32;
-                        text(
-                            color::WHITE,
-                            50,
-                            format!("Score: {}", self.score).as_str(),
-                            glyph_cache,
-                            context.transform.trans(
-                                f64::from(self.window_size.width / 2 - 90 - offset),
-                                f64::from(self.window_size.height / 2 + 30),
-                            ),
-                            graphics,
-                        );
-                    });
                 }
-                _ => {}
             }
         }
     }

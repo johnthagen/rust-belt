@@ -2,7 +2,8 @@
 
 use music;
 use opengl_graphics::{GlGraphics, GlyphCache};
-use piston_window::{clear, text, types, Button, Context, Input, Key, PistonWindow, Transformed};
+use piston_window::{clear, text, types, Button, Context, Key, PistonWindow, PressEvent,
+                    RenderEvent, Transformed};
 
 use game::color::{self, ColoredText};
 use menu::{Sound, Volume};
@@ -136,19 +137,17 @@ pub fn run(
     volume: Volume,
 ) {
     while let Some(event) = window.next() {
-        match event {
-            Input::Render(args) => {
-                opengl.draw(args.viewport(), |context, graphics| {
-                    draw(context, graphics, glyph_cache)
-                });
-            }
+        if let Some(args) = event.render_args() {
+            opengl.draw(args.viewport(), |context, graphics| {
+                draw(context, graphics, glyph_cache)
+            });
+        }
 
-            Input::Press(Button::Keyboard(key)) => if key == Key::Space {
+        if let Some(Button::Keyboard(key)) = event.press_args() {
+            if key == Key::Space {
                 music::play_sound(&Sound::MenuBack, music::Repeat::Times(0), volume.sound);
                 break;
-            },
-
-            _ => {}
+            }
         }
     }
 }
