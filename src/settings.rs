@@ -1,9 +1,9 @@
 //! Modify game settings.
 
 use music;
-use opengl_graphics::GlGraphics;
-use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{clear, text, Button, Context, Input, Key, PistonWindow, Transformed};
+use opengl_graphics::{GlGraphics, GlyphCache};
+use piston_window::{clear, text, Button, Context, Key, PistonWindow, PressEvent, RenderEvent,
+                    Transformed};
 
 use game::color;
 use menu::{Sound, Volume};
@@ -46,7 +46,7 @@ fn draw(
             .transform
             .trans(left_alignment, starting_line_offset),
         graphics,
-    );
+    ).unwrap();
     text(
         music_color,
         menu_font,
@@ -56,7 +56,7 @@ fn draw(
             .transform
             .trans(value_left_alignment, starting_line_offset),
         graphics,
-    );
+    ).unwrap();
     text(
         sound_color,
         menu_font,
@@ -66,7 +66,7 @@ fn draw(
             .transform
             .trans(left_alignment, starting_line_offset + new_line_offset),
         graphics,
-    );
+    ).unwrap();
     text(
         sound_color,
         menu_font,
@@ -76,7 +76,7 @@ fn draw(
             .transform
             .trans(value_left_alignment, starting_line_offset + new_line_offset),
         graphics,
-    );
+    ).unwrap();
 }
 
 /// Loop providing game setting options to change to the user until they exit the screen.
@@ -90,68 +90,56 @@ pub fn run(
     let mut menu_selection = MenuSelection::MusicVolume;
 
     while let Some(event) = window.next() {
-        match event {
-            Input::Render(args) => {
-                opengl.draw(args.viewport(), |context, graphics| {
-                    draw(
-                        context,
-                        graphics,
-                        glyph_cache,
-                        menu_selection,
-                        *volume,
-                        left_alignment,
-                    )
-                });
-            }
+        if let Some(args) = event.render_args() {
+            opengl.draw(args.viewport(), |context, graphics| {
+                draw(
+                    context,
+                    graphics,
+                    glyph_cache,
+                    menu_selection,
+                    *volume,
+                    left_alignment,
+                )
+            });
+        }
 
-            // TODO: Known precision problem related to stepping f64 instead of integers.
-            Input::Press(Button::Keyboard(key)) => {
-                let volume_step: f64 = 0.1;
+        // TODO: Known precision problem related to stepping f64 instead of integers.
+        if let Some(Button::Keyboard(key)) = event.press_args() {
+            let volume_step: f64 = 0.1;
 
-                match key {
-                    Key::W => match menu_selection {
-                        MenuSelection::MusicVolume => {}
-                        MenuSelection::SoundVolume => menu_selection = MenuSelection::MusicVolume,
-                    },
-                    Key::S => match menu_selection {
-                        MenuSelection::MusicVolume => menu_selection = MenuSelection::SoundVolume,
-                        MenuSelection::SoundVolume => {}
-                    },
-                    Key::D => {
-                        music::play_sound(
-                            &Sound::MenuSelection,
-                            music::Repeat::Times(0),
-                            volume.sound,
-                        );
-                        match menu_selection {
-                            MenuSelection::MusicVolume => volume.music += volume_step,
-                            MenuSelection::SoundVolume => volume.sound += volume_step,
-                        }
+            match key {
+                Key::W => match menu_selection {
+                    MenuSelection::MusicVolume => {}
+                    MenuSelection::SoundVolume => menu_selection = MenuSelection::MusicVolume,
+                },
+                Key::S => match menu_selection {
+                    MenuSelection::MusicVolume => menu_selection = MenuSelection::SoundVolume,
+                    MenuSelection::SoundVolume => {}
+                },
+                Key::D => {
+                    music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0), volume.sound);
+                    match menu_selection {
+                        MenuSelection::MusicVolume => volume.music += volume_step,
+                        MenuSelection::SoundVolume => volume.sound += volume_step,
                     }
-                    Key::A => {
-                        music::play_sound(
-                            &Sound::MenuSelection,
-                            music::Repeat::Times(0),
-                            volume.sound,
-                        );
-                        match menu_selection {
-                            MenuSelection::MusicVolume => volume.music -= volume_step,
-                            MenuSelection::SoundVolume => volume.sound -= volume_step,
-                        }
-                    }
-                    Key::Space => {
-                        music::play_sound(&Sound::MenuBack, music::Repeat::Times(0), volume.sound);
-                        break;
-                    }
-                    _ => {}
                 }
-
-                volume.music = volume.music.max(music::MIN_VOLUME).min(music::MAX_VOLUME);
-                volume.sound = volume.sound.max(music::MIN_VOLUME).min(music::MAX_VOLUME);
-                music::set_volume(volume.music);
+                Key::A => {
+                    music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0), volume.sound);
+                    match menu_selection {
+                        MenuSelection::MusicVolume => volume.music -= volume_step,
+                        MenuSelection::SoundVolume => volume.sound -= volume_step,
+                    }
+                }
+                Key::Space => {
+                    music::play_sound(&Sound::MenuBack, music::Repeat::Times(0), volume.sound);
+                    break;
+                }
+                _ => {}
             }
 
-            _ => {}
+            volume.music = volume.music.max(music::MIN_VOLUME).min(music::MAX_VOLUME);
+            volume.sound = volume.sound.max(music::MIN_VOLUME).min(music::MAX_VOLUME);
+            music::set_volume(volume.music);
         }
     }
 }

@@ -3,10 +3,9 @@
 
 use ai_behavior::{Action, Sequence};
 use music;
-use opengl_graphics::{GlGraphics, Texture};
-use opengl_graphics::glyph_cache::GlyphCache;
-use piston_window::{clear, text, Button, Context, Input, Key, PistonWindow, Size, TextureSettings,
-                    Transformed};
+use opengl_graphics::{GlGraphics, GlyphCache, Texture};
+use piston_window::{clear, text, Button, Context, Key, PistonWindow, PressEvent, RenderEvent,
+                    Size, TextureSettings, Transformed, UpdateEvent};
 use sprite::{Ease, EaseFunction, FadeIn, Scene, Sprite};
 
 
@@ -143,7 +142,7 @@ fn draw(
                 starting_line_offset + ((index as f64 + 1.0) * new_line_offset),
             ),
             graphics,
-        );
+        ).unwrap();
     }
 }
 
@@ -151,9 +150,12 @@ fn draw(
 fn create_logo_scene(window_size: Size) -> Scene<Texture> {
     let mut scene = Scene::new();
     let tex = Rc::new(
-        Texture::from_path("./assets/images/rust-belt-logo-transparent.png").unwrap(),
+        Texture::from_path(
+            "./assets/images/rust-belt-logo-transparent.png",
+            &TextureSettings::new(),
+        ).unwrap(),
     );
-    let mut sprite = Sprite::from_texture(tex.clone());
+    let mut sprite = Sprite::from_texture(Rc::clone(&tex));
     sprite.set_position(
         f64::from(window_size.width) / 2.0,
         f64::from(window_size.height) / 2.0 - 120.0,
@@ -180,6 +182,7 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
         // and thus must be able to be changed over time as new characters are requested.
         let mut glyph_cache = GlyphCache::new(
             "./assets/fonts/FiraSans-Regular.ttf",
+            (),
             TextureSettings::new(),
         ).unwrap();
 
@@ -191,79 +194,74 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
         let mut menu_selection = MenuSelection::Play;
         let menu_align = f64::from(window_size.width) / 2.0 - 120.0;
         while let Some(event) = window.next() {
-            match event {
-                Input::Render(args) => {
-                    opengl.draw(args.viewport(), |context, graphics| {
-                        clear(color::BLACK, graphics);
-                        draw(
-                            context,
-                            graphics,
-                            &mut glyph_cache,
-                            menu_align,
-                            menu_selection,
-                            &logo_scene,
-                        );
-                    });
-                }
-                Input::Update(_) => {
-                    logo_scene.event(&event);
-                }
-                Input::Press(Button::Keyboard(key)) => {
-                    music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0), volume.sound);
-                    match key {
-                        Key::W => match menu_selection {
-                            MenuSelection::Play => {}
-                            MenuSelection::Story => menu_selection = MenuSelection::Play,
-                            MenuSelection::Settings => menu_selection = MenuSelection::Story,
-                            MenuSelection::Exit => menu_selection = MenuSelection::Settings,
-                        },
-                        Key::S => match menu_selection {
-                            MenuSelection::Play => menu_selection = MenuSelection::Story,
-                            MenuSelection::Story => menu_selection = MenuSelection::Settings,
-                            MenuSelection::Settings => menu_selection = MenuSelection::Exit,
-                            MenuSelection::Exit => {}
-                        },
-                        Key::Space => {
-                            music::play_sound(
-                                &Sound::MenuValidate,
-                                music::Repeat::Times(0),
-                                volume.sound,
-                            );
-                            match menu_selection {
-                                MenuSelection::Play => {
-                                    music::play_music(&Music::Action, music::Repeat::Forever);
-                                    let mut game = game::Game::new(window_size, volume);
-                                    game.run(&mut window, &mut opengl, &mut glyph_cache);
+            if let Some(args) = event.render_args() {
+                opengl.draw(args.viewport(), |context, graphics| {
+                    clear(color::BLACK, graphics);
+                    draw(
+                        context,
+                        graphics,
+                        &mut glyph_cache,
+                        menu_align,
+                        menu_selection,
+                        &logo_scene,
+                    );
+                });
+            }
 
-                                    if game.game_over() {
-                                        music::play_music(&Music::GameOver, music::Repeat::Forever);
-                                        game.run_game_over(
-                                            &mut window,
-                                            &mut opengl,
-                                            &mut glyph_cache,
-                                        );
-                                    }
-                                    music::play_music(&Music::Menu, music::Repeat::Forever);
+            if event.update_args().is_some() {
+                logo_scene.event(&event);
+            }
+
+            if let Some(Button::Keyboard(key)) = event.press_args() {
+                music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0), volume.sound);
+                match key {
+                    Key::W => match menu_selection {
+                        MenuSelection::Play => {}
+                        MenuSelection::Story => menu_selection = MenuSelection::Play,
+                        MenuSelection::Settings => menu_selection = MenuSelection::Story,
+                        MenuSelection::Exit => menu_selection = MenuSelection::Settings,
+                    },
+                    Key::S => match menu_selection {
+                        MenuSelection::Play => menu_selection = MenuSelection::Story,
+                        MenuSelection::Story => menu_selection = MenuSelection::Settings,
+                        MenuSelection::Settings => menu_selection = MenuSelection::Exit,
+                        MenuSelection::Exit => {}
+                    },
+                    Key::Space => {
+                        music::play_sound(
+                            &Sound::MenuValidate,
+                            music::Repeat::Times(0),
+                            volume.sound,
+                        );
+                        match menu_selection {
+                            MenuSelection::Play => {
+                                music::play_music(&Music::Action, music::Repeat::Forever);
+                                let mut game = game::Game::new(window_size, volume);
+                                game.run(&mut window, &mut opengl, &mut glyph_cache);
+
+                                if game.game_over() {
+                                    music::play_music(&Music::GameOver, music::Repeat::Forever);
+                                    game.run_game_over(&mut window, &mut opengl, &mut glyph_cache);
                                 }
-                                MenuSelection::Story => {
-                                    story::run(&mut window, &mut opengl, &mut glyph_cache, volume);
-                                }
-                                MenuSelection::Settings => {
-                                    settings::run(
-                                        &mut window,
-                                        &mut opengl,
-                                        &mut glyph_cache,
-                                        &mut volume,
-                                        menu_align,
-                                    );
-                                }
-                                MenuSelection::Exit => break,
+                                music::play_music(&Music::Menu, music::Repeat::Forever);
                             }
+                            MenuSelection::Story => {
+                                story::run(&mut window, &mut opengl, &mut glyph_cache, volume);
+                            }
+                            MenuSelection::Settings => {
+                                settings::run(
+                                    &mut window,
+                                    &mut opengl,
+                                    &mut glyph_cache,
+                                    &mut volume,
+                                    menu_align,
+                                );
+                            }
+                            MenuSelection::Exit => break,
                         }
-                        _ => {}
                     }
+                    _ => {}
                 }
-                _ => {}
             }
         }
     });
