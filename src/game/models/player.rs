@@ -97,7 +97,6 @@ impl Player {
 
     pub fn reset_weapon_cooldown(&mut self) {
         self.weapon_cooldown = self.weapon_cooldown_reset;
-        println!("{:?}", self.weapon_cooldown_reset);
     }
 
     pub fn set_powerup(&mut self, powerup: PowerUpType){
@@ -106,7 +105,6 @@ impl Player {
             PowerUpType::FastShoot => {
                 self.weapon_cooldown_reset = 0.08;
                 self.powerup_timer = 5.0;
-                println!("Powerup: {:?}", self.weapon_cooldown_reset);
             },
             _ => {},
         }
