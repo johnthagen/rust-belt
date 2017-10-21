@@ -155,7 +155,7 @@ fn create_logo_scene(window_size: Size) -> Scene<Texture> {
             &TextureSettings::new(),
         ).unwrap(),
     );
-    let mut sprite = Sprite::from_texture(tex.clone());
+    let mut sprite = Sprite::from_texture(Rc::clone(&tex));
     sprite.set_position(
         f64::from(window_size.width) / 2.0,
         f64::from(window_size.height) / 2.0 - 120.0,
@@ -208,7 +208,7 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
                 });
             }
 
-            if let Some(_) = event.update_args() {
+            if event.update_args().is_some() {
                 logo_scene.event(&event);
             }
 
