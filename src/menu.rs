@@ -142,7 +142,7 @@ fn draw(
                 starting_line_offset + ((index as f64 + 1.0) * new_line_offset),
             ),
             graphics,
-        );
+        ).unwrap();
     }
 }
 

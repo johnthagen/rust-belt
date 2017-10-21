@@ -46,7 +46,7 @@ fn draw(
             .transform
             .trans(left_alignment, starting_line_offset),
         graphics,
-    );
+    ).unwrap();
     text(
         music_color,
         menu_font,
@@ -56,7 +56,7 @@ fn draw(
             .transform
             .trans(value_left_alignment, starting_line_offset),
         graphics,
-    );
+    ).unwrap();
     text(
         sound_color,
         menu_font,
@@ -66,7 +66,7 @@ fn draw(
             .transform
             .trans(left_alignment, starting_line_offset + new_line_offset),
         graphics,
-    );
+    ).unwrap();
     text(
         sound_color,
         menu_font,
@@ -76,7 +76,7 @@ fn draw(
             .transform
             .trans(value_left_alignment, starting_line_offset + new_line_offset),
         graphics,
-    );
+    ).unwrap();
 }
 
 /// Loop providing game setting options to change to the user until they exit the screen.

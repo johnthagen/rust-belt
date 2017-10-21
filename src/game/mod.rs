@@ -134,7 +134,7 @@ impl Game {
                             f64::from(self.window_size.height / 2 - 30),
                         ),
                         graphics,
-                    );
+                    ).unwrap();
                     let offset = (self.score.to_string().len() * 5) as u32;
                     text(
                         color::WHITE,
@@ -146,7 +146,7 @@ impl Game {
                             f64::from(self.window_size.height / 2 + 30),
                         ),
                         graphics,
-                    );
+                    ).unwrap();
                 });
             }
 
@@ -183,7 +183,7 @@ impl Game {
             glyph_cache,
             context.transform.trans(10.0, 20.0),
             graphics,
-        );
+        ).unwrap();
     }
 }
 
