@@ -5,7 +5,7 @@ use ai_behavior::{Action, Sequence};
 use music;
 use opengl_graphics::{GlGraphics, GlyphCache, Texture};
 use piston_window::{clear, text, Button, Context, Key, PistonWindow, PressEvent, RenderEvent,
-                    Size, TextureSettings, Transformed, UpdateEvent, Glyphs};
+                    Size, TextureSettings, Transformed, UpdateEvent};
 use sprite::{Ease, EaseFunction, FadeIn, Scene, Sprite};
 
 
@@ -149,8 +149,12 @@ fn draw(
 /// Create an animated fade in sprite of the game logo.
 fn create_logo_scene(window_size: Size) -> Scene<Texture> {
     let mut scene = Scene::new();
-    let tex =
-        Rc::new(Texture::from_path("./assets/images/rust-belt-logo-transparent.png").unwrap());
+    let tex = Rc::new(
+        Texture::from_path(
+            "./assets/images/rust-belt-logo-transparent.png",
+            &TextureSettings::new(),
+        ).unwrap(),
+    );
     let mut sprite = Sprite::from_texture(tex.clone());
     sprite.set_position(
         f64::from(window_size.width) / 2.0,
