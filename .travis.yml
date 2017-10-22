@@ -46,7 +46,7 @@ install:
 
 before_script:
   - bash -c 'if [[ "$CI_BUILD_TYPE" == "CLIPPY" ]]; then
-      cargo install clippy --vers $CLIPPY_VERSION --force;
+      cargo install clippy --vers $CLIPPY_VERSION;
     elif [[ "$CI_BUILD_TYPE" == "RUSTFMT" ]]; then
       cargo install rustfmt-nightly --force;
     fi'
