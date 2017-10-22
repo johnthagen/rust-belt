@@ -20,7 +20,6 @@ matrix:
       env: CI_BUILD_TYPE="RUSTFMT"
 
   allow_failures:
-    - rust: beta
     - rust: nightly
 
 cache: cargo
