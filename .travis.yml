@@ -14,7 +14,10 @@ matrix:
       rust: nightly
     - os: linux
       rust: nightly-2017-10-20
-      env: CI_BUILD_NAME="Clippy and Rustfmt"
+      env: CI_BUILD_TYPE="CLIPPY"
+    - os: linux
+      rust: nightly
+      env: CI_BUILD_TYPE="RUSTFMT"
 
   allow_failures:
     - rust: beta
@@ -22,13 +25,11 @@ matrix:
 
 cache: cargo
 
-# Specific clippy and rustfmt-nightly versions generally are only supported against
-# specific nightly versions, so select a nightly clippy/rustfmt combination known to work.
+# Specific clippy versions generally are only supported against specific
+# nightly versions, so select a nightly/clippy combination known to work.
 env:
   global:
     - CLIPPY_VERSION=0.0.166
-    - RUSTFMT_VERSION=0.2.9
-    - NIGHTLY_VERSION=nightly-2017-10-20
 
 install:
   # Steps copied from the rust-sdl2 project.
@@ -43,19 +44,20 @@ install:
   - pushd SDL2_mixer-2.0.1 && ./configure && make && sudo make install && popd
 
 before_script:
-  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == $NIGHTLY_VERSION ]]; then
+  - bash -c 'if [[ "$CI_BUILD_TYPE" == "CLIPPY" ]]; then
       cargo install clippy --vers $CLIPPY_VERSION --force;
-      cargo install rustfmt-nightly --vers $RUSTFMT_VERSION --force;
+    elif [[ "$CI_BUILD_TYPE" == "RUSTFMT" ]]; then
+      cargo install rustfmt-nightly --force;
     fi'
 
 script:
-  - cargo build --verbose
-  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == $NIGHTLY_VERSION ]]; then
+  - bash -c 'if [[ "$CI_BUILD_TYPE" == "CLIPPY" ]]; then
       cargo clippy -- --deny warnings;
-    fi'
-  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == $NIGHTLY_VERSION ]]; then
+    elif [[ "$CI_BUILD_TYPE" == "RUSTFMT" ]]; then
       export PATH=$PATH:~/.cargo/bin &&
       cargo fmt -- --write-mode diff;
+    else
+      cargo build --verbose;
     fi'
 
 notifications:
