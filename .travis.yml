@@ -22,11 +22,12 @@ matrix:
 
 cache: cargo
 
-# Specific clippy versions generally are only supported against specific
-# nightly versions, so select a nightly/clippy combination known to work.
+# Specific clippy and rustfmt-nightly versions generally are only supported against
+# specific nightly versions, so select a nightly clippy/rustfmt combination known to work.
 env:
   global:
     - CLIPPY_VERSION=0.0.166
+    - RUSTFMT_VERSION=0.2.9
     - NIGHTLY_VERSION=nightly-2017-10-20
 
 install:
@@ -44,7 +45,7 @@ install:
 before_script:
   - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == $NIGHTLY_VERSION ]]; then
       cargo install clippy --vers $CLIPPY_VERSION --force;
-      cargo install rustfmt-nightly --force;
+      cargo install rustfmt-nightly --vers $RUSTFMT_VERSION --force;
     fi'
 
 script:
