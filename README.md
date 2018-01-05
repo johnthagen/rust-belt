@@ -1,4 +1,4 @@
-![Rust Belt](./assets/rust-belt-logo.png)
+![Rust Belt](./assets/images/rust-belt-logo.png)
 
 | Build Status |                                                                                |
 |--------------|--------------------------------------------------------------------------------|
