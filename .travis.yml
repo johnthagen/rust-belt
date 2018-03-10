@@ -4,12 +4,11 @@ matrix:
   include:
     - os: linux
       rust: stable
+      env: CI_BUILD_TYPE="RUSTFMT"
     - os: osx
       rust: stable
-
     - os: linux
       rust: beta
-
     - os: linux
       rust: nightly
       env: CI_BUILD_TYPE="NIGHTLY"
@@ -48,7 +47,7 @@ before_script:
   - bash -c 'if [[ "$CI_BUILD_TYPE" == "CLIPPY" ]]; then
       cargo install clippy --vers $CLIPPY_VERSION --force;
     elif [[ "$CI_BUILD_TYPE" == "RUSTFMT" ]]; then
-      cargo install rustfmt-nightly --force;
+      rustup component add rustfmt-preview;
     fi'
 
 script:
