@@ -168,9 +168,10 @@ impl Drawable for Player {
             polygon(
                 color::DIM_RED,
                 BOOSTER,
-                context.transform.trans(self.pos.x, self.pos.y).rot_rad(
-                    self.rot - f64::consts::FRAC_PI_3,
-                ),
+                context
+                    .transform
+                    .trans(self.pos.x, self.pos.y)
+                    .rot_rad(self.rot - f64::consts::FRAC_PI_3),
                 graphics,
             );
         }
@@ -178,9 +179,10 @@ impl Drawable for Player {
             polygon(
                 color::DIM_RED,
                 BOOSTER,
-                context.transform.trans(self.pos.x, self.pos.y).rot_rad(
-                    self.rot + f64::consts::FRAC_PI_3,
-                ),
+                context
+                    .transform
+                    .trans(self.pos.x, self.pos.y)
+                    .rot_rad(self.rot + f64::consts::FRAC_PI_3),
                 graphics,
             );
         }

@@ -233,11 +233,9 @@ impl Asteroid {
         let other_pos = other.pos();
         let nearest_point = self.shape
             .iter()
-            .map(|vert| {
-                Vector {
-                    x: vert[0],
-                    y: vert[1],
-                }
+            .map(|vert| Vector {
+                x: vert[0],
+                y: vert[1],
             })
             .map(|vert| other_pos.distance(vert.rotate(self.rot) + self.pos))
             .enumerate()
@@ -268,10 +266,10 @@ impl Updateable for Asteroid {
         // This code is useful at the beginning of an asteroid's life.
         // It checks whether the asteroid is fully on-screen. If it is,
         // it sets the on_Screen flag and this code isn't touched again.
-        if !self.on_screen && self.pos.x > self.radius &&
-            self.pos.x + self.radius < f64::from(self.window_size.width) &&
-            self.pos.y > self.radius &&
-            self.pos.y + self.radius < f64::from(self.window_size.height)
+        if !self.on_screen && self.pos.x > self.radius
+            && self.pos.x + self.radius < f64::from(self.window_size.width)
+            && self.pos.y > self.radius
+            && self.pos.y + self.radius < f64::from(self.window_size.height)
         {
             self.on_screen = true;
         }
@@ -287,9 +285,10 @@ impl Drawable for Asteroid {
         polygon(
             color::WHITE,
             &self.shape,
-            context.transform.trans(self.pos.x, self.pos.y).rot_rad(
-                self.rot,
-            ),
+            context
+                .transform
+                .trans(self.pos.x, self.pos.y)
+                .rot_rad(self.rot),
             graphics,
         );
 

@@ -42,10 +42,9 @@ fn draw(
         menu_font,
         "Music Volume",
         glyph_cache,
-        context.transform.trans(
-            left_alignment,
-            starting_line_offset,
-        ),
+        context
+            .transform
+            .trans(left_alignment, starting_line_offset),
         graphics,
     ).unwrap();
     text(
@@ -53,10 +52,9 @@ fn draw(
         menu_font,
         &format!("{}%", (volume.music * 100.0) as i32),
         glyph_cache,
-        context.transform.trans(
-            value_left_alignment,
-            starting_line_offset,
-        ),
+        context
+            .transform
+            .trans(value_left_alignment, starting_line_offset),
         graphics,
     ).unwrap();
     text(
@@ -64,10 +62,9 @@ fn draw(
         menu_font,
         "Sound Volume",
         glyph_cache,
-        context.transform.trans(
-            left_alignment,
-            starting_line_offset + new_line_offset,
-        ),
+        context
+            .transform
+            .trans(left_alignment, starting_line_offset + new_line_offset),
         graphics,
     ).unwrap();
     text(
@@ -75,10 +72,9 @@ fn draw(
         menu_font,
         &format!("{}%", (volume.sound * 100.0) as i32),
         glyph_cache,
-        context.transform.trans(
-            value_left_alignment,
-            starting_line_offset + new_line_offset,
-        ),
+        context
+            .transform
+            .trans(value_left_alignment, starting_line_offset + new_line_offset),
         graphics,
     ).unwrap();
 }
@@ -112,18 +108,14 @@ pub fn run(
             let volume_step: f64 = 0.1;
 
             match key {
-                Key::W => {
-                    match menu_selection {
-                        MenuSelection::MusicVolume => {}
-                        MenuSelection::SoundVolume => menu_selection = MenuSelection::MusicVolume,
-                    }
-                }
-                Key::S => {
-                    match menu_selection {
-                        MenuSelection::MusicVolume => menu_selection = MenuSelection::SoundVolume,
-                        MenuSelection::SoundVolume => {}
-                    }
-                }
+                Key::W => match menu_selection {
+                    MenuSelection::MusicVolume => {}
+                    MenuSelection::SoundVolume => menu_selection = MenuSelection::MusicVolume,
+                },
+                Key::S => match menu_selection {
+                    MenuSelection::MusicVolume => menu_selection = MenuSelection::SoundVolume,
+                    MenuSelection::SoundVolume => {}
+                },
                 Key::D => {
                     music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0), volume.sound);
                     match menu_selection {

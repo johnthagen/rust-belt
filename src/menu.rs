@@ -8,7 +8,6 @@ use piston_window::{clear, text, Button, Context, Key, PistonWindow, PressEvent,
                     Size, TextureSettings, Transformed, UpdateEvent};
 use sprite::{Ease, EaseFunction, FadeIn, Scene, Sprite};
 
-
 use game;
 use game::color::{self, ColoredText};
 use settings;
@@ -164,10 +163,7 @@ fn create_logo_scene(window_size: Size) -> Scene<Texture> {
     sprite.set_opacity(0.0);
     let id = scene.add_child(sprite);
     let fade = Sequence(vec![
-        Action(Ease(
-            EaseFunction::QuadraticInOut,
-            Box::new(FadeIn(3.0)),
-        )),
+        Action(Ease(EaseFunction::QuadraticInOut, Box::new(FadeIn(3.0)))),
     ]);
     scene.run(id, &fade);
 
@@ -218,22 +214,18 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
             if let Some(Button::Keyboard(key)) = event.press_args() {
                 music::play_sound(&Sound::MenuSelection, music::Repeat::Times(0), volume.sound);
                 match key {
-                    Key::W => {
-                        match menu_selection {
-                            MenuSelection::Play => {}
-                            MenuSelection::Story => menu_selection = MenuSelection::Play,
-                            MenuSelection::Settings => menu_selection = MenuSelection::Story,
-                            MenuSelection::Exit => menu_selection = MenuSelection::Settings,
-                        }
-                    }
-                    Key::S => {
-                        match menu_selection {
-                            MenuSelection::Play => menu_selection = MenuSelection::Story,
-                            MenuSelection::Story => menu_selection = MenuSelection::Settings,
-                            MenuSelection::Settings => menu_selection = MenuSelection::Exit,
-                            MenuSelection::Exit => {}
-                        }
-                    }
+                    Key::W => match menu_selection {
+                        MenuSelection::Play => {}
+                        MenuSelection::Story => menu_selection = MenuSelection::Play,
+                        MenuSelection::Settings => menu_selection = MenuSelection::Story,
+                        MenuSelection::Exit => menu_selection = MenuSelection::Settings,
+                    },
+                    Key::S => match menu_selection {
+                        MenuSelection::Play => menu_selection = MenuSelection::Story,
+                        MenuSelection::Story => menu_selection = MenuSelection::Settings,
+                        MenuSelection::Settings => menu_selection = MenuSelection::Exit,
+                        MenuSelection::Exit => {}
+                    },
                     Key::Space => {
                         music::play_sound(
                             &Sound::MenuValidate,
