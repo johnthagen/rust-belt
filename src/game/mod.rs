@@ -43,11 +43,11 @@ impl Game {
             bullets: Vec::new(),
             asteroids: Vec::new(),
             score: 0,
-            window_size: window_size,
+            window_size,
             asteroid_timer: 0.1,
             asteroid_timer_max: 4.0,
             game_over: false,
-            volume: volume,
+            volume,
         }
     }
 

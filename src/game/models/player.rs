@@ -33,6 +33,7 @@ pub struct Actions {
     pub is_shooting: bool,
 }
 
+#[derive(Copy, Clone)]
 enum Direction {
     Forward,
     Backward,
@@ -52,7 +53,7 @@ impl Player {
             rot: 0.0,
             actions: Actions::default(),
             weapon_cooldown: 0.0,
-            window_size: window_size,
+            window_size,
         }
     }
 

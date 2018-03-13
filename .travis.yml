@@ -12,7 +12,7 @@ matrix:
       rust: nightly
       env: CI_BUILD_TYPE="NIGHTLY"
     - os: linux
-      rust: nightly-2017-10-20
+      rust: nightly-2018-03-06
       env: CI_BUILD_TYPE="CLIPPY"
     - os: linux
       rust: stable
@@ -28,7 +28,7 @@ cache: cargo
 # nightly versions, so select a nightly/clippy combination known to work.
 env:
   global:
-    - CLIPPY_VERSION=0.0.166
+    - CLIPPY_VERSION=0.0.187
 
 install:
   # Steps copied from the rust-sdl2 project.
