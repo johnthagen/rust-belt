@@ -4,7 +4,6 @@ matrix:
   include:
     - os: linux
       rust: stable
-      env: CI_BUILD_TYPE="RUSTFMT"
     - os: osx
       rust: stable
     - os: linux
@@ -16,7 +15,7 @@ matrix:
       rust: nightly-2017-10-20
       env: CI_BUILD_TYPE="CLIPPY"
     - os: linux
-      rust: nightly
+      rust: stable
       env: CI_BUILD_TYPE="RUSTFMT"
 
   allow_failures:
