@@ -165,7 +165,7 @@ impl Asteroid {
             spin: (rand::random::<f64>() - 0.5) * f64::consts::PI / 180.0,
             radius: asteroid_radius,
             shape: generate_jagged_shape(asteroid_radius, DEFAULT_NUM_VERTS),
-            window_size: window_size,
+            window_size,
 
             // All asteroids start off-screen.
             on_screen: false,

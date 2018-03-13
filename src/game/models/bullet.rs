@@ -29,7 +29,7 @@ impl Bullet {
                 y: speed_multiplier * direction.sin() + velocity.y,
             },
             ttl: 1.0,
-            window_size: window_size,
+            window_size,
         }
     }
 
