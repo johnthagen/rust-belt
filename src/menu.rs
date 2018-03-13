@@ -8,7 +8,6 @@ use piston_window::{clear, text, Button, Context, Key, PistonWindow, PressEvent,
                     Size, TextureSettings, Transformed, UpdateEvent};
 use sprite::{Ease, EaseFunction, FadeIn, Scene, Sprite};
 
-
 use game;
 use game::color::{self, ColoredText};
 use settings;

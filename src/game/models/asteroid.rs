@@ -233,11 +233,9 @@ impl Asteroid {
         let other_pos = other.pos();
         let nearest_point = self.shape
             .iter()
-            .map(|vert| {
-                Vector {
-                    x: vert[0],
-                    y: vert[1],
-                }
+            .map(|vert| Vector {
+                x: vert[0],
+                y: vert[1],
             })
             .map(|vert| other_pos.distance(vert.rotate(self.rot) + self.pos))
             .enumerate()
