@@ -6,9 +6,9 @@ use opengl_graphics::GlGraphics;
 use piston_window::{polygon, Context, Size, Transformed, UpdateArgs};
 use rand;
 
-use game::color;
-use game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
-use game::models::vector::Vector;
+use crate::game::color;
+use crate::game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
+use crate::game::models::vector::Vector;
 
 /// Asteroids have random radii within a defined range.
 const RADIUS_MIN: f64 = 15.0;
@@ -30,7 +30,7 @@ const DEFAULT_NUM_VERTS: usize = 20;
 /// * `shape`: an array representing the the drawn shape of the asteroid
 /// * `window_size`: the size of the opengl window, used to wrap position
 /// * `on_screen`: a flag storing whether the asteroid is fully on-screen
-pub struct Asteroid {
+crate struct Asteroid {
     pos: Vector,
     vel: Vector,
     rot: f64,
@@ -124,7 +124,7 @@ fn calculate_radius(shape: &[[f64; 2]]) -> f64 {
 }
 
 impl Asteroid {
-    pub fn new(window_size: Size) -> Self {
+    crate fn new(window_size: Size) -> Self {
         // First, we generate a random radius, within the specified range, for the new asteroid.
         let asteroid_radius = RADIUS_MIN + rand::random::<f64>() * (RADIUS_MAX - RADIUS_MIN);
 
@@ -172,11 +172,11 @@ impl Asteroid {
         }
     }
 
-    pub fn can_split(&self) -> bool {
+    crate fn can_split(&self) -> bool {
         self.shape.len() > 10
     }
 
-    pub fn split<P: Positioned>(&mut self, other: &P) -> Vec<Asteroid> {
+    crate fn split<P: Positioned>(&mut self, other: &P) -> Vec<Asteroid> {
         self.normalize_rotation();
         let index_nearest = self.index_nearest_point(other);
         let num_pieces = 3;

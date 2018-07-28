@@ -8,13 +8,13 @@ use piston_window::{clear, text, Button, Context, Key, PistonWindow, PressEvent,
                     Size, TextureSettings, Transformed, UpdateEvent};
 use sprite::{Ease, EaseFunction, FadeIn, Scene, Sprite};
 
-use game;
-use game::color::{self, ColoredText};
-use settings;
+use crate::game;
+use crate::game::color::{self, ColoredText};
+use crate::settings;
 
 use std::f64;
 use std::rc::Rc;
-use story;
+use crate::story;
 
 /// The different music soundtrack pieces in the game.
 #[derive(Copy, Clone, Hash, PartialEq, Eq)]
@@ -31,7 +31,7 @@ enum Music {
 
 /// Sound effects.
 #[derive(Copy, Clone, Hash, PartialEq, Eq)]
-pub enum Sound {
+crate enum Sound {
     MenuSelection,
     MenuBack,
     MenuValidate,
@@ -41,13 +41,13 @@ pub enum Sound {
 
 /// Volume for music and sound effects.
 #[derive(Copy, Clone)]
-pub struct Volume {
-    pub music: f64,
-    pub sound: f64,
+crate struct Volume {
+    crate music: f64,
+    crate sound: f64,
 }
 
 impl Volume {
-    pub fn new() -> Self {
+    crate fn new() -> Self {
         Volume {
             music: music::MAX_VOLUME,
             sound: music::MAX_VOLUME,
@@ -89,7 +89,7 @@ enum MenuSelection {
 fn draw(
     context: Context,
     graphics: &mut GlGraphics,
-    glyph_cache: &mut GlyphCache,
+    glyph_cache: &mut GlyphCache<'_>,
     menu_align: f64,
     menu_selection: MenuSelection,
     logo_scene: &Scene<Texture>,
@@ -171,7 +171,7 @@ fn create_logo_scene(window_size: Size) -> Scene<Texture> {
 }
 
 /// Loops the menu screen, taking user input to change the current menu selection.
-pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_size: Size) {
+crate fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_size: Size) {
     music::start::<Music, Sound, _>(32, || {
         bind_sound_files();
 

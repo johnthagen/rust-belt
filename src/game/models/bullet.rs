@@ -8,11 +8,11 @@
 use opengl_graphics::GlGraphics;
 use piston_window::{ellipse, types, Context, Size, Transformed, UpdateArgs};
 
-use game::color;
-use game::models::{Collidable, Drawable, Positioned, Updateable};
-use game::models::vector::Vector;
+use crate::game::color;
+use crate::game::models::{Collidable, Drawable, Positioned, Updateable};
+use crate::game::models::vector::Vector;
 
-pub struct Bullet {
+crate struct Bullet {
     pos: Vector,
     vel: Vector,
     ttl: f64,
@@ -20,7 +20,7 @@ pub struct Bullet {
 }
 
 impl Bullet {
-    pub fn new(position: Vector, velocity: Vector, direction: f64, window_size: Size) -> Self {
+    crate fn new(position: Vector, velocity: Vector, direction: f64, window_size: Size) -> Self {
         let speed_multiplier = 4.0;
         Bullet {
             pos: position,
@@ -33,7 +33,7 @@ impl Bullet {
         }
     }
 
-    pub fn ttl(&self) -> f64 {
+    crate fn ttl(&self) -> f64 {
         self.ttl
     }
 }

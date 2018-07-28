@@ -6,27 +6,27 @@ use std::f64::consts::PI;
 use opengl_graphics::GlGraphics;
 use piston_window::{Context, UpdateArgs};
 
-pub mod asteroid;
-pub mod bullet;
-pub mod player;
+crate mod asteroid;
+crate mod bullet;
+crate mod player;
 mod vector;
 
 const PI_MULT_2: f64 = 2.0 * PI;
 
 /// Trait implemented by types that can be drawn to a window.
-pub trait Drawable {
+crate trait Drawable {
     /// Draws oneself to the screen.
     fn draw(&self, context: Context, graphics: &mut GlGraphics);
 }
 
 /// Trait implemented by types that are updated by a game loop.
-pub trait Updateable {
+crate trait Updateable {
     /// Update the state of a type within a game loop.
     fn update(&mut self, args: UpdateArgs);
 }
 
 /// Defines how a type can expose its position.
-pub trait Positioned {
+crate trait Positioned {
     fn x(&self) -> f64 {
         self.pos().x
     }
@@ -39,7 +39,7 @@ pub trait Positioned {
 }
 
 /// Defines how types can expose how they can check for collisions with each other.
-pub trait Collidable: Positioned {
+crate trait Collidable: Positioned {
     fn radius(&self) -> f64;
 
     /// Check another `Collidable` type to see if it's radius overlaps with this instance's.

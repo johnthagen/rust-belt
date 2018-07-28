@@ -12,13 +12,13 @@ use piston_window::{clear, text, Button, Context, Key, PistonWindow, PressEvent,
                     RenderEvent, Size, Transformed, UpdateArgs, UpdateEvent};
 
 use self::models::{asteroid, bullet, player, Collidable, Drawable, Updateable};
-use menu::{Sound, Volume};
+use crate::menu::{Sound, Volume};
 
-pub mod color;
+crate mod color;
 mod models;
 
 /// Stores Game state and all objects that exist.
-pub struct Game {
+crate struct Game {
     player: player::Player,
 
     /// The bullets that are currently live in the window.
@@ -37,7 +37,7 @@ pub struct Game {
 }
 
 impl Game {
-    pub fn new(window_size: Size, volume: Volume) -> Self {
+    crate fn new(window_size: Size, volume: Volume) -> Self {
         Game {
             player: player::Player::new(window_size),
             bullets: Vec::new(),
@@ -51,15 +51,15 @@ impl Game {
         }
     }
 
-    pub fn game_over(&self) -> bool {
+    crate fn game_over(&self) -> bool {
         self.game_over
     }
 
-    pub fn run(
+    crate fn run(
         &mut self,
         window: &mut PistonWindow,
         opengl: &mut GlGraphics,
-        glyph_cache: &mut GlyphCache,
+        glyph_cache: &mut GlyphCache<'_>,
     ) {
         while let Some(event) = window.next() {
             if let Some(args) = event.render_args() {
@@ -109,11 +109,11 @@ impl Game {
     }
 
     /// Game over screen logic.
-    pub fn run_game_over(
+    crate fn run_game_over(
         &self,
         window: &mut PistonWindow,
         opengl: &mut GlGraphics,
-        glyph_cache: &mut GlyphCache,
+        glyph_cache: &mut GlyphCache<'_>,
     ) {
         // Wait for the player to have pressed and release a key before
         // continuing in case they were holding a button down during
@@ -166,7 +166,7 @@ impl Game {
     }
 
     /// Draws all current live objects onto the screen as well as the current score.
-    fn draw(&self, context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache) {
+    fn draw(&self, context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache<'_>) {
         clear(color::BLACK, graphics);
         for bullet in &self.bullets {
             bullet.draw(context, graphics);
