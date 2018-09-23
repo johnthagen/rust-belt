@@ -1,3 +1,5 @@
+cargo-features = ["edition"]
+
 [package]
 name = "rust-belt"
 version = "1.2.0"
@@ -6,6 +8,7 @@ authors = [
     "theandrewdavis <theandrewdavis@gmail.com>",
     "mcdenhoed <mcdenhoed@gmail.com>",
 ]
+edition = '2018'
 
 [dependencies]
 piston_window = "0.80.0"

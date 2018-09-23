@@ -5,8 +5,8 @@ use opengl_graphics::{GlGraphics, GlyphCache};
 use piston_window::{clear, text, Button, Context, Key, PistonWindow, PressEvent, RenderEvent,
                     Transformed};
 
-use game::color;
-use menu::{Sound, Volume};
+use crate::game::color;
+use crate::menu::{Sound, Volume};
 
 /// The currently selected menu item the user is highlighting.
 #[derive(Copy, Clone)]
@@ -18,7 +18,7 @@ enum MenuSelection {
 fn draw(
     context: Context,
     graphics: &mut GlGraphics,
-    glyph_cache: &mut GlyphCache,
+    glyph_cache: &mut GlyphCache<'_>,
     menu_selection: MenuSelection,
     volume: Volume,
     left_alignment: f64,
@@ -80,10 +80,10 @@ fn draw(
 }
 
 /// Loop providing game setting options to change to the user until they exit the screen.
-pub fn run(
+crate fn run(
     window: &mut PistonWindow,
     opengl: &mut GlGraphics,
-    glyph_cache: &mut GlyphCache,
+    glyph_cache: &mut GlyphCache<'_>,
     volume: &mut Volume,
     left_alignment: f64,
 ) {

@@ -6,19 +6,19 @@ use rand;
 
 /// Models an (x, y) coordinate value (such as position or velocity).
 #[derive(Copy, Clone, Default)]
-pub struct Vector {
-    pub x: f64,
-    pub y: f64,
+crate struct Vector {
+    crate x: f64,
+    crate y: f64,
 }
 
 impl Vector {
-    pub fn new_rand(x_min: f64, y_min: f64, x_max: f64, y_max: f64) -> Self {
+    crate fn new_rand(x_min: f64, y_min: f64, x_max: f64, y_max: f64) -> Self {
         Vector {
             x: rand::random::<f64>() * (x_max - x_min) + x_min,
             y: rand::random::<f64>() * (y_max - y_min) + y_min,
         }
     }
-    pub fn angle_to_vector(self, other: Vector) -> f64 {
+    crate fn angle_to_vector(self, other: Vector) -> f64 {
         let diff = other - self;
         let mut angle_to_point = (diff.y / diff.x).atan();
         if diff.y < 0.0 {
@@ -32,15 +32,15 @@ impl Vector {
         angle_to_point
     }
 
-    pub fn magnitude(self) -> f64 {
+    crate fn magnitude(self) -> f64 {
         (self.x.powi(2) + self.y.powi(2)).sqrt()
     }
 
-    pub fn distance(self, other: Vector) -> f64 {
+    crate fn distance(self, other: Vector) -> f64 {
         (self - other).magnitude()
     }
 
-    pub fn rotate(self, angle: f64) -> Vector {
+    crate fn rotate(self, angle: f64) -> Vector {
         let old_angle = (self.angle_to_vector(Vector { x: 0.0, y: 0.0 }) + PI) % (PI * 2.0);
         let magnitude = self.magnitude();
         let new_angle = (angle + old_angle) % (PI * 2.0);

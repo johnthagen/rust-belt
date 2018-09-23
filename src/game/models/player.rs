@@ -10,27 +10,27 @@ use std::f64;
 use opengl_graphics::GlGraphics;
 use piston_window::{polygon, types, Context, Size, Transformed, UpdateArgs};
 
-use game::color;
-use game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
-use game::models::vector::Vector;
+use crate::game::color;
+use crate::game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
+use crate::game::models::vector::Vector;
 
-pub struct Player {
-    pub pos: Vector,
-    pub vel: Vector,
-    pub rot: f64,
-    pub actions: Actions,
+crate struct Player {
+    crate pos: Vector,
+    crate vel: Vector,
+    crate rot: f64,
+    crate actions: Actions,
     weapon_cooldown: f64,
     window_size: Size,
 }
 
 /// Currently active user actions.
 #[derive(Default)]
-pub struct Actions {
-    pub rotate_cw: bool,
-    pub rotate_ccw: bool,
-    pub fire_boosters: bool,
-    pub fire_rev_boosters: bool,
-    pub is_shooting: bool,
+crate struct Actions {
+    crate rotate_cw: bool,
+    crate rotate_ccw: bool,
+    crate fire_boosters: bool,
+    crate fire_rev_boosters: bool,
+    crate is_shooting: bool,
 }
 
 #[derive(Copy, Clone)]
@@ -43,7 +43,7 @@ const ROTATION_INCREMENT: f64 = 5.0;
 const THRUST_INCREMENT: f64 = 5.0;
 
 impl Player {
-    pub fn new(window_size: Size) -> Self {
+    crate fn new(window_size: Size) -> Self {
         Player {
             pos: Vector {
                 x: f64::from(window_size.width) / 2.0,
@@ -89,11 +89,11 @@ impl Player {
         self.accelerate(delta, Direction::Backward);
     }
 
-    pub fn reset_weapon_cooldown(&mut self) {
+    crate fn reset_weapon_cooldown(&mut self) {
         self.weapon_cooldown = 0.25;
     }
 
-    pub fn should_shoot(&self) -> bool {
+    crate fn should_shoot(&self) -> bool {
         self.weapon_cooldown == 0.0 && self.actions.is_shooting
     }
 }
