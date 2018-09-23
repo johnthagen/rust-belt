@@ -8,8 +8,8 @@ extern crate piston_window;
 extern crate rand;
 extern crate sprite;
 
-use piston_window::{OpenGL, PistonWindow, Size, WindowSettings};
 use opengl_graphics::GlGraphics;
+use piston_window::{OpenGL, PistonWindow, Size, WindowSettings};
 
 mod game;
 mod menu;
@@ -30,10 +30,10 @@ fn main() {
         game_title,
         [game_window_size.width, game_window_size.height],
     ).opengl(opengl)
-        .samples(4)
-        .exit_on_esc(true)
-        .build()
-        .unwrap_or_else(|error| panic!("Failed to build PistonWindow: {}", error));
+    .samples(4)
+    .exit_on_esc(true)
+    .build()
+    .unwrap_or_else(|error| panic!("Failed to build PistonWindow: {}", error));
 
     let mut gl = GlGraphics::new(opengl);
 

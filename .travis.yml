@@ -47,8 +47,7 @@ script:
   - bash -c 'if [[ "$CI_BUILD_TYPE" == "CLIPPY" ]]; then
       cargo clippy -- -D warnings;
     elif [[ "$CI_BUILD_TYPE" == "RUSTFMT" ]]; then
-      export PATH=$PATH:~/.cargo/bin &&
-      cargo fmt -- --write-mode diff;
+      cargo fmt --all -- --check;
     else
       cargo build --verbose;
     fi'

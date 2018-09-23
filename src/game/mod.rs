@@ -8,8 +8,10 @@
 
 use music;
 use opengl_graphics::{GlGraphics, GlyphCache};
-use piston_window::{clear, text, Button, Context, Key, PistonWindow, PressEvent, ReleaseEvent,
-                    RenderEvent, Size, Transformed, UpdateArgs, UpdateEvent};
+use piston_window::{
+    clear, text, Button, Context, Key, PistonWindow, PressEvent, ReleaseEvent, RenderEvent, Size,
+    Transformed, UpdateArgs, UpdateEvent,
+};
 
 use self::models::{asteroid, bullet, player, Collidable, Drawable, Updateable};
 use menu::{Sound, Volume};
