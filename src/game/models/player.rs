@@ -11,8 +11,8 @@ use opengl_graphics::GlGraphics;
 use piston_window::{polygon, types, Context, Size, Transformed, UpdateArgs};
 
 use game::color;
-use game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
 use game::models::vector::Vector;
+use game::models::{Collidable, Drawable, Positioned, Updateable, PI_MULT_2};
 
 pub struct Player {
     pub pos: Vector,

@@ -4,8 +4,10 @@
 use ai_behavior::{Action, Sequence};
 use music;
 use opengl_graphics::{GlGraphics, GlyphCache, Texture};
-use piston_window::{clear, text, Button, Context, Key, PistonWindow, PressEvent, RenderEvent,
-                    Size, TextureSettings, Transformed, UpdateEvent};
+use piston_window::{
+    clear, text, Button, Context, Key, PistonWindow, PressEvent, RenderEvent, Size,
+    TextureSettings, Transformed, UpdateEvent,
+};
 use sprite::{Ease, EaseFunction, FadeIn, Scene, Sprite};
 
 use game;
@@ -162,9 +164,10 @@ fn create_logo_scene(window_size: Size) -> Scene<Texture> {
     sprite.set_scale(0.4, 0.4);
     sprite.set_opacity(0.0);
     let id = scene.add_child(sprite);
-    let fade = Sequence(vec![
-        Action(Ease(EaseFunction::QuadraticInOut, Box::new(FadeIn(3.0)))),
-    ]);
+    let fade = Sequence(vec![Action(Ease(
+        EaseFunction::QuadraticInOut,
+        Box::new(FadeIn(3.0)),
+    ))]);
     scene.run(id, &fade);
 
     scene
