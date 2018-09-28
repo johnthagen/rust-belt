@@ -1,14 +1,14 @@
 //! This module defines the asteroid component.
-use std::{cmp, f64};
 use std::f64::consts::PI;
+use std::{cmp, f64};
 
 use opengl_graphics::GlGraphics;
 use piston_window::{polygon, Context, Size, Transformed, UpdateArgs};
 use rand;
 
 use game::color;
-use game::models::{Collidable, Drawable, PI_MULT_2, Positioned, Updateable};
 use game::models::vector::Vector;
+use game::models::{Collidable, Drawable, Positioned, Updateable, PI_MULT_2};
 
 /// Asteroids have random radii within a defined range.
 const RADIUS_MIN: f64 = 15.0;
@@ -231,13 +231,13 @@ impl Asteroid {
 
     fn index_nearest_point<P: Positioned>(&mut self, other: &P) -> usize {
         let other_pos = other.pos();
-        let nearest_point = self.shape
+        let nearest_point = self
+            .shape
             .iter()
             .map(|vert| Vector {
                 x: vert[0],
                 y: vert[1],
-            })
-            .map(|vert| other_pos.distance(vert.rotate(self.rot) + self.pos))
+            }).map(|vert| other_pos.distance(vert.rotate(self.rot) + self.pos))
             .enumerate()
             .min_by_key(|&(_, b)| b as i64);
         nearest_point.unwrap().0
@@ -266,7 +266,8 @@ impl Updateable for Asteroid {
         // This code is useful at the beginning of an asteroid's life.
         // It checks whether the asteroid is fully on-screen. If it is,
         // it sets the on_Screen flag and this code isn't touched again.
-        if !self.on_screen && self.pos.x > self.radius
+        if !self.on_screen
+            && self.pos.x > self.radius
             && self.pos.x + self.radius < f64::from(self.window_size.width)
             && self.pos.y > self.radius
             && self.pos.y + self.radius < f64::from(self.window_size.height)

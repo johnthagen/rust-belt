@@ -12,7 +12,7 @@ matrix:
       rust: nightly
       env: CI_BUILD_TYPE="NIGHTLY"
     - os: linux
-      rust: nightly
+      rust: stable
       env: CI_BUILD_TYPE="CLIPPY"
     - os: linux
       rust: stable
@@ -38,17 +38,16 @@ install:
 
 before_script:
   - bash -c 'if [[ "$CI_BUILD_TYPE" == "CLIPPY" ]]; then
-      rustup component add clippy-preview --toolchain=nightly;
+      rustup component add clippy-preview;
     elif [[ "$CI_BUILD_TYPE" == "RUSTFMT" ]]; then
       rustup component add rustfmt-preview;
     fi'
 
 script:
   - bash -c 'if [[ "$CI_BUILD_TYPE" == "CLIPPY" ]]; then
-      cargo +nightly clippy;
+      cargo clippy -- -D warnings;
     elif [[ "$CI_BUILD_TYPE" == "RUSTFMT" ]]; then
-      export PATH=$PATH:~/.cargo/bin &&
-      cargo fmt -- --write-mode diff;
+      cargo fmt --all -- --check;
     else
       cargo build --verbose;
     fi'
