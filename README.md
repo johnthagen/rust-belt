@@ -19,7 +19,7 @@ implemented  using the [Rust](https://www.rust-lang.org/) game engine,
 ## Prerequisites
 
 1. The latest stable release of Rust.
-    1. Install [`rustup`](https://www.rustup.rs/).
+    1. Install [`rustup`](https://www.rust-lang.org/install.html).
 
 2. `rust-belt` uses [`piston-music`](https://github.com/PistonDevelopers/music) to play music. 
     `piston-music` depends on two third-party non-Rust libraries, [SDL2](https://www.libsdl.org/) 
@@ -34,12 +34,10 @@ Select to proceed with either the MSVC or GNU toolchain.
 
 1. Ensure you are using the latest stable 64-bit MVSC toolchain with `rustup show` 
    (`stable-x86_64-pc-windows-msvc`).
-2. Ensure you have installed the 
-   [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools)
-   (as recommended by `rustup` during install).
-   (e.g. `C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\cl.exe`).
+2. Ensure you have installed the [Build Tools for Visual Studio](https://aka.ms/buildtools)
+   as instructed by `rustup` during install.
 3. [Download](https://www.libsdl.org/download-2.0.php) the latest SDL2 MSVC development library 
-(`SDL2-devel-2.0.x-VC.zip`).
+   (`SDL2-devel-2.0.x-VC.zip`).
 4. Unpack and copy all `.lib` files from `SDL2-devel-2.0.x-VC\SDL2-2.0.x\lib\x64\` into a folder. 
    If the `LIB` system environment variable does not exist, create it. Add that folder path to 
    `LIB`.
