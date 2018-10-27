@@ -72,7 +72,7 @@ Select to proceed with either the MSVC or GNU toolchain.
 
 ## Mac OSX
 
-1. Install [Homebrew](http://brew.sh/) (by default this will install `gcc` via Xcode development 
+1. Install [Homebrew](https://brew.sh/) (by default this will install `gcc` via Xcode development 
    tools).
 2. `brew install sdl2`
 3. `brew install sdl2_mixer --with-flac --with-fluid-synth --with-libmikmod --with-mpg123`
