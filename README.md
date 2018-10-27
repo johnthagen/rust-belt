@@ -10,7 +10,7 @@
 `rust-belt` is a 2D video game featuring an original soundtrack :musical_score: inspired by the 
 classic [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game. It is 
 implemented  using the [Rust](https://www.rust-lang.org/) game engine, 
-[Piston](http://www.piston.rs/).
+[Piston](https://www.piston.rs/).
 
 ![Rust Belt](./videos/rust-belt-game-play.gif)
 
