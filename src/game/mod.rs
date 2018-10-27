@@ -14,7 +14,7 @@ use piston_window::{
 };
 
 use self::models::{asteroid, bullet, player, Collidable, Drawable, Updateable};
-use menu::{Sound, Volume};
+use crate::menu::{Sound, Volume};
 
 pub mod color;
 mod models;

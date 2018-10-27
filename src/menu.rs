@@ -10,13 +10,13 @@ use piston_window::{
 };
 use sprite::{Ease, EaseFunction, FadeIn, Scene, Sprite};
 
-use game;
-use game::color::{self, ColoredText};
-use settings;
+use crate::game;
+use crate::game::color::{self, ColoredText};
+use crate::settings;
 
 use std::f64;
 use std::rc::Rc;
-use story;
+use crate::story;
 
 /// The different music soundtrack pieces in the game.
 #[derive(Copy, Clone, Hash, PartialEq, Eq)]

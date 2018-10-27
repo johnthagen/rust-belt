@@ -10,9 +10,9 @@ use std::f64;
 use opengl_graphics::GlGraphics;
 use piston_window::{polygon, types, Context, Size, Transformed, UpdateArgs};
 
-use game::color;
-use game::models::vector::Vector;
-use game::models::{Collidable, Drawable, Positioned, Updateable, PI_MULT_2};
+use crate::game::color;
+use crate::game::models::vector::Vector;
+use crate::game::models::{Collidable, Drawable, Positioned, Updateable, PI_MULT_2};
 
 pub struct Player {
     pub pos: Vector,
