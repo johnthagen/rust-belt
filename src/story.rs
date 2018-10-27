@@ -126,8 +126,7 @@ fn draw(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCach
                 starting_line_offset + (index as f64 * new_line_offset),
             ),
             graphics,
-        )
-        .unwrap();
+        ).unwrap();
     }
 }
 

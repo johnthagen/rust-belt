@@ -237,8 +237,7 @@ impl Asteroid {
             .map(|vert| Vector {
                 x: vert[0],
                 y: vert[1],
-            })
-            .map(|vert| other_pos.distance(vert.rotate(self.rot) + self.pos))
+            }).map(|vert| other_pos.distance(vert.rotate(self.rot) + self.pos))
             .enumerate()
             .min_by_key(|&(_, b)| b as i64);
         nearest_point.unwrap().0
