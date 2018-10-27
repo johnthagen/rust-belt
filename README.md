@@ -53,7 +53,7 @@ Select to proceed with either the MSVC or GNU toolchain.
 
 1. Ensure you using the latest stable 64-bit GNU ABI toolchain with `rustup show` 
    (`stable-x86_64-pc-windows-gnu`).
-2. Install [MSYS2](https://msys2.github.io/).
+2. Install [MSYS2](https://www.msys2.org/).
 3. In an MSYS2 terminal: `pacman --sync mingw-w64-x86_64-gcc`
 4. Add `C:\msys64\mingw64\bin` to system `PATH`.
 5. [Download](https://www.libsdl.org/download-2.0.php) the latest SDL2 MinGW development library 
