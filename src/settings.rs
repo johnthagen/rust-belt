@@ -6,8 +6,8 @@ use piston_window::{
     clear, text, Button, Context, Key, PistonWindow, PressEvent, RenderEvent, Transformed,
 };
 
-use game::color;
-use menu::{Sound, Volume};
+use crate::game::color;
+use crate::menu::{Sound, Volume};
 
 /// The currently selected menu item the user is highlighting.
 #[derive(Copy, Clone)]

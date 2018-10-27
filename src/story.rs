@@ -6,8 +6,8 @@ use piston_window::{
     clear, text, types, Button, Context, Key, PistonWindow, PressEvent, RenderEvent, Transformed,
 };
 
-use game::color::{self, ColoredText};
-use menu::{Sound, Volume};
+use crate::game::color::{self, ColoredText};
+use crate::menu::{Sound, Volume};
 
 fn draw(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache) {
     const NARRATOR_COLOR: types::Color = color::WHITE;
