@@ -199,7 +199,7 @@ impl Asteroid {
         let zipped_indices: Vec<(&usize, &usize)> =
             first_indices.iter().zip(last_indices.iter()).collect();
         for pair in zipped_indices {
-            let mut new_shape = transformed_shape[*pair.0..*pair.1 + 1].to_vec();
+            let mut new_shape = transformed_shape[*pair.0..=*pair.1].to_vec();
             new_shape.push([0.0, 0.0]);
             let average_pos = center_mass(&mut new_shape);
             let new_radius = calculate_radius(&new_shape);
