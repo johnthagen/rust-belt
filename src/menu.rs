@@ -1,6 +1,9 @@
 //! Main menu.
 //! Provides an interface for the user to start the game, change settings, or exit.
 
+use std::f64;
+use std::rc::Rc;
+
 use ai_behavior::{Action, Sequence};
 use music;
 use opengl_graphics::{GlGraphics, GlyphCache, Texture};
@@ -13,9 +16,6 @@ use sprite::{Ease, EaseFunction, FadeIn, Scene, Sprite};
 use crate::game;
 use crate::game::color::{self, ColoredText};
 use crate::settings;
-
-use std::f64;
-use std::rc::Rc;
 use crate::story;
 
 /// The different music soundtrack pieces in the game.
