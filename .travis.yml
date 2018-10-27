@@ -12,7 +12,7 @@ matrix:
       rust: nightly
       env: CI_BUILD_TYPE="NIGHTLY"
     - os: linux
-      rust: nightly
+      rust: stable
       env: CI_BUILD_TYPE="CLIPPY"
     - os: linux
       rust: stable
@@ -26,29 +26,28 @@ cache: cargo
 
 install:
   # Steps copied from the rust-sdl2 project.
-  - wget https://www.libsdl.org/release/SDL2-2.0.5.tar.gz -O sdl2.tar.gz
+  - wget https://www.libsdl.org/release/SDL2-2.0.8.tar.gz -O sdl2.tar.gz
   - tar xzf sdl2.tar.gz
-  - pushd SDL2-2.0.5 && ./configure && make && sudo make install && popd
+  - pushd SDL2-* && ./configure && make && sudo make install && popd
 
   # Steps copied from rust-sdl2_mixer project.
-  - wget https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.1.tar.gz
+  - wget https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.2.tar.gz
       -O sdl2_mixer.tar.gz
   - tar xzf sdl2_mixer.tar.gz
-  - pushd SDL2_mixer-2.0.1 && ./configure && make && sudo make install && popd
+  - pushd SDL2_mixer-* && ./configure && make && sudo make install && popd
 
 before_script:
   - bash -c 'if [[ "$CI_BUILD_TYPE" == "CLIPPY" ]]; then
-      rustup component add clippy-preview --toolchain=nightly;
+      rustup component add clippy-preview;
     elif [[ "$CI_BUILD_TYPE" == "RUSTFMT" ]]; then
       rustup component add rustfmt-preview;
     fi'
 
 script:
   - bash -c 'if [[ "$CI_BUILD_TYPE" == "CLIPPY" ]]; then
-      cargo +nightly clippy;
+      cargo clippy -- -D warnings;
     elif [[ "$CI_BUILD_TYPE" == "RUSTFMT" ]]; then
-      export PATH=$PATH:~/.cargo/bin &&
-      cargo fmt -- --write-mode diff;
+      cargo fmt --all -- --check;
     else
       cargo build --verbose;
     fi'
