@@ -190,12 +190,13 @@ impl Drawable for Player {
         polygon(
             color::CYAN,
             SHIP,
-            context.transform
-                    .trans(self.pos.x, self.pos.y)
-                    .rot_rad(self.rot)
-                    // Without this trans(), rotation occurs around the
-                    // upper left corner rather than the center.
-                    .trans(-1.0 * SHIP_HEIGHT / 2.0, 0.0),
+            context
+                .transform
+                .trans(self.pos.x, self.pos.y)
+                .rot_rad(self.rot)
+                // Without this trans(), rotation occurs around the
+                // upper left corner rather than the center.
+                .trans(-1.0 * SHIP_HEIGHT / 2.0, 0.0),
             graphics,
         );
     }

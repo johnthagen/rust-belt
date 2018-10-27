@@ -29,7 +29,8 @@ fn main() {
     let mut window: PistonWindow = WindowSettings::new(
         game_title,
         [game_window_size.width, game_window_size.height],
-    ).opengl(opengl)
+    )
+    .opengl(opengl)
     .samples(4)
     .exit_on_esc(true)
     .build()
