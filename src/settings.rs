@@ -19,7 +19,7 @@ enum MenuSelection {
 fn draw(
     context: Context,
     graphics: &mut GlGraphics,
-    glyph_cache: &mut GlyphCache,
+    glyph_cache: &mut GlyphCache<'_>,
     menu_selection: MenuSelection,
     volume: Volume,
     left_alignment: f64,
@@ -84,7 +84,7 @@ fn draw(
 pub fn run(
     window: &mut PistonWindow,
     opengl: &mut GlGraphics,
-    glyph_cache: &mut GlyphCache,
+    glyph_cache: &mut GlyphCache<'_>,
     volume: &mut Volume,
     left_alignment: f64,
 ) {

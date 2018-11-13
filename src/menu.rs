@@ -91,7 +91,7 @@ enum MenuSelection {
 fn draw(
     context: Context,
     graphics: &mut GlGraphics,
-    glyph_cache: &mut GlyphCache,
+    glyph_cache: &mut GlyphCache<'_>,
     menu_align: f64,
     menu_selection: MenuSelection,
     logo_scene: &Scene<Texture>,
