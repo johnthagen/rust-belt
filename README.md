@@ -46,7 +46,7 @@ Select to proceed with either the MSVC or GNU toolchain.
    library (`SDL2_mixer-devel-2.0.x-VC.zip`).
 7. Unpack and copy all `.lib` files from `SDL2_mixer-devel-2.0.x-VC\SDL2_mixer-2.0.x\lib\x64` into 
    the same folder added in step 4 that was added to the `LIB` system environment variable.
-8. Copy `SDL2_mixer.dll` and `smpeg2.dll` into the `rust-belt` project folder, next to 
+8. Copy `SDL2_mixer.dll` and `libmpg123-0.dll` into the `rust-belt` project folder, next to 
    `Cargo.toml`.
 
 ### GNU/MinGW-w64
