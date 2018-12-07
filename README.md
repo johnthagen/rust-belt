@@ -7,10 +7,10 @@
 
 [![GitHub Releases][github-release-svg]][github-release]
 
-`rust-belt` is a 2D video game featuring an original soundtrack :musical_score: inspired by the 
-classic [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game. It is 
-implemented  using the [Rust](https://www.rust-lang.org/) game engine, 
-[Piston](http://www.piston.rs/).
+`rust-belt` is a 2D video game inspired by the classic 
+[Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game, 
+featuring an [original soundtrack :musical_score:](assets/music). It is implemented using the 
+[Rust](https://www.rust-lang.org/) game engine, [Piston](https://www.piston.rs/).
 
 ![Rust Belt](./videos/rust-belt-game-play.gif)
 
@@ -46,14 +46,14 @@ Select to proceed with either the MSVC or GNU toolchain.
    library (`SDL2_mixer-devel-2.0.x-VC.zip`).
 7. Unpack and copy all `.lib` files from `SDL2_mixer-devel-2.0.x-VC\SDL2_mixer-2.0.x\lib\x64` into 
    the same folder added in step 4 that was added to the `LIB` system environment variable.
-8. Copy `SDL2_mixer.dll` and `smpeg2.dll` into the `rust-belt` project folder, next to 
+8. Copy `SDL2_mixer.dll` and `libmpg123-0.dll` into the `rust-belt` project folder, next to 
    `Cargo.toml`.
 
 ### GNU/MinGW-w64
 
 1. Ensure you using the latest stable 64-bit GNU ABI toolchain with `rustup show` 
    (`stable-x86_64-pc-windows-gnu`).
-2. Install [MSYS2](https://msys2.github.io/).
+2. Install [MSYS2](https://www.msys2.org/).
 3. In an MSYS2 terminal: `pacman --sync mingw-w64-x86_64-gcc`
 4. Add `C:\msys64\mingw64\bin` to system `PATH`.
 5. [Download](https://www.libsdl.org/download-2.0.php) the latest SDL2 MinGW development library 
@@ -72,7 +72,7 @@ Select to proceed with either the MSVC or GNU toolchain.
 
 ## Mac OSX
 
-1. Install [Homebrew](http://brew.sh/) (by default this will install `gcc` via Xcode development 
+1. Install [Homebrew](https://brew.sh/) (by default this will install `gcc` via Xcode development 
    tools).
 2. `brew install sdl2`
 3. `brew install sdl2_mixer --with-flac --with-fluid-synth --with-libmikmod --with-mpg123`
