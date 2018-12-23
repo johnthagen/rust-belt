@@ -9,7 +9,7 @@ use piston_window::{
 use crate::game::color::{self, ColoredText};
 use crate::menu::{Sound, Volume};
 
-fn draw(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache) {
+fn draw(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache<'_>) {
     const NARRATOR_COLOR: types::Color = color::WHITE;
     const KARA_COLOR: types::Color = color::MAGENTA;
     const JACK_COLOR: types::Color = color::CYAN;
@@ -126,7 +126,8 @@ fn draw(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCach
                 starting_line_offset + (index as f64 * new_line_offset),
             ),
             graphics,
-        ).unwrap();
+        )
+        .unwrap();
     }
 }
 
@@ -134,7 +135,7 @@ fn draw(context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCach
 pub fn run(
     window: &mut PistonWindow,
     opengl: &mut GlGraphics,
-    glyph_cache: &mut GlyphCache,
+    glyph_cache: &mut GlyphCache<'_>,
     volume: Volume,
 ) {
     while let Some(event) = window.next() {

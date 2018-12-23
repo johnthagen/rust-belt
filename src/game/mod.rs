@@ -61,7 +61,7 @@ impl Game {
         &mut self,
         window: &mut PistonWindow,
         opengl: &mut GlGraphics,
-        glyph_cache: &mut GlyphCache,
+        glyph_cache: &mut GlyphCache<'_>,
     ) {
         while let Some(event) = window.next() {
             if let Some(args) = event.render_args() {
@@ -115,7 +115,7 @@ impl Game {
         &self,
         window: &mut PistonWindow,
         opengl: &mut GlGraphics,
-        glyph_cache: &mut GlyphCache,
+        glyph_cache: &mut GlyphCache<'_>,
     ) {
         // Wait for the player to have pressed and release a key before
         // continuing in case they were holding a button down during
@@ -136,7 +136,8 @@ impl Game {
                             f64::from(self.window_size.height / 2 - 30),
                         ),
                         graphics,
-                    ).unwrap();
+                    )
+                    .unwrap();
                     let offset = (self.score.to_string().len() * 5) as u32;
                     text(
                         color::WHITE,
@@ -148,7 +149,8 @@ impl Game {
                             f64::from(self.window_size.height / 2 + 30),
                         ),
                         graphics,
-                    ).unwrap();
+                    )
+                    .unwrap();
                 });
             }
 
@@ -168,7 +170,7 @@ impl Game {
     }
 
     /// Draws all current live objects onto the screen as well as the current score.
-    fn draw(&self, context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache) {
+    fn draw(&self, context: Context, graphics: &mut GlGraphics, glyph_cache: &mut GlyphCache<'_>) {
         clear(color::BLACK, graphics);
         for bullet in &self.bullets {
             bullet.draw(context, graphics);
@@ -185,7 +187,8 @@ impl Game {
             glyph_cache,
             context.transform.trans(10.0, 20.0),
             graphics,
-        ).unwrap();
+        )
+        .unwrap();
     }
 }
 

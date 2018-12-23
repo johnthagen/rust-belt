@@ -91,7 +91,7 @@ enum MenuSelection {
 fn draw(
     context: Context,
     graphics: &mut GlGraphics,
-    glyph_cache: &mut GlyphCache,
+    glyph_cache: &mut GlyphCache<'_>,
     menu_align: f64,
     menu_selection: MenuSelection,
     logo_scene: &Scene<Texture>,
@@ -143,7 +143,8 @@ fn draw(
                 starting_line_offset + ((index as f64 + 1.0) * new_line_offset),
             ),
             graphics,
-        ).unwrap();
+        )
+        .unwrap();
     }
 }
 
@@ -154,7 +155,8 @@ fn create_logo_scene(window_size: Size) -> Scene<Texture> {
         Texture::from_path(
             "./assets/images/rust-belt-logo-transparent.png",
             &TextureSettings::new(),
-        ).unwrap(),
+        )
+        .unwrap(),
     );
     let mut sprite = Sprite::from_texture(Rc::clone(&tex));
     sprite.set_position(
@@ -186,7 +188,8 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
             "./assets/fonts/FiraSans-Regular.ttf",
             (),
             TextureSettings::new(),
-        ).unwrap();
+        )
+        .unwrap();
 
         let mut volume = Volume::new();
         volume.sound = 0.50;
