@@ -1,6 +1,6 @@
 //! This module defines the asteroid component.
+use std::f64;
 use std::f64::consts::PI;
-use std::{f64};
 
 use opengl_graphics::GlGraphics;
 use piston_window::{polygon, Context, Size, Transformed, UpdateArgs};
