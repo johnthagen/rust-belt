@@ -143,15 +143,15 @@ impl Asteroid {
         let target = Vector::new_rand(
             RADIUS_MAX,
             RADIUS_MAX,
-            f64::from(window_size.width) - RADIUS_MAX,
-            f64::from(window_size.height) - RADIUS_MAX,
+            window_size.width - RADIUS_MAX,
+            window_size.height - RADIUS_MAX,
         );
 
         // Now that the asteroid's direction is decided, we decide its speed.
         let vel_multiplier = 0.5 + rand::random::<f64>() * 0.7;
         let new_pos = Vector {
-            x: f64::from(window_size.width) / 2.0 + spawn_radius * angle.cos(),
-            y: f64::from(window_size.height) / 2.0 + spawn_radius * angle.sin(),
+            x: window_size.width / 2.0 + spawn_radius * angle.cos(),
+            y: window_size.height / 2.0 + spawn_radius * angle.sin(),
         };
         Asteroid {
             pos: new_pos,
@@ -269,9 +269,9 @@ impl Updateable for Asteroid {
         // it sets the on_Screen flag and this code isn't touched again.
         if !self.on_screen
             && self.pos.x > self.radius
-            && self.pos.x + self.radius < f64::from(self.window_size.width)
+            && self.pos.x + self.radius < self.window_size.width
             && self.pos.y > self.radius
-            && self.pos.y + self.radius < f64::from(self.window_size.height)
+            && self.pos.y + self.radius < self.window_size.height
         {
             self.on_screen = true;
         }
@@ -302,13 +302,13 @@ impl Drawable for Asteroid {
         // the (literal) corner case, as it will never produce a wrapped asteroid
         // drawing in a corner when an asteroid approaches the opposing corner.
         if self.on_screen {
-            if self.pos.x + self.radius > f64::from(self.window_size.width) {
+            if self.pos.x + self.radius > self.window_size.width {
                 polygon(
                     color::WHITE,
                     &self.shape,
                     context
                         .transform
-                        .trans(self.pos.x - f64::from(self.window_size.width), self.pos.y)
+                        .trans(self.pos.x - self.window_size.width, self.pos.y)
                         .rot_rad(self.rot),
                     graphics,
                 )
@@ -318,18 +318,18 @@ impl Drawable for Asteroid {
                     &self.shape,
                     context
                         .transform
-                        .trans(self.pos.x + f64::from(self.window_size.width), self.pos.y)
+                        .trans(self.pos.x + self.window_size.width, self.pos.y)
                         .rot_rad(self.rot),
                     graphics,
                 )
             }
-            if self.pos.y + self.radius > f64::from(self.window_size.height) {
+            if self.pos.y + self.radius > self.window_size.height {
                 polygon(
                     color::WHITE,
                     &self.shape,
                     context
                         .transform
-                        .trans(self.pos.x, self.pos.y - f64::from(self.window_size.height))
+                        .trans(self.pos.x, self.pos.y - self.window_size.height)
                         .rot_rad(self.rot),
                     graphics,
                 )
@@ -339,7 +339,7 @@ impl Drawable for Asteroid {
                     &self.shape,
                     context
                         .transform
-                        .trans(self.pos.x, self.pos.y + f64::from(self.window_size.height))
+                        .trans(self.pos.x, self.pos.y + self.window_size.height)
                         .rot_rad(self.rot),
                     graphics,
                 )

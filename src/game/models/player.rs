@@ -46,8 +46,8 @@ impl Player {
     pub fn new(window_size: Size) -> Self {
         Player {
             pos: Vector {
-                x: f64::from(window_size.width) / 2.0,
-                y: f64::from(window_size.height) / 2.0,
+                x: window_size.width / 2.0,
+                y: window_size.height / 2.0,
             },
             vel: Vector { x: 0.0, y: 0.0 },
             rot: 0.0,
