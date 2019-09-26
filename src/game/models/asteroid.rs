@@ -1,6 +1,6 @@
 //! This module defines the asteroid component.
 use std::f64::consts::PI;
-use std::{cmp, f64};
+use std::{f64};
 
 use opengl_graphics::GlGraphics;
 use piston_window::{polygon, Context, Size, Transformed, UpdateArgs};
@@ -130,7 +130,7 @@ impl Asteroid {
 
         // Asteroids spawn off-screen at a random point along a circle of a set radius,
         // centered at the middle of the screen. Here we are defining that radius.
-        let spawn_radius = f64::from(cmp::max(window_size.width, window_size.height)) + RADIUS_MAX;
+        let spawn_radius = window_size.width.max(window_size.height) + RADIUS_MAX;
 
         // Here we are generating a random angle, which we will use along with the above radius
         // to calculate the starting point for the new asteroid.

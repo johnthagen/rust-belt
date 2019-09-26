@@ -132,21 +132,21 @@ impl Game {
                         "Game Over",
                         glyph_cache,
                         context.transform.trans(
-                            f64::from(self.window_size.width / 2 - 120),
-                            f64::from(self.window_size.height / 2 - 30),
+                            self.window_size.width / 2.0 - 120.0,
+                            self.window_size.height / 2.0 - 30.0,
                         ),
                         graphics,
                     )
                     .unwrap();
-                    let offset = (self.score.to_string().len() * 5) as u32;
+                    let offset = (self.score.to_string().len() * 5) as f64;
                     text(
                         color::WHITE,
                         50,
                         format!("Score: {}", self.score).as_str(),
                         glyph_cache,
                         context.transform.trans(
-                            f64::from(self.window_size.width / 2 - 90 - offset),
-                            f64::from(self.window_size.height / 2 + 30),
+                            self.window_size.width / 2.0 - 90.0 - offset,
+                            self.window_size.height / 2.0 + 30.0,
                         ),
                         graphics,
                     )
