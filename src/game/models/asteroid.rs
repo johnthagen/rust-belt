@@ -1,6 +1,6 @@
 //! This module defines the asteroid component.
+use std::f64;
 use std::f64::consts::PI;
-use std::{cmp, f64};
 
 use opengl_graphics::GlGraphics;
 use piston_window::{polygon, Context, Size, Transformed, UpdateArgs};
@@ -130,7 +130,7 @@ impl Asteroid {
 
         // Asteroids spawn off-screen at a random point along a circle of a set radius,
         // centered at the middle of the screen. Here we are defining that radius.
-        let spawn_radius = f64::from(cmp::max(window_size.width, window_size.height)) + RADIUS_MAX;
+        let spawn_radius = window_size.width.max(window_size.height) + RADIUS_MAX;
 
         // Here we are generating a random angle, which we will use along with the above radius
         // to calculate the starting point for the new asteroid.
@@ -143,15 +143,15 @@ impl Asteroid {
         let target = Vector::new_rand(
             RADIUS_MAX,
             RADIUS_MAX,
-            f64::from(window_size.width) - RADIUS_MAX,
-            f64::from(window_size.height) - RADIUS_MAX,
+            window_size.width - RADIUS_MAX,
+            window_size.height - RADIUS_MAX,
         );
 
         // Now that the asteroid's direction is decided, we decide its speed.
         let vel_multiplier = 0.5 + rand::random::<f64>() * 0.7;
         let new_pos = Vector {
-            x: f64::from(window_size.width) / 2.0 + spawn_radius * angle.cos(),
-            y: f64::from(window_size.height) / 2.0 + spawn_radius * angle.sin(),
+            x: window_size.width / 2.0 + spawn_radius * angle.cos(),
+            y: window_size.height / 2.0 + spawn_radius * angle.sin(),
         };
         Asteroid {
             pos: new_pos,
@@ -269,9 +269,9 @@ impl Updateable for Asteroid {
         // it sets the on_Screen flag and this code isn't touched again.
         if !self.on_screen
             && self.pos.x > self.radius
-            && self.pos.x + self.radius < f64::from(self.window_size.width)
+            && self.pos.x + self.radius < self.window_size.width
             && self.pos.y > self.radius
-            && self.pos.y + self.radius < f64::from(self.window_size.height)
+            && self.pos.y + self.radius < self.window_size.height
         {
             self.on_screen = true;
         }
@@ -302,13 +302,13 @@ impl Drawable for Asteroid {
         // the (literal) corner case, as it will never produce a wrapped asteroid
         // drawing in a corner when an asteroid approaches the opposing corner.
         if self.on_screen {
-            if self.pos.x + self.radius > f64::from(self.window_size.width) {
+            if self.pos.x + self.radius > self.window_size.width {
                 polygon(
                     color::WHITE,
                     &self.shape,
                     context
                         .transform
-                        .trans(self.pos.x - f64::from(self.window_size.width), self.pos.y)
+                        .trans(self.pos.x - self.window_size.width, self.pos.y)
                         .rot_rad(self.rot),
                     graphics,
                 )
@@ -318,18 +318,18 @@ impl Drawable for Asteroid {
                     &self.shape,
                     context
                         .transform
-                        .trans(self.pos.x + f64::from(self.window_size.width), self.pos.y)
+                        .trans(self.pos.x + self.window_size.width, self.pos.y)
                         .rot_rad(self.rot),
                     graphics,
                 )
             }
-            if self.pos.y + self.radius > f64::from(self.window_size.height) {
+            if self.pos.y + self.radius > self.window_size.height {
                 polygon(
                     color::WHITE,
                     &self.shape,
                     context
                         .transform
-                        .trans(self.pos.x, self.pos.y - f64::from(self.window_size.height))
+                        .trans(self.pos.x, self.pos.y - self.window_size.height)
                         .rot_rad(self.rot),
                     graphics,
                 )
@@ -339,7 +339,7 @@ impl Drawable for Asteroid {
                     &self.shape,
                     context
                         .transform
-                        .trans(self.pos.x, self.pos.y + f64::from(self.window_size.height))
+                        .trans(self.pos.x, self.pos.y + self.window_size.height)
                         .rot_rad(self.rot),
                     graphics,
                 )

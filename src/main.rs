@@ -13,8 +13,8 @@ mod story;
 fn main() {
     let game_title = "Rust Belt";
     let game_window_size = Size {
-        width: 1024,
-        height: 768,
+        width: 1024.0,
+        height: 768.0,
     };
 
     let opengl = OpenGL::V3_2;
@@ -23,7 +23,6 @@ fn main() {
         game_title,
         [game_window_size.width, game_window_size.height],
     )
-    .opengl(opengl)
     .samples(4)
     .exit_on_esc(true)
     .build()

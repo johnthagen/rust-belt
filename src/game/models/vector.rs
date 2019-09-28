@@ -175,8 +175,8 @@ impl DivAssign<f64> for Vector {
 impl From<Size> for Vector {
     fn from(size: Size) -> Self {
         Vector {
-            x: f64::from(size.width),
-            y: f64::from(size.height),
+            x: size.width,
+            y: size.height,
         }
     }
 }
