@@ -26,12 +26,12 @@ cache: cargo
 
 install:
   # Steps copied from the rust-sdl2 project.
-  - wget https://www.libsdl.org/release/SDL2-2.0.8.tar.gz -O sdl2.tar.gz
+  - wget https://www.libsdl.org/release/SDL2-2.0.10.tar.gz -O sdl2.tar.gz
   - tar xzf sdl2.tar.gz
   - pushd SDL2-* && ./configure && make && sudo make install && popd
 
   # Steps copied from rust-sdl2_mixer project.
-  - wget https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.2.tar.gz
+  - wget https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.4.tar.gz
       -O sdl2_mixer.tar.gz
   - tar xzf sdl2_mixer.tar.gz
   - pushd SDL2_mixer-* && ./configure && make && sudo make install && popd
