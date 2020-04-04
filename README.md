@@ -121,8 +121,8 @@ Music composed by [@johnthagen](https://github.com/johnthagen).  All rights rese
 Sound from [freesound.org](https://www.freesound.org/).
 
 <!-- Badges -->
-[travis-build-status]: https://travis-ci.org/johnthagen/rust-belt
-[travis-build-status-svg]: https://travis-ci.org/johnthagen/rust-belt.svg?branch=master
+[travis-build-status]: https://travis-ci.com/johnthagen/rust-belt
+[travis-build-status-svg]: https://travis-ci.com/johnthagen/rust-belt.svg?branch=master
 
 [appveyor-build-status]: https://ci.appveyor.com/project/johnthagen/rust-belt
 [appveyor-build-status-svg]: 
