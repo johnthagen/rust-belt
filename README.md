@@ -23,7 +23,7 @@ featuring an [original soundtrack :musical_score:](assets/music). It is implemen
 
 2. `rust-belt` uses [`piston-music`](https://github.com/PistonDevelopers/music) to play music. 
     `piston-music` depends on two third-party non-Rust libraries, [SDL2](https://www.libsdl.org/) 
-    and [SDL2_mixer](https://www.libsdl.org/projects/SDL_mixer/). Install instructions are provided
+    and [SDL2_mixer](https://github.com/libsdl-org/SDL_mixer). Install instructions are provided
     below.
 
 ## Windows
@@ -36,14 +36,14 @@ Select to proceed with either the MSVC or GNU toolchain.
    (`stable-x86_64-pc-windows-msvc`).
 2. Ensure you have installed the [Build Tools for Visual Studio](https://aka.ms/buildtools)
    as instructed by `rustup` during install.
-3. [Download](https://www.libsdl.org/download-2.0.php) the latest SDL2 MSVC development library 
-   (`SDL2-devel-2.0.x-VC.zip`).
+3. [Download](https://github.com/libsdl-org/SDL/releases) the latest 2.0.x SDL2 MSVC development
+   library (`SDL2-devel-2.0.x-VC.zip`).
 4. Unpack and copy all `.lib` files from `SDL2-devel-2.0.x-VC\SDL2-2.0.x\lib\x64\` into a folder. 
    If the `LIB` system environment variable does not exist, create it. Add that folder path to 
    `LIB`.
 5. Copy `SDL2.dll` into the `rust-belt` project folder, next to `Cargo.toml`.
-6. [Download](https://www.libsdl.org/projects/SDL_mixer/) the latest SDL2_mixer MSVC development
-   library (`SDL2_mixer-devel-2.0.x-VC.zip`).
+6. [Download](https://www.libsdl.org/projects/SDL_mixer/release/) the latest 2.0.x SDL2_mixer MSVC
+   development library (`SDL2_mixer-devel-2.0.x-VC.zip`).
 7. Unpack and copy all `.lib` files from `SDL2_mixer-devel-2.0.x-VC\SDL2_mixer-2.0.x\lib\x64` into 
    the same folder added in step 4 that was added to the `LIB` system environment variable.
 8. Copy `SDL2_mixer.dll` and `libmpg123-0.dll` into the `rust-belt` project folder, next to 
@@ -56,14 +56,14 @@ Select to proceed with either the MSVC or GNU toolchain.
 2. Install [MSYS2](https://www.msys2.org/).
 3. In an MSYS2 terminal: `pacman --sync mingw-w64-x86_64-gcc`
 4. Add `C:\msys64\mingw64\bin` to system `PATH`.
-5. [Download](https://www.libsdl.org/download-2.0.php) the latest SDL2 MinGW development library 
-   (`SDL2-devel-2.0.x-mingw.tar.gz`).
-6. Unpack and copy all `.lib` files from `SDL2-devel-2.0.x-mingw\SDL2-2.0.x\x86_64-w64-mingw32\lib`
+5. [Download](https://github.com/libsdl-org/SDL/releases) the latest 2.0.x SDL2 MinGW development
+   library (`SDL2-devel-2.0.x-mingw.tar.gz`).
+6. Unpack and copy all `.lib` files from `SDL2-devel-2.x.x-mingw\SDL2-2.x.x\x86_64-w64-mingw32\lib`
    into a folder. If the `LIBRARY_PATH` system environment variable does not exist, create it. Add 
    that folder to `LIBRARY_PATH`.
 7. Copy `SDL2.dll` into the `rust-belt` project folder, next to `Cargo.toml`.
-8. [Download](https://www.libsdl.org/projects/SDL_mixer/) the latest SDL2_mixer MinGW development 
-   library (`SDL2_mixer-devel-2.0.x-mingw.tar.gz`).
+8. [Download](https://www.libsdl.org/projects/SDL_mixer/release/) the latest 2.0.x SDL2_mixer MinGW
+   development library (`SDL2_mixer-devel-2.0.x-mingw.tar.gz`).
 9. Unpack and copy all `.lib` files from 
    `SDL2_mixer-devel-2.0.x-mingw\SDL2_mixer-2.0.x\x86_64-w64-mingw32\lib\` into the same folder 
    added in step 6 that was added to the `LIB` system environment variable.
