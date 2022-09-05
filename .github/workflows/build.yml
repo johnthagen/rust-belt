@@ -31,7 +31,7 @@ jobs:
         with:
           toolchain: stable
           components: rustfmt
-      - name: Cargo Format
+      - name: Rustfmt
         run: cargo fmt --check
 
   clippy:
