@@ -11,7 +11,7 @@ edition = "2021"
 [dependencies]
 piston_window = "0.105.0"
 piston2d-opengl_graphics = "0.69.0"
-piston-music = "0.25.1"
+piston-music = "0.26.0"
 piston2d-sprite = "0.58.0"
 piston-ai_behavior = "0.31.0"
 rand = "0.8.5"
