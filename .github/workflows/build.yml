@@ -3,7 +3,7 @@ name: build
 on: [ push, pull_request ]
 
 jobs:
-  build:
+  build-nix:
     strategy:
       matrix:
         platform: [ ubuntu-latest, macos-latest ]
