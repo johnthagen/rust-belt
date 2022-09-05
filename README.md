@@ -1,10 +1,6 @@
 ![Rust Belt](./assets/images/rust-belt-logo.png)
 
-| Build Status |                                                                                |
-|--------------|--------------------------------------------------------------------------------|
-| Travis       | [![Travis Build Status][travis-build-status-svg]][travis-build-status]         |
-| AppVeyor     | [![AppVeyor Build Status][appveyor-build-status-svg]][appveyor-build-status]   |
-
+[![GitHub Actions][github-actions-badge]](https://github.com/johnthagen/rust-belt/actions)
 [![GitHub Releases][github-release-svg]][github-release]
 
 `rust-belt` is a 2D video game inspired by the classic 
@@ -108,6 +104,7 @@ Keyboard         | Menu        | Game
 <kbd>Esc</kbd>   | Exit        | Exit
 
 # Maintainers
+
 * [@johnthagen](https://github.com/johnthagen)
 * [@mcdenhoed](https://github.com/mcdenhoed)
 
@@ -121,12 +118,8 @@ Music composed by [@johnthagen](https://github.com/johnthagen).  All rights rese
 Sound from [freesound.org](https://www.freesound.org/).
 
 <!-- Badges -->
-[travis-build-status]: https://travis-ci.com/johnthagen/rust-belt
-[travis-build-status-svg]: https://travis-ci.com/johnthagen/rust-belt.svg?branch=master
 
-[appveyor-build-status]: https://ci.appveyor.com/project/johnthagen/rust-belt
-[appveyor-build-status-svg]: 
-    https://ci.appveyor.com/api/projects/status/nbkgf5i3p4998a2j/branch/master?svg=true
+[github-actions-badge]: https://github.com/johnthagen/rust-belt/workflows/build/badge.svg
 
 [github-release]: https://github.com/johnthagen/rust-belt/releases
 [github-release-svg]: https://img.shields.io/github/release/johnthagen/rust-belt.svg
