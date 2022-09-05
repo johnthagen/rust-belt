@@ -58,7 +58,7 @@ Select to proceed with either the MSVC or GNU toolchain.
 4. Add `C:\msys64\mingw64\bin` to system `PATH`.
 5. [Download](https://github.com/libsdl-org/SDL/releases) the latest 2.0.x SDL2 MinGW development
    library (`SDL2-devel-2.0.x-mingw.tar.gz`).
-6. Unpack and copy all `.lib` files from `SDL2-devel-2.x.x-mingw\SDL2-2.x.x\x86_64-w64-mingw32\lib`
+6. Unpack and copy all `.lib` files from `SDL2-devel-2.0.x-mingw\SDL2-2.0.x\x86_64-w64-mingw32\lib`
    into a folder. If the `LIBRARY_PATH` system environment variable does not exist, create it. Add 
    that folder to `LIBRARY_PATH`.
 7. Copy `SDL2.dll` into the `rust-belt` project folder, next to `Cargo.toml`.
