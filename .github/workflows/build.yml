@@ -42,5 +42,5 @@ jobs:
         with:
           toolchain: stable
           components: clippy
-      - name: Cargo Format
+      - name: Clippy
         run: cargo clippy -- -D warnings
