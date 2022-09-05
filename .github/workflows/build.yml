@@ -22,3 +22,13 @@ jobs:
           pushd SDL2_mixer-* && ./configure && make && sudo make install && popd
       - name: Build
         run: cargo build
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - name: Cargo Format
+        run: cargo fmt --check
