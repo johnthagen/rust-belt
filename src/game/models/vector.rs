@@ -3,7 +3,6 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Rem, RemAssign, S
 
 use piston_window::Size;
 
-
 /// Models an (x, y) coordinate value (such as position or velocity).
 #[derive(Copy, Clone, Default)]
 pub struct Vector {
