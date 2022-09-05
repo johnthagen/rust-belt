@@ -5,7 +5,7 @@ use std::f64;
 use std::rc::Rc;
 
 use ai_behavior::{Action, Sequence};
-use music;
+
 use opengl_graphics::{GlGraphics, GlyphCache, Texture};
 use piston_window::{
     clear, text, Button, Context, Key, PistonWindow, PressEvent, RenderEvent, Size,
@@ -173,7 +173,7 @@ fn create_logo_scene(window_size: Size) -> Scene<Texture> {
 }
 
 /// Loops the menu screen, taking user input to change the current menu selection.
-pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_size: Size) {
+pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: Size) {
     music::start::<Music, Sound, _>(32, || {
         bind_sound_files();
 
@@ -239,21 +239,21 @@ pub fn run(mut window: &mut PistonWindow, mut opengl: &mut GlGraphics, window_si
                             MenuSelection::Play => {
                                 music::play_music(&Music::Action, music::Repeat::Forever);
                                 let mut game = game::Game::new(window_size, volume);
-                                game.run(&mut window, &mut opengl, &mut glyph_cache);
+                                game.run(window, opengl, &mut glyph_cache);
 
                                 if game.game_over() {
                                     music::play_music(&Music::GameOver, music::Repeat::Forever);
-                                    game.run_game_over(&mut window, &mut opengl, &mut glyph_cache);
+                                    game.run_game_over(window, opengl, &mut glyph_cache);
                                 }
                                 music::play_music(&Music::Menu, music::Repeat::Forever);
                             }
                             MenuSelection::Story => {
-                                story::run(&mut window, &mut opengl, &mut glyph_cache, volume);
+                                story::run(window, opengl, &mut glyph_cache, volume);
                             }
                             MenuSelection::Settings => {
                                 settings::run(
-                                    &mut window,
-                                    &mut opengl,
+                                    window,
+                                    opengl,
                                     &mut glyph_cache,
                                     &mut volume,
                                     menu_align,

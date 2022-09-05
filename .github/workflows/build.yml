@@ -1,0 +1,49 @@
+name: build
+
+on: [ push, pull_request ]
+
+jobs:
+  build-nix:
+    strategy:
+      matrix:
+        platform: [ ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - name: Build SDL2
+        run: |
+          wget https://www.libsdl.org/release/SDL2-2.0.22.tar.gz -O sdl2.tar.gz
+          tar xzf sdl2.tar.gz
+          pushd SDL2-* && ./configure && make && sudo make install && popd
+      - name: Build SDL2 Mixer
+        run: |
+          wget https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.4.tar.gz -O sdl2_mixer.tar.gz
+          tar xzf sdl2_mixer.tar.gz
+          pushd SDL2_mixer-* && ./configure && make && sudo make install && popd
+      - name: Build
+        run: cargo build
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+          components: rustfmt
+      - name: Rustfmt
+        run: cargo fmt --check
+
+  clippy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+          components: clippy
+      - name: Clippy
+        run: cargo clippy -- -D warnings

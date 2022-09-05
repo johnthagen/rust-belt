@@ -1,6 +1,5 @@
 //! Modify game settings.
 
-use music;
 use opengl_graphics::{GlGraphics, GlyphCache};
 use piston_window::{
     clear, text, Button, Context, Key, PistonWindow, PressEvent, RenderEvent, Transformed,

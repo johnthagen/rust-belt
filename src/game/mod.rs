@@ -6,7 +6,6 @@
 //! `Game` takes user input from the keyboard in order to control the `Player`
 //! and handles collision detection and the TTL for `Bullet`s.
 
-use music;
 use opengl_graphics::{GlGraphics, GlyphCache};
 use piston_window::{
     clear, text, Button, Context, Key, PistonWindow, PressEvent, ReleaseEvent, RenderEvent, Size,
