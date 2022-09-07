@@ -179,7 +179,7 @@ pub fn run(window: &mut PistonWindow, opengl: &mut GlGraphics, window_size: Size
 
         let mut logo_scene = create_logo_scene(window_size);
 
-        // The glyphe cache is mutable because it loads each character on demand (lazily),
+        // The glyph cache is mutable because it loads each character on demand (lazily),
         // and thus must be able to be changed over time as new characters are requested.
         let mut glyph_cache = GlyphCache::new(
             "./assets/fonts/FiraSans-Regular.ttf",
