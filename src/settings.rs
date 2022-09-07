@@ -93,7 +93,7 @@ pub fn run(
 ) {
     let mut menu_selection = MenuSelection::MusicVolume;
 
-    while let Some(event) = window.next() {
+    for event in window.by_ref() {
         if let Some(args) = event.render_args() {
             opengl.draw(args.viewport(), |context, graphics| {
                 draw(

@@ -62,7 +62,7 @@ impl Game {
         opengl: &mut GlGraphics,
         glyph_cache: &mut GlyphCache<'_>,
     ) {
-        while let Some(event) = window.next() {
+        for event in window.by_ref() {
             if let Some(args) = event.render_args() {
                 opengl.draw(args.viewport(), |context, graphics| {
                     self.draw(context, graphics, glyph_cache)
@@ -121,7 +121,7 @@ impl Game {
         // game over.
         let mut has_pressed = false;
         let mut has_released = false;
-        while let Some(event) = window.next() {
+        for event in window.by_ref() {
             if let Some(args) = event.render_args() {
                 opengl.draw(args.viewport(), |context, graphics| {
                     clear(color::BLACK, graphics);
