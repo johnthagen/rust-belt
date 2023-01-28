@@ -26,7 +26,7 @@ fn main() {
     .samples(4)
     .exit_on_esc(true)
     .build()
-    .unwrap_or_else(|error| panic!("Failed to build PistonWindow: {}", error));
+    .unwrap_or_else(|error| panic!("Failed to build PistonWindow: {error}"));
 
     let mut gl = GlGraphics::new(opengl);
 
