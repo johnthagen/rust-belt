@@ -191,7 +191,6 @@ impl Asteroid {
         let mut first_indices: Vec<usize> = (0..num_pieces - 1)
             .map(|idx| idx + 1)
             .map(|idx| idx * chunk_size)
-            .map(|idx| idx as usize)
             .collect();
         let mut last_indices = first_indices.clone();
         first_indices.insert(0, 0);
