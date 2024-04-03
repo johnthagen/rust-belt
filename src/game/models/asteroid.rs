@@ -97,7 +97,7 @@ fn generate_jagged_shape(radius: f64, num_segments: usize) -> Vec<[f64; 2]> {
     randomize_shape(new_shape, max_mut)
 }
 
-fn center_mass(shape: &mut Vec<[f64; 2]>) -> Vector {
+fn center_mass(shape: &mut [[f64; 2]]) -> Vector {
     let mut average = Vector::default();
     for vertex in &mut shape.iter() {
         // Here, we are adding the new vertex location into what will be our average location.
